@@ -45,6 +45,13 @@ const manager = {
             type: 'item',
             url: '/difficult-tech-docs-modify',
             icon: ''
+        },
+        {
+            id: 'util-difficult-project-matching',
+            title: '프로젝트 매칭',
+            type: 'item',
+            url: '/difficult-tech-project-matching',
+            icon: ''
         }
     ]
 };
