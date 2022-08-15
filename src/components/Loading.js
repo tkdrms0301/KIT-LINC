@@ -21,7 +21,7 @@ const divStyle = css`
 
 const textStyle = css`
     font: 1rem 'Noto Sans KR';
-     text-align: center;
+    text-align: center;
 `;
 
 const Loading = () => {
