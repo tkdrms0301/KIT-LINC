@@ -33,6 +33,9 @@ const PostTable = () => {
         setSearch(e.target.value);
     };
 
+    // detail
+    const [clickedProject, setClickedProject] = useState('');
+
     // pagination
     const LAST_PAGE = post.length % 10 === 0 ? parseInt(post.length / 10) : parseInt(post.length / 10) + 1;
 

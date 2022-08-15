@@ -1,5 +1,6 @@
 // material-ui
 import { Grid, Stack, Box, Typography, Avatar } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -22,7 +23,7 @@ const TechPost = ({ project }) => {
                             <Grid container sx={{ mb: 3 }}>
                                 <Grid item container xs={12} alignItems="flex-end">
                                     <Typography variant="h3" component="p">
-                                        {project.title}
+                                        <Link to="/difficult-techs/detail">{project.title}</Link>
                                     </Typography>
                                     <Typography sx={{ mx: 1 }}>{project.date}</Typography>
                                 </Grid>
