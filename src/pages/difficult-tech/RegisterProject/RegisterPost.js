@@ -3,6 +3,8 @@ import MainCard from 'components/MainCard';
 
 import React, { useEffect, useState } from 'react';
 
+import { axios } from 'axios';
+
 // material-ui
 import { Grid } from '@mui/material';
 
@@ -87,18 +89,21 @@ const RegisterPost = () => {
         setEtc(e.target.value);
     };
 
-    const listTest = () => {
-        const list = [name, group, contact];
-        return list;
-    };
-
-    /*
     const onSubmit = (e) => {
+        const consultantInfo = {
+            name: name,
+            group: group,
+            contact: contact
+        };
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
         axios
-            .post('http://localhost:8080/login/member', {
+            .post('http://localhost:8080/test', {
+                consultingForm: consultingForm,
+                consultingField: consultingField,
+                consultantInfo: consultantInfo,
                 detailInfo: detailInfo,
+
                 effectiveness: effectiveness
             })
             .then((res) => {
@@ -107,7 +112,6 @@ const RegisterPost = () => {
             .catch((err) => console.log(err));
         e.preventDefault();
     };
-    */
 
     const formInfo = {
         companyName: '상근상조',
@@ -122,9 +126,11 @@ const RegisterPost = () => {
         fullTimeWorker: '20',
         sales: '1억',
         growthDegree: 3,
-        businessType: [1, 0, 0, 1, 0, 1, 0, 1, 0, ''],
+        businessType: [1, 0, 0, 1, 0, 1, 0, 1, 1, 'test'],
         mainService: '드론 제작 메인서비스'
     };
+
+    const consultantInfo = {};
 
     const validationSchema = Yup.object({
         title: Yup.string().required('Required'),

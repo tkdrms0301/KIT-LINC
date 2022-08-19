@@ -77,8 +77,6 @@ const FormTechCare365 = ({
         '기타'
     ];
 
-    const consultantInfo = [];
-
     let formInfoArr = Object.values(formInfo);
 
     return (
