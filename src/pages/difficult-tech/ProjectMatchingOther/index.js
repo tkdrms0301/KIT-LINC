@@ -21,10 +21,6 @@ const ProjectMatchingOther = () => {
     const [projects, setProject] = useState('');
     const [professors, setProfessor] = useState([]);
 
-    const onClickTest = () => {
-        console.log(projects);
-        console.log(professors);
-    };
     return (
         <>
             <Grid container spacing={3}>
