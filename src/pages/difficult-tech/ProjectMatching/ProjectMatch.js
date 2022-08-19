@@ -1,23 +1,23 @@
 // material-ui
-import { Grid, Stack, Box, Typography, Avatar } from '@mui/material';
+import { Button, Grid, Stack, Box, Typography, Avatar, FormControlLabel, FormGroup } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
-import { FormControl, FormControlLabel, FormGroup } from '../../../../node_modules/@mui/material/index';
 import Checkbox from '@mui/material/Checkbox';
+import ProjectSearch from './ProjectSearch';
 
-const ProjectCheck = ({ project }) => {
-    return (
-        <FormGroup>
-            <FormControlLabel control={<Checkbox />} label={project}></FormControlLabel>
-        </FormGroup>
-    );
+const ProjectCheck = ({ project, setProject }) => {
+    const projectTest = () => {
+        setProject((prevState) => {
+            let state;
+            prevState === null ? (state = project) : prevState === project ? (state = null) : (state = project);
+            return state;
+        });
+    };
+    return <FormControlLabel control={<Checkbox onClick={projectTest} />} label={project}></FormControlLabel>;
 };
 
-const ProjectMath = ({ projectList }) => {
-    {
-        console.log(projectList);
-    }
+const ProjectMath = ({ projectList, setProject }) => {
     return (
         <>
             <Grid container spacing={3}>
@@ -26,9 +26,15 @@ const ProjectMath = ({ projectList }) => {
                         <Typography variant="h3" component="p">
                             프로젝트
                         </Typography>
-                        {projectList.map((project) => (
-                            <ProjectCheck project={project} />
-                        ))}
+                        <ProjectSearch />
+                        <FormGroup>
+                            {projectList.map((project) => (
+                                <ProjectCheck project={project} setProject={setProject} />
+                            ))}
+                        </FormGroup>
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button variant="contained">프로젝트 추가</Button>
+                        </Box>
                     </MainCard>
                 </Grid>
             </Grid>

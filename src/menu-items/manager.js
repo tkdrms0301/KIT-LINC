@@ -52,13 +52,6 @@ const manager = {
             type: 'item',
             url: '/difficult-tech-project-matching',
             icon: ''
-        },
-        {
-            id: 'util-difficult-project-matching-other',
-            title: '프로젝트 매칭 version-2',
-            type: 'item',
-            url: '/difficult-tech-project-matching-other',
-            icon: ''
         }
     ]
 };
