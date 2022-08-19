@@ -20,6 +20,7 @@ import Form4 from './Form4';
 import Form5 from './Form5';
 
 const RegisterPost = () => {
+    const [projectName, setProjectName] = useState('');
     const [consultingForm, setConsultingForm] = useState([]);
     const [consultingField, setConsultingField] = useState([]);
     const [detailInfo, setDetailInfo] = useState('');
@@ -29,27 +30,11 @@ const RegisterPost = () => {
     const [contact, setContact] = useState('');
     const [etc, setEtc] = useState('');
     const [etcChecked, setEtcChecked] = useState(false);
-    let consultingFieldList = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', null];
-    let consultingFormList = ['0', '0', '0', '0', '0'];
+    const [formInfo, setFormInfo] = useState();
 
-    useEffect(() => {
-        requestFormInfo();
-
-        for (var i = 0; i < consultingField.length; i++) {
-            consultingFieldList[Number(consultingField[i])] = '1';
-        }
-
-        for (var i = 0; i < consultingForm.length; i++) {
-            consultingFormList[Number(consultingForm[i])] = '1';
-        }
-
-        if (consultingFieldList[consultingFieldList.length - 2] === '1') {
-            setEtcChecked(true);
-            consultingFieldList[consultingFieldList.length - 1] = etc;
-        } else {
-            setEtcChecked(false);
-        }
-    }, [etcChecked, consultingField, consultingForm, consultingFieldList, consultingFormList]);
+    const onChangeProjectName = (e) => {
+        setProjectName(e.target.value);
+    };
 
     const onChangeDetailInfo = (e) => {
         setDetailInfo(e.target.value);
@@ -98,8 +83,10 @@ const RegisterPost = () => {
         const consultantInfo = new Array(name, group, contact);
 
         const test = {
-            consultantForm: consultingFormList,
-            consultingField: consultingFieldList,
+            projectName: projectName,
+            consultantForm: consultingForm,
+            consultingField: consultingField,
+            consultingFieldEtc: etc,
             consultantInfo: consultantInfo,
             detailInfo: detailInfo,
             effectiveness: effectiveness
@@ -125,53 +112,36 @@ const RegisterPost = () => {
         axios
             .get('http://se337.duckdns.org:80/api/member/requestform', {})
             .then((res) => {
-                console.log(res);
+                console.log(res.data.data);
+
+                const tmpFormInfo = {
+                    companyName: res.data.data.companyName,
+                    representativeName: res.data.data.representativeName,
+                    companyRegistrationNum: res.data.data.companyRegistrationNum,
+                    faxNum: res.data.data.faxNum,
+                    address: res.data.data.address,
+                    name: res.data.data.name,
+                    departmentAndPosition: res.data.data.departmentAndPosition,
+                    phoneNum: res.data.data.phoneNum,
+                    email: res.data.data.email,
+                    fullTimeWorker: res.data.data.fullTimeWorker,
+                    sales: res.data.data.sales,
+                    growthDegree: res.data.data.growthDegree,
+                    // businessType: res.data.data.businessType,
+                    businessType: ['2', '4', '7'],
+                    //businessTypeEtc : res.data.data.businessType,
+                    businessTypeEtc: 'test',
+                    mainService: res.data.data.mainService
+                };
+
+                setFormInfo(tmpFormInfo);
             })
             .catch((err) => console.log(err));
     }
 
-    const formInfo = {
-        companyName: '상근상조',
-        representativeName: '안상근',
-        CompanyRegistrationNum: '010-1234-1211',
-        faxNum: '00123',
-        address: '대구 북구 금오공대',
-        name: '안상근',
-        departmentAndPosition: '보안팀/신입',
-        phoneNum: '010-1234-1111',
-        email: 'basdf@gmail.com',
-        fullTimeWorker: '20',
-        sales: '1억',
-        growthDegree: 3,
-        businessType: [1, 0, 0, 1, 0, 1, 0, 1, 1, 'test'],
-        mainService: '드론 제작 메인서비스'
-    };
-
-    const consultantInfo = {};
-
-    const validationSchema = Yup.object({
-        title: Yup.string().required('Required'),
-        content: Yup.string().required('Required')
-    });
-
-    const formik = useFormik({
-        initialValues: {
-            title: '',
-            content:
-                '※상세한 업무내용\n' +
-                '- 프로젝트 소개 :\n' +
-                '- 사내 인력 업무지원 범위 : 예 ) 디자인 자체 진행\n\n' +
-                '+ 상세한 업무내용\n' +
-                '- 업무범위 (주요기능, 페이지수등 )\n\n' +
-                '※참고사항\n' +
-                '- 우대사항\n'
-        },
-        onSubmit: (values, { setSubmitting }) => {
-            setSubmitting(true);
-            setSubmitting(false);
-        },
-        validationSchema
-    });
+    useEffect(() => {
+        requestFormInfo();
+    }, []);
 
     const [view, setView] = useState('');
 
@@ -189,6 +159,8 @@ const RegisterPost = () => {
                         <Grid item xs={12}>
                             {view === 'TechCare365' ? (
                                 <FormTechCare365
+                                    projectName={projectName}
+                                    onChangeProjectName={onChangeProjectName}
                                     consultingForm={consultingForm}
                                     onChangeConsultingForm={onChangeConsultingForm}
                                     consultingField={consultingField}

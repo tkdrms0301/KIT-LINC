@@ -23,17 +23,18 @@ import {
 // project import
 import MainCard from 'components/MainCard';
 
+const formList = ['All', 'TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
+
 const SelectItem = ({ name, onChange }) => {
     return (
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
+            <InputLabel id="demo-simple-select-standard-label">지원형태</InputLabel>
             <Select labelId="demo-simple-select-standard-label" id="demo-simple-select-standard" name={name} onChange={onChange}>
-                <MenuItem value="">
-                    <em>All</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                {formList.map((forms, index) => (
+                    <MenuItem key={index} value={forms}>
+                        {forms}
+                    </MenuItem>
+                ))}
             </Select>
         </FormControl>
     );
@@ -42,8 +43,7 @@ const SelectItem = ({ name, onChange }) => {
 const SortBar = ({ onChange }) => {
     return (
         <Grid container item xs={12} sx={{ mb: 3 }} justifyContent="flex-start" alignItems="flex-end">
-            <SelectItem name="age" onChange={onChange} />
-            <SelectItem name="name" onChange={onChange} />
+            <SelectItem name="지원형태" onChange={onChange} />
             <Box>
                 <Button variant="outlined" color="primary">
                     조회

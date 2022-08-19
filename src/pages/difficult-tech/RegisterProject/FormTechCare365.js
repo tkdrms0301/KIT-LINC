@@ -3,6 +3,8 @@ import { RadioGroup, FormControlLabel, Radio, Typography, TextField, Grid, Box, 
 import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
 
 const FormTechCare365 = ({
+    projectName,
+    onChangeProjectName,
     consultingForm,
     onChangeConsultingForm,
     consultingField,
@@ -41,8 +43,7 @@ const FormTechCare365 = ({
         '마케팅지도',
         '해외시장 개척',
         '사업화지도',
-        '사업계획서 작성지도',
-        '기타'
+        '사업계획서 작성지도'
     ];
 
     const applicantInfoList = [
@@ -74,11 +75,17 @@ const FormTechCare365 = ({
         '목제종이',
         '석유화확',
         '비금속',
-        '운송장비',
-        '기타'
+        '운송장비'
     ];
 
     let formInfoArr = Object.values(formInfo);
+
+    let cnt = 0;
+
+    let checkedBusinessType = ['0', '0', '0', '0', '0', '0', '0', '0'];
+    for (var i = 0; i < formInfo.businessType.length; i++) {
+        checkedBusinessType[Number(formInfo.businessType[i])] = '1';
+    }
 
     return (
         <Grid container spacing={3}>
@@ -111,7 +118,7 @@ const FormTechCare365 = ({
                         {growthDegreeList.map((growthDegrees, index) => (
                             <Grid item xs={6} key={index}>
                                 <FormControlLabel
-                                    control={formInfo.growthDegree === index ? <Radio disabled checked /> : <Radio disabled />}
+                                    control={Number(formInfo.growthDegree) === index ? <Radio disabled checked /> : <Radio disabled />}
                                     label={growthDegrees}
                                 />
                             </Grid>
@@ -128,7 +135,7 @@ const FormTechCare365 = ({
                         {businessTypeList.map((businessTypes, index) => (
                             <Grid item xs={6} key={index}>
                                 <FormControlLabel
-                                    control={formInfo.businessType[index] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
+                                    control={checkedBusinessType[index] === '1' ? <Checkbox disabled checked /> : <Checkbox disabled />}
                                     label={businessTypes}
                                 />
                             </Grid>
@@ -140,7 +147,7 @@ const FormTechCare365 = ({
                                 label="기타"
                                 type="text"
                                 variant="standard"
-                                defaultValue={formInfo.businessType[9]}
+                                defaultValue={formInfo.businessTypeEtc}
                                 InputProps={{
                                     disabled: true
                                 }}
@@ -166,6 +173,21 @@ const FormTechCare365 = ({
                         </Grid>
                     </Grid>
                 </Box>
+            </Grid>
+            <Grid item xs={12}>
+                <Box>
+                    <Typography>프로젝트 제목</Typography>
+                </Box>
+                <Grid>
+                    <TextField
+                        fullWidth
+                        label="프로젝트 제목"
+                        type="text"
+                        variant="standard"
+                        value={projectName}
+                        onChange={onChangeProjectName}
+                    />
+                </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Box>
@@ -201,15 +223,7 @@ const FormTechCare365 = ({
                             </Grid>
                         ))}
                         <Grid item xs={3}>
-                            <TextField
-                                fullWidth
-                                label="기타"
-                                type="text"
-                                variant="standard"
-                                disabled={etcChecked ? false : true}
-                                onChange={onChangeEtc}
-                                value={etc}
-                            />
+                            <TextField fullWidth label="기타" type="text" variant="standard" onChange={onChangeEtc} value={etc} />
                         </Grid>
                     </Grid>
                 </FormGroup>
