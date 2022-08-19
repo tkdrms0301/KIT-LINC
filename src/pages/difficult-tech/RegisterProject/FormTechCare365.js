@@ -43,143 +43,65 @@ const FormTechCare365 = ({
         '사업계획서 작성지도',
         '기타'
     ];
+
+    const applicantInfoList = [
+        '기업명',
+        '대표자명',
+        '시업자등록번호',
+        '전화번호 및 팩스번호',
+        '주소',
+        '작성자 성명',
+        '부서/직위',
+        '전화번호',
+        'e-mail',
+        '상시 근로자 수',
+        '매출액(전년도 말 기준)'
+    ];
+    const growthDegreeList = [
+        '창업기(1년미만, 5인 이하)',
+        '초기성장기(3년미만, 50인 이하)',
+        '성장기(3년이상, 300인 미만)',
+        '성숙기(5년이상, 300인 이상)',
+        '업종전환기(동일제품 10년 이상)'
+    ];
+
+    const businessTypeList = [
+        'IT분야(전기전자, 통신, 컴퓨터, IT관련 기계장비 등)',
+        '그린에너지분야(태양광, 연료전지, 2차전지 등)',
+        '음식료',
+        '섬유의복',
+        '목제종이',
+        '석유화확',
+        '비금속',
+        '운송장비',
+        '기타'
+    ];
+
+    const consultantInfo = [];
+
+    let formInfoArr = Object.values(formInfo);
+
     return (
         <Grid container spacing={3}>
             <Grid item xs={12} justifyContent="center" alignItems="center">
                 <Box component="form" noValidate autoComplete="off">
                     <Grid container spacing={1}>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="기업명"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.companyName}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="대표자명"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.representativeName}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="사업자등록번호"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.CompanyRegistrationNum}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="전화번호 및 팩스번호"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.faxNum}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                fullWidth
-                                label="주소"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.address}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="작성자 성명"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.name}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="부서/직위"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.departmentAndPosition}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="전화번호"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.phoneNum}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="e-mail"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.email}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="상시근로자 수"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.fullTimeWorker}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <TextField
-                                fullWidth
-                                label="매출액(전년도 말 기준)"
-                                type="text"
-                                variant="standard"
-                                defaultValue={formInfo.sales}
-                                InputProps={{
-                                    disabled: true
-                                }}
-                            />
-                        </Grid>
+                        {applicantInfoList.map((applicantInfo, index) => (
+                            <Grid item xs={index === 4 ? 12 : 6}>
+                                <div key={index}>
+                                    <TextField
+                                        fullWidth
+                                        label={applicantInfo}
+                                        type="text"
+                                        variant="standard"
+                                        defaultValue={formInfoArr[index]}
+                                        InputProps={{
+                                            disabled: true
+                                        }}
+                                    />
+                                </div>
+                            </Grid>
+                        ))}
                     </Grid>
                 </Box>
             </Grid>
@@ -189,41 +111,17 @@ const FormTechCare365 = ({
                 </Box>
                 <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
                     <Grid container>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                value="1"
-                                control={formInfo.growthDegree === 1 ? <Radio disabled checked /> : <Radio disabled />}
-                                label="창업기(1년미만, 5인 이하)"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                value="2"
-                                control={formInfo.growthDegree === 2 ? <Radio disabled checked /> : <Radio disabled />}
-                                label="초기성장기(3년미만, 50인 이하)"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                value="3"
-                                control={formInfo.growthDegree === 3 ? <Radio disabled checked /> : <Radio disabled />}
-                                label="성장기(3년이상, 300인 미만)"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                value="4"
-                                control={formInfo.growthDegree === 4 ? <Radio disabled checked /> : <Radio disabled />}
-                                label="성숙기(5년이상, 300인 이상)"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                value="5"
-                                control={formInfo.growthDegree === 5 ? <Radio disabled checked /> : <Radio disabled />}
-                                label="업종전환기(동일제품 10년 이상)"
-                            />
-                        </Grid>
+                        {growthDegreeList.map((growthDegrees, index) => (
+                            <Grid item xs={6}>
+                                <div key={index}>
+                                    <FormControlLabel
+                                        value={(index) => console.log(index)}
+                                        control={formInfo.growthDegree === index ? <Radio disabled checked /> : <Radio disabled />}
+                                        label={growthDegrees}
+                                    />
+                                </div>
+                            </Grid>
+                        ))}
                     </Grid>
                 </RadioGroup>
             </Grid>
@@ -233,60 +131,17 @@ const FormTechCare365 = ({
                 </Box>
                 <FormGroup>
                     <Grid container>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={formInfo.businessType[0] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="IT분야(전기전자, 통신, 컴퓨터, IT관련 기계장비 등)"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={formInfo.businessType[1] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="그린에너지분야(태양광, 연료전지, 2차전지 등)"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[2] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="음식료"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[3] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="섬유의복"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[4] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="목재종이"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[5] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="석유화학"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[6] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="비금속"
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <FormControlLabel
-                                control={formInfo.businessType[7] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="운송장비"
-                            />
-                        </Grid>
-                        <Grid item xs={2}>
-                            <FormControlLabel
-                                control={formInfo.businessType[8] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                label="기타"
-                            />
-                        </Grid>
+                        {businessTypeList.map((businessTypes, index) => (
+                            <Grid item xs={6}>
+                                <div key={index}>
+                                    <FormControlLabel
+                                        control={formInfo.businessType[index] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
+                                        label={businessTypes}
+                                    />
+                                </div>
+                            </Grid>
+                        ))}
+
                         <Grid item xs={4}>
                             <TextField
                                 fullWidth

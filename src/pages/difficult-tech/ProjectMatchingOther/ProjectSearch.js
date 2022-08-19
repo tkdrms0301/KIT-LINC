@@ -2,9 +2,6 @@
 import { Grid, Box, TextField, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
-// project import
-import MainCard from 'components/MainCard';
-
 const ProjectSearch = ({ search: searchInput, handleChange }) => {
     return (
         <Grid item xs={12}>

@@ -4,21 +4,18 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 
 // material-ui
-import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Grid } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 // project import
-import AnimateButton from 'components/@extended/AnimateButton';
 import TechCatergory from './TechCategory';
-import RegisterForm from './RegisterForm';
 import FormTechCare365 from './FormTechCare365';
 import Form2 from './Form2';
 import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
-import { bool } from 'prop-types';
 
 const RegisterPost = () => {
     const [consultingForm, setConsultingForm] = useState([]);
