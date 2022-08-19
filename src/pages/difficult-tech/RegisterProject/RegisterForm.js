@@ -1,5 +1,3 @@
-import MainCard from 'components/MainCard';
-
 import React, { useState } from 'react';
 
 // material-ui

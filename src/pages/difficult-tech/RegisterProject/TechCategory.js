@@ -1,6 +1,3 @@
-// project import
-import MainCard from 'components/MainCard';
-
 import React, { useState } from 'react';
 
 // material-ui
@@ -35,8 +32,10 @@ const TechCatergory = ({ view, handleView }) => {
                     <FormControl fullWidth size="large">
                         <InputLabel id="demo-select-small">지원 요청서</InputLabel>
                         <Select value={view} onChange={handleView}>
-                            {categoryList.map((category) => (
-                                <MenuItem value={category}>{category}</MenuItem>
+                            {categoryList.map((category, index) => (
+                                <div key={index} value={category}>
+                                    <MenuItem>{category}</MenuItem>
+                                </div>
                             ))}
                         </Select>
                     </FormControl>

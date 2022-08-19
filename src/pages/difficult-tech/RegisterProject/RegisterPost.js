@@ -29,10 +29,12 @@ const RegisterPost = () => {
     const [contact, setContact] = useState('');
     const [etc, setEtc] = useState('');
     const [etcChecked, setEtcChecked] = useState(false);
-    let consultingFieldList = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+    let consultingFieldList = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', null];
     let consultingFormList = ['0', '0', '0', '0', '0'];
 
     useEffect(() => {
+        requestFormInfo();
+
         for (var i = 0; i < consultingField.length; i++) {
             consultingFieldList[Number(consultingField[i])] = '1';
         }
@@ -105,20 +107,28 @@ const RegisterPost = () => {
         console.log(test);
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
+        // axios
+        //     .post('http://se337.duckdns.org:80/api/request/care365', {
+        //         consultingForm: consultingForm,
+        //         consultingField: consultingField,
+        //         consultantInfo: consultantInfo,
+        //         detailInfo: detailInfo,
+        //         effectiveness: effectiveness
+        //     })
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((err) => console.log(err));
+    };
+
+    function requestFormInfo() {
         axios
-            .post('http://se337.duckdns.org:80/api/request/care365', {
-                consultingForm: consultingFormList,
-                consultingField: consultingFieldList,
-                consultantInfo: consultantInfo,
-                detailInfo: detailInfo,
-                effectiveness: effectiveness
-            })
+            .get('http://se337.duckdns.org:80/api/member/requestform', {})
             .then((res) => {
-                res.header('Access-Control-Allow-Origin', '*');
                 console.log(res);
             })
             .catch((err) => console.log(err));
-    };
+    }
 
     const formInfo = {
         companyName: '상근상조',
@@ -136,6 +146,8 @@ const RegisterPost = () => {
         businessType: [1, 0, 0, 1, 0, 1, 0, 1, 1, 'test'],
         mainService: '드론 제작 메인서비스'
     };
+
+    const consultantInfo = {};
 
     const validationSchema = Yup.object({
         title: Yup.string().required('Required'),

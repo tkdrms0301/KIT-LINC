@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Button, Box, Grid, Stack, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
 import ProjectTable from './ProjectTable';
 
 const TechTag = ({ tag }) => {

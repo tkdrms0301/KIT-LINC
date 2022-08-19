@@ -10,6 +10,7 @@ import PostTable from 'pages/difficult-tech/PostTable/index';
 import DocumentManage from 'pages/difficult-tech/DocumentManage/DocumentManage';
 import TechPostDetail from 'pages/difficult-tech/PostTable/TechPostDetail';
 import ProjectMatching from 'pages/difficult-tech/ProjectMatching/index';
+import ProjectMatchingOther from 'pages/difficult-tech/ProjectMatchingOther/index';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -51,6 +52,10 @@ const MainRoutes = {
         {
             path: '/difficult-tech-project-matching',
             element: <ProjectMatching />
+        },
+        {
+            path: '/difficult-tech-project-matching-other',
+            element: <ProjectMatchingOther />
         },
         // manager, professor, company 각각 페이지 나눠야됨
         {

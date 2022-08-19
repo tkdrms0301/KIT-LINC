@@ -86,19 +86,17 @@ const FormTechCare365 = ({
                 <Box component="form" noValidate autoComplete="off">
                     <Grid container spacing={1}>
                         {applicantInfoList.map((applicantInfo, index) => (
-                            <Grid item xs={index === 4 ? 12 : 6}>
-                                <div key={index}>
-                                    <TextField
-                                        fullWidth
-                                        label={applicantInfo}
-                                        type="text"
-                                        variant="standard"
-                                        defaultValue={formInfoArr[index]}
-                                        InputProps={{
-                                            disabled: true
-                                        }}
-                                    />
-                                </div>
+                            <Grid item xs={index === 4 ? 12 : 6} key={index}>
+                                <TextField
+                                    fullWidth
+                                    label={applicantInfo}
+                                    type="text"
+                                    variant="standard"
+                                    defaultValue={formInfoArr[index]}
+                                    InputProps={{
+                                        disabled: true
+                                    }}
+                                />
                             </Grid>
                         ))}
                     </Grid>
@@ -111,14 +109,11 @@ const FormTechCare365 = ({
                 <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
                     <Grid container>
                         {growthDegreeList.map((growthDegrees, index) => (
-                            <Grid item xs={6}>
-                                <div key={index}>
-                                    <FormControlLabel
-                                        value={(index) => console.log(index)}
-                                        control={formInfo.growthDegree === index ? <Radio disabled checked /> : <Radio disabled />}
-                                        label={growthDegrees}
-                                    />
-                                </div>
+                            <Grid item xs={6} key={index}>
+                                <FormControlLabel
+                                    control={formInfo.growthDegree === index ? <Radio disabled checked /> : <Radio disabled />}
+                                    label={growthDegrees}
+                                />
                             </Grid>
                         ))}
                     </Grid>
@@ -131,13 +126,11 @@ const FormTechCare365 = ({
                 <FormGroup>
                     <Grid container>
                         {businessTypeList.map((businessTypes, index) => (
-                            <Grid item xs={6}>
-                                <div key={index}>
-                                    <FormControlLabel
-                                        control={formInfo.businessType[index] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
-                                        label={businessTypes}
-                                    />
-                                </div>
+                            <Grid item xs={6} key={index}>
+                                <FormControlLabel
+                                    control={formInfo.businessType[index] === 1 ? <Checkbox disabled checked /> : <Checkbox disabled />}
+                                    label={businessTypes}
+                                />
                             </Grid>
                         ))}
 
@@ -182,7 +175,7 @@ const FormTechCare365 = ({
                     <Grid container>
                         {consultingFormList.map((consultingForms, index) => (
                             <div key={index}>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} key={index}>
                                     <FormControlLabel
                                         control={<Checkbox value={index} onChange={onChangeConsultingForm} />}
                                         label={consultingForms}
@@ -200,14 +193,12 @@ const FormTechCare365 = ({
                 <FormGroup>
                     <Grid container>
                         {consultingFieldList.map((consultingFields, index) => (
-                            <div key={index}>
-                                <Grid item xs={12}>
-                                    <FormControlLabel
-                                        control={<Checkbox value={index} onChange={onChangeConsultingField} />}
-                                        label={consultingFields}
-                                    />
-                                </Grid>
-                            </div>
+                            <Grid item xs={12} key={index}>
+                                <FormControlLabel
+                                    control={<Checkbox value={index} onChange={onChangeConsultingField} />}
+                                    label={consultingFields}
+                                />
+                            </Grid>
                         ))}
                         <Grid item xs={3}>
                             <TextField
