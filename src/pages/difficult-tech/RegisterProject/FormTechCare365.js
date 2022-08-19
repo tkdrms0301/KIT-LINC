@@ -1,6 +1,6 @@
 import { RadioGroup, FormControlLabel, Radio, Typography, TextField, Grid, Box, Checkbox, Button } from '@mui/material';
 
-import { FormGroup } from '../../../../node_modules/@mui/material/index';
+import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
 
 const FormTechCare365 = ({
     consultingForm,
@@ -20,7 +20,8 @@ const FormTechCare365 = ({
     onChangeContact,
     etc,
     onChangeEtc,
-    etcChecked
+    etcChecked,
+    onSubmit
 }) => {
     const consultingFormList = [
         '단기 기술지도(1일 4시간이상 4회 이내 단기기술지도)',
@@ -280,7 +281,11 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12} justifyContent="center" alignItems="center">
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button variant="contained">애로 기술 등록</Button>
+                    <form onSubmit={onSubmit}>
+                        <Button variant="contained" type="submit">
+                            애로 기술 등록
+                        </Button>
+                    </form>
                 </Box>
             </Grid>
         </Grid>

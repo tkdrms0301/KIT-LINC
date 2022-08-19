@@ -29,19 +29,25 @@ const RegisterPost = () => {
     const [contact, setContact] = useState('');
     const [etc, setEtc] = useState('');
     const [etcChecked, setEtcChecked] = useState(false);
-    let consultList = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', null];
+    let consultingFieldList = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', null];
+    let consultingFormList = ['0', '0', '0', '0', '0'];
 
     useEffect(() => {
         for (var i = 0; i < consultingField.length; i++) {
-            consultList[Number(consultingField[i])] = '1';
+            consultingFieldList[Number(consultingField[i])] = '1';
         }
-        if (consultList[consultList.length - 2] === '1') {
+
+        for (var i = 0; i < consultingForm.length; i++) {
+            consultingFormList[Number(consultingForm[i])] = '1';
+        }
+
+        if (consultingFieldList[consultingFieldList.length - 2] === '1') {
             setEtcChecked(true);
-            consultList[consultList.length - 1] = etc;
+            consultingFieldList[consultingFieldList.length - 1] = etc;
         } else {
             setEtcChecked(false);
         }
-    }, [etcChecked, consultingField]);
+    }, [etcChecked, consultingField, consultingForm, consultingFieldList, consultingFormList]);
 
     const onChangeDetailInfo = (e) => {
         setDetailInfo(e.target.value);
@@ -59,10 +65,6 @@ const RegisterPost = () => {
             updateList.splice(consultingForm.indexOf(e.target.value), 1);
         }
         setConsultingForm(updateList);
-        let List = ['0', '0', '0', '0', '0'];
-        for (var i = 0; i < consultingForm.length; i++) {
-            List[Number(consultingForm[i])] = '1';
-        }
     };
 
     const onChangeConsultingField = (e) => {
@@ -90,27 +92,35 @@ const RegisterPost = () => {
     };
 
     const onSubmit = (e) => {
+        e.preventDefault();
         const consultantInfo = {
             name: name,
             group: group,
             contact: contact
         };
-        // submit 이벤트는 브라우저에서 새로고침을 발생
-        // 이를 방지하기 위해 이 함수를 호출
-        axios
-            .post('http://localhost:8080/test', {
-                consultingForm: consultingForm,
-                consultingField: consultingField,
-                consultantInfo: consultantInfo,
-                detailInfo: detailInfo,
 
-                effectiveness: effectiveness
-            })
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => console.log(err));
-        e.preventDefault();
+        const test = {
+            consultantForm: consultingFormList,
+            consultingField: consultingFieldList,
+            consultantInfo: consultantInfo,
+            detailInfo: detailInfo,
+            effectiveness: effectiveness
+        };
+        console.log(test);
+        // // submit 이벤트는 브라우저에서 새로고침을 발생
+        // // 이를 방지하기 위해 이 함수를 호출
+        // axios
+        //     .post('http://localhost:8080/test', {
+        //         consultingForm: consultingForm,
+        //         consultingField: consultingField,
+        //         consultantInfo: consultantInfo,
+        //         detailInfo: detailInfo,
+        //         effectiveness: effectiveness
+        //     })
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((err) => console.log(err));
     };
 
     const formInfo = {
@@ -190,6 +200,7 @@ const RegisterPost = () => {
                                     etc={etc}
                                     onChangeEtc={onChangeEtc}
                                     etcChecked={etcChecked}
+                                    onSubmit={onSubmit}
                                 ></FormTechCare365>
                             ) : null}
                             {view === '지원요청서2' ? <Form2></Form2> : null}
