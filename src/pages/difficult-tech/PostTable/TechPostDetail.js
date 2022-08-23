@@ -1,47 +1,55 @@
-// material-ui
-import { Grid, Stack, Box, Typography, Avatar } from '@mui/material';
-
 // project import
-import MainCard from 'components/MainCard';
-import { useLocation } from 'react-router';
+import { Box, Grid } from '@mui/material';
+import { useState } from 'react';
+import { useParams } from 'react-router';
+import axios from '../../../../node_modules/axios/index';
+import Form2Detail from './Form2Detail';
+import Form3Detail from './Form3Detail';
+import Form4Detail from './Form4Detail';
+import Form5Detail from './Form5Detail';
+import TechCare365Detail from './TechCare365Detail';
 
 const TechPostDetail = () => {
-    const location = useLocation();
-    console.log(location);
+    const params = useParams();
+    console.log(params.requestForm);
+    console.log(params.detail);
+
+    const TechCare365 = <TechCare365Detail></TechCare365Detail>;
+    const Form2 = <Form2Detail />;
+    const Form3 = <Form3Detail />;
+    const Form4 = <Form4Detail />;
+    const Form5 = <Form5Detail />;
+
+    const requestFormList = [
+        {
+            requestForm: 'TechCare365',
+            template: TechCare365
+        },
+        {
+            requestForm: '지원요청서2',
+            template: Form2
+        },
+        {
+            requestForm: '지원요청서3',
+            template: Form3
+        },
+        {
+            requestForm: '지원요청서4',
+            template: Form4
+        },
+        {
+            requestForm: '지원요청서5',
+            template: Form5
+        }
+    ];
+
+    const [data, setData] = useState([]);
+
     return (
         <>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box sx={{ width: '80%' }}>
-                    <Grid item xs={12}>
-                        <MainCard title="" codeHighlight>
-                            <Box>
-                                <Typography variant="h3" component="p">
-                                    TechPostDetail
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography variant="subtitle1" component="p">
-                                    2022-08-14 author
-                                </Typography>
-                            </Box>
-                        </MainCard>
-                        <MainCard title="" codeHighlight>
-                            <Box>
-                                <Typography variant="subtitle1" component="p">
-                                    TechPostDetailSubtitle
-                                </Typography>
-                            </Box>
-                            <Box>
-                                <Typography variant="body1" component="p">
-                                    body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit,
-                                    quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat
-                                    deleniti? Eum quasi quidem quibusdam.
-                                </Typography>
-                            </Box>
-                        </MainCard>
-                    </Grid>
-                </Box>
-            </Box>
+            {requestFormList.map((requestForms, index) =>
+                requestForms.requestForm === params.requestForm ? <Grid key={index}>{requestForms.template}</Grid> : null
+            )}
         </>
     );
 };

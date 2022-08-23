@@ -38,7 +38,7 @@ const MainRoutes = {
             element: <PostTable />
         },
         {
-            path: '/difficult-techs/detail',
+            path: '/difficult-techs/:requestForm/:detail',
             element: <TechPostDetail />
         },
         {

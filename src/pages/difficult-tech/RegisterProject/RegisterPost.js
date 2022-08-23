@@ -94,18 +94,20 @@ const RegisterPost = () => {
         console.log(test);
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
-        // axios
-        //     .post('http://se337.duckdns.org:80/api/request/care365', {
-        //         consultingForm: consultingForm,
-        //         consultingField: consultingField,
-        //         consultantInfo: consultantInfo,
-        //         detailInfo: detailInfo,
-        //         effectiveness: effectiveness
-        //     })
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => console.log(err));
+        axios
+            .post('http://se337.duckdns.org:80/api/request/care365', {
+                projectName: projectName,
+                consultantForm: consultingForm,
+                consultingField: consultingField,
+                consultingFieldEtc: etc,
+                consultantInfo: consultantInfo,
+                detailInfo: detailInfo,
+                effectiveness: effectiveness
+            })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => console.log(err));
     };
 
     function requestFormInfo() {
@@ -126,11 +128,9 @@ const RegisterPost = () => {
                     email: res.data.data.email,
                     fullTimeWorker: res.data.data.fullTimeWorker,
                     sales: res.data.data.sales,
+                    businessType: res.data.data.businessType,
+                    businessTypeEtc: res.data.data.businessTypeEtc,
                     growthDegree: res.data.data.growthDegree,
-                    // businessType: res.data.data.businessType,
-                    businessType: ['2', '4', '7'],
-                    //businessTypeEtc : res.data.data.businessType,
-                    businessTypeEtc: 'test',
                     mainService: res.data.data.mainService
                 };
 

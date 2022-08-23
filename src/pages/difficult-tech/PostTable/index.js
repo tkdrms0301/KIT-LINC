@@ -1,5 +1,6 @@
 // material-ui
 import { Grid, Box, Pagination } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 // project import
 import { useState } from 'react';
@@ -34,7 +35,17 @@ const PostTable = () => {
     };
 
     // detail
-    const [clickedProject, setClickedProject] = useState('');
+    const [selectedConsultingField, setSelectedConsultingField] = useState('모두');
+    const [selectedRequstForm, setSelectedRequestForm] = useState('All');
+
+    const onChangeSelectedConsultingField = (e) => {
+        setSelectedConsultingField(e.target.value);
+        console.log(selectedConsultingField);
+    };
+    const onChangeSelectedRequestForm = (e) => {
+        setSelectedRequestForm(e.target.value);
+        console.log(selectedRequstForm);
+    };
 
     // pagination
     const LAST_PAGE = post.length % 10 === 0 ? parseInt(post.length / 10) : parseInt(post.length / 10) + 1;
@@ -43,15 +54,19 @@ const PostTable = () => {
     const [data, setData] = useState(post.slice(0, 10));
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 1500);
+        // setLoading(true);
+        // setTimeout(() => {
+        //     setLoading(false);
+        // }, 1500);
 
         // TODO: 수정필요
         let filteredPost = post;
-        if (selectedCategory !== 'all') {
-            filteredPost = post.filter((item) => item.tags.includes(selectedCategory));
+        if (selectedConsultingField !== '모두') {
+            filteredPost = filteredPost.filter((item) => item.field.includes(selectedConsultingField));
+        }
+
+        if (selectedRequstForm !== 'All') {
+            filteredPost = filteredPost.filter((item) => item.requestForm.includes(selectedRequstForm));
         }
 
         if (page === LAST_PAGE) {
@@ -60,7 +75,7 @@ const PostTable = () => {
             setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
         }
         console.log(data);
-    }, [page, selectedCategory]);
+    }, [page, selectedConsultingField, selectedRequstForm]);
 
     const handlePage = (event) => {
         const nowPageInt = parseInt(event.target.outerText);
@@ -70,18 +85,23 @@ const PostTable = () => {
     return (
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Box sx={{ width: '80%' }}>
+                <Box>
                     <Grid container spacing={3}>
                         <Grid item xs={12}>
                             <Search search={searchInput} handleChange={handleSearchChange} />
                         </Grid>
                         <Grid item xs={3}>
-                            <SideFilter value={selectedCategory} handleChange={handleCategoryChange} />
+                            <SideFilter
+                                selectedConsultingField={selectedConsultingField}
+                                onChangeSelectedConsultingField={onChangeSelectedConsultingField}
+                                selectedRequstForm={selectedRequstForm}
+                                onChangeSelectedRequestForm={onChangeSelectedRequestForm}
+                            />
                         </Grid>
                         <Grid item xs={9}>
                             <Grid container spacing={2}>
-                                {data.map((post) => (
-                                    <TechPost project={post} />
+                                {data.map((post, index) => (
+                                    <TechPost key={index} project={post} />
                                 ))}
                             </Grid>
                         </Grid>

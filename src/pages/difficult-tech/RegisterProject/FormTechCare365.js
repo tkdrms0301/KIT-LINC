@@ -94,9 +94,9 @@ const FormTechCare365 = ({
                     <Grid container spacing={1}>
                         {applicantInfoList.map((applicantInfo, index) => (
                             <Grid item xs={index === 4 ? 12 : 6} key={index}>
+                                <Typography variant="body2"> {applicantInfo}</Typography>
                                 <TextField
                                     fullWidth
-                                    label={applicantInfo}
                                     type="text"
                                     variant="standard"
                                     defaultValue={formInfoArr[index]}
@@ -111,7 +111,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>기업 성장 단계</Typography>
+                    <Typography variant="h5">기업 성장 단계</Typography>
                 </Box>
                 <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
                     <Grid container>
@@ -128,7 +128,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>업종</Typography>
+                    <Typography variant="h5">업종</Typography>
                 </Box>
                 <FormGroup>
                     <Grid container>
@@ -142,9 +142,9 @@ const FormTechCare365 = ({
                         ))}
 
                         <Grid item xs={4}>
+                            <Typography variant="body2"> 기타</Typography>
                             <TextField
                                 fullWidth
-                                label="기타"
                                 type="text"
                                 variant="standard"
                                 defaultValue={formInfo.businessTypeEtc}
@@ -160,9 +160,9 @@ const FormTechCare365 = ({
                 <Box>
                     <Grid container spacing={5}>
                         <Grid item xs={12}>
+                            <Typography variant="h5"> 주생산품목/서비스</Typography>
                             <TextField
                                 fullWidth
-                                label="주생산품목/서비스(구체적으로 기입)"
                                 type="text"
                                 variant="standard"
                                 defaultValue={formInfo.mainService}
@@ -176,22 +176,15 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>프로젝트 제목</Typography>
+                    <Typography variant="h5">프로젝트 제목</Typography>
                 </Box>
                 <Grid>
-                    <TextField
-                        fullWidth
-                        label="프로젝트 제목"
-                        type="text"
-                        variant="standard"
-                        value={projectName}
-                        onChange={onChangeProjectName}
-                    />
+                    <TextField fullWidth type="text" variant="standard" value={projectName} onChange={onChangeProjectName} />
                 </Grid>
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>지도/자문 형태</Typography>
+                    <Typography variant="h5">지도/자문 형태</Typography>
                 </Box>
                 <FormGroup>
                     <Grid container>
@@ -210,7 +203,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>지도/자문 분야</Typography>
+                    <Typography variant="h5">지도/자문 분야</Typography>
                 </Box>
                 <FormGroup>
                     <Grid container>
@@ -230,7 +223,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>희망지도/자문위원</Typography>
+                    <Typography variant="h5">희망지도/자문위원</Typography>
                 </Box>
                 <Box>
                     <Grid container spacing={5}>
@@ -248,7 +241,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>지원요청의 상세내용</Typography>
+                    <Typography variant="h5">지원요청의 상세내용</Typography>
                 </Box>
                 <Box>
                     <Grid container spacing={5}>
@@ -267,7 +260,7 @@ const FormTechCare365 = ({
             </Grid>
             <Grid item xs={12}>
                 <Box>
-                    <Typography>기대효과</Typography>
+                    <Typography variant="h5">기대효과</Typography>
                 </Box>
                 <Box>
                     <Grid container spacing={5}>

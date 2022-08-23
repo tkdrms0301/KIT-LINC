@@ -13,7 +13,7 @@ const Search = ({ search: searchInput, handleChange }) => {
                     <Box>프로젝트를 검색해주세요.</Box>
                     <TextField
                         id="outlined-name"
-                        label="프로젝트 검색어"
+                        label="프로젝트 이름 검색"
                         value={searchInput}
                         onChange={handleChange}
                         variant="standard"

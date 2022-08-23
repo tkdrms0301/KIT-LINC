@@ -4,8 +4,9 @@ import { Stack, Box, Typography, FormControl, FormLabel, RadioGroup, FormControl
 // project import
 import MainCard from 'components/MainCard';
 
-const SideFilter = ({ value, handleChange }) => {
-    const categoryList = ['프로젝트 태그1', '프로젝트 태그2', '프로젝트 태그3', '프로젝트 태그4', '프로젝트 태그5'];
+const SideFilter = ({ selectedConsultingField, onChangeSelectedConsultingField, selectedRequstForm, onChangeSelectedRequestForm }) => {
+    const businessTypeList = ['모두', 'IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
+    const requestFormList = ['All', 'TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
 
     return (
         <MainCard title="" codeHighlight>
@@ -16,30 +17,21 @@ const SideFilter = ({ value, handleChange }) => {
             <Stack spacing={3}>
                 <Box>
                     <FormControl>
-                        <FormLabel id="tech-controlled-radio-buttons-group">분야</FormLabel>
-                        <RadioGroup
-                            aria-labelledby="tech-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={value}
-                            onChange={handleChange}
-                        >
-                            {categoryList.map((category, index) => (
-                                <FormControlLabel key={index} value={category} control={<Radio />} label={category} />
+                        <FormLabel>업종</FormLabel>
+                        <RadioGroup value={selectedConsultingField} onChange={onChangeSelectedConsultingField}>
+                            {businessTypeList.map((businessType, index) => (
+                                <FormControlLabel key={index} value={businessType} control={<Radio />} label={businessType} />
                             ))}
                         </RadioGroup>
                     </FormControl>
                 </Box>
                 <Box>
                     <FormControl>
-                        <FormLabel id="tech-controlled-radio-buttons-group">정렬</FormLabel>
-                        <RadioGroup
-                            aria-labelledby="tech-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={value}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="1" control={<Radio />} label="1" />
-                            <FormControlLabel value="2" control={<Radio />} label="2" />
+                        <FormLabel>지원서</FormLabel>
+                        <RadioGroup value={selectedRequstForm} onChange={onChangeSelectedRequestForm}>
+                            {requestFormList.map((requestForm, index) => (
+                                <FormControlLabel key={index} value={requestForm} control={<Radio />} label={requestForm} />
+                            ))}
                         </RadioGroup>
                     </FormControl>
                 </Box>
