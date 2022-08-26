@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // project import
 import MainCard from 'components/MainCard';
 
-const Search = ({ search: searchInput, handleChange }) => {
+const Search = ({ searchInputValue, onChangeSearchInput }) => {
     return (
         <Grid item xs={12}>
             <MainCard title="" codeHighlight>
@@ -14,8 +14,8 @@ const Search = ({ search: searchInput, handleChange }) => {
                     <TextField
                         id="outlined-name"
                         label="프로젝트 이름 검색"
-                        value={searchInput}
-                        onChange={handleChange}
+                        value={searchInputValue}
+                        onChange={onChangeSearchInput}
                         variant="standard"
                         sx={{
                             width: '50%'

@@ -22,16 +22,9 @@ const icons = {
 
 const professor = {
     id: 'professor',
-    title: '애로 기술 관리(교수)',
+    title: '현장실습',
     type: 'group',
     children: [
-        {
-            id: 'util-difficult-tech-continue-professor',
-            title: '진행 중 프로젝트',
-            type: 'item',
-            url: '/difficult-tech-continue-professor',
-            icon: ''
-        },
         {
             id: 'util-difficult-tech-docs-professor',
             title: '관련 서류 제출',

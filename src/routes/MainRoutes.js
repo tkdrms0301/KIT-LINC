@@ -4,7 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import TestLogin from 'pages/TestLogin/index';
-import RegisterPost from 'pages/difficult-tech/RegisterProject/RegisterPost';
+import RegisterPost from 'pages/difficult-tech/RegisterProject/index';
 import ApproveProject from 'pages/difficult-tech/ApproveProject/index';
 import PostTable from 'pages/difficult-tech/PostTable/index';
 import DocumentManage from 'pages/difficult-tech/DocumentManage/DocumentManage';
@@ -29,7 +29,7 @@ const MainRoutes = {
             children: [
                 {
                     path: 'default',
-                    element: <DashboardDefault />
+                    element: <DocumentManage />
                 }
             ]
         },

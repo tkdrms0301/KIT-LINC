@@ -1,4 +1,5 @@
 import { RadioGroup, FormControlLabel, Radio, Typography, TextField, Grid, Box, Checkbox, Button } from '@mui/material';
+import { throttle } from 'lodash';
 
 import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
 
@@ -93,7 +94,7 @@ const FormTechCare365 = ({
                 <Box component="form" noValidate autoComplete="off">
                     <Grid container spacing={1}>
                         {applicantInfoList.map((applicantInfo, index) => (
-                            <Grid item xs={index === 4 ? 12 : 6} key={index}>
+                            <Grid item xs={index === 4 ? 8 : 4} key={index}>
                                 <Typography variant="body2"> {applicantInfo}</Typography>
                                 <TextField
                                     fullWidth
@@ -116,7 +117,7 @@ const FormTechCare365 = ({
                 <RadioGroup aria-labelledby="demo-radio-buttons-group-label" defaultValue="female" name="radio-buttons-group">
                     <Grid container>
                         {growthDegreeList.map((growthDegrees, index) => (
-                            <Grid item xs={6} key={index}>
+                            <Grid item xs={4} key={index}>
                                 <FormControlLabel
                                     control={Number(formInfo.growthDegree) === index ? <Radio disabled checked /> : <Radio disabled />}
                                     label={growthDegrees}
@@ -133,7 +134,7 @@ const FormTechCare365 = ({
                 <FormGroup>
                     <Grid container>
                         {businessTypeList.map((businessTypes, index) => (
-                            <Grid item xs={6} key={index}>
+                            <Grid item xs={4} key={index}>
                                 <FormControlLabel
                                     control={checkedBusinessType[index] === '1' ? <Checkbox disabled checked /> : <Checkbox disabled />}
                                     label={businessTypes}
@@ -160,10 +161,11 @@ const FormTechCare365 = ({
                 <Box>
                     <Grid container spacing={5}>
                         <Grid item xs={12}>
-                            <Typography variant="h5"> 주생산품목/서비스</Typography>
+                            <Typography variant="h5">주생산품목/서비스</Typography>
                             <TextField
                                 fullWidth
                                 type="text"
+                                placeholder="주생산품목/서비스"
                                 variant="standard"
                                 defaultValue={formInfo.mainService}
                                 InputProps={{
@@ -179,7 +181,14 @@ const FormTechCare365 = ({
                     <Typography variant="h5">프로젝트 제목</Typography>
                 </Box>
                 <Grid>
-                    <TextField fullWidth type="text" variant="standard" value={projectName} onChange={onChangeProjectName} />
+                    <TextField
+                        fullWidth
+                        type="text"
+                        placeholder="프로젝트 제목"
+                        variant="standard"
+                        value={projectName}
+                        onChange={throttle(onChangeProjectName, 500)}
+                    />
                 </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -208,7 +217,7 @@ const FormTechCare365 = ({
                 <FormGroup>
                     <Grid container>
                         {consultingFieldList.map((consultingFields, index) => (
-                            <Grid item xs={12} key={index}>
+                            <Grid item xs={4} key={index}>
                                 <FormControlLabel
                                     control={<Checkbox value={index} onChange={onChangeConsultingField} />}
                                     label={consultingFields}
@@ -228,13 +237,34 @@ const FormTechCare365 = ({
                 <Box>
                     <Grid container spacing={5}>
                         <Grid item xs={4}>
-                            <TextField fullWidth label="성명" type="text" variant="standard" value={name} onChange={onChangeName} />
+                            <TextField
+                                fullWidth
+                                label="성명"
+                                type="text"
+                                variant="standard"
+                                value={name}
+                                onChange={throttle(onChangeName, 500)}
+                            />
                         </Grid>
                         <Grid item xs={4}>
-                            <TextField fullWidth label="소속" type="text" variant="standard" value={group} onChange={onChangeGroup} />
+                            <TextField
+                                fullWidth
+                                label="소속"
+                                type="text"
+                                variant="standard"
+                                value={group}
+                                onChange={throttle(onChangeGroup)}
+                            />
                         </Grid>
                         <Grid item xs={4}>
-                            <TextField fullWidth label="연락처" type="text" variant="standard" value={contact} onChange={onChangeContact} />
+                            <TextField
+                                fullWidth
+                                label="연락처"
+                                type="text"
+                                variant="standard"
+                                value={contact}
+                                onChange={throttle(onChangeContact)}
+                            />
                         </Grid>
                     </Grid>
                 </Box>
@@ -248,11 +278,12 @@ const FormTechCare365 = ({
                         <Grid item xs={12}>
                             <TextField
                                 fullWidth
-                                label="지원받고자 하는 분야의 상세 내용 기술"
                                 type="text"
-                                variant="standard"
+                                multiline
+                                placeholder="지원받고자 하는 분야의 상세 내용 기술"
                                 value={detailInfo}
-                                onChange={onChangeDetailInfo}
+                                rows={4}
+                                onChange={throttle(onChangeDetailInfo)}
                             />
                         </Grid>
                     </Grid>
@@ -267,11 +298,12 @@ const FormTechCare365 = ({
                         <Grid item xs={12}>
                             <TextField
                                 fullWidth
-                                label="지원을 희망하는 분야의 내용을 정량적으로 수치화하여 작성하고 지원을 통한 객관적이고 정량적인 기대효과를 기술"
+                                placeholder="지원을 희망하는 분야의 내용을 정량적으로 수치화하여 작성하고 지원을 통한 객관적이고 정량적인 기대효과를 기술"
                                 type="text"
-                                variant="standard"
+                                multiline
+                                rows={4}
                                 value={effectiveness}
-                                onChange={onChangeEffectiveness}
+                                onChange={throttle(onChangeEffectiveness, 500)}
                             />
                         </Grid>
                     </Grid>

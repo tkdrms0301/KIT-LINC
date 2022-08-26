@@ -8,14 +8,14 @@ const icons = {
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
-const dashboard = {
+const myPage = {
     id: 'group-dashboard',
-    title: 'Navigation',
+    title: '마이페이지',
     type: 'group',
     children: [
         {
             id: 'dashboard',
-            title: '기본 정보',
+            title: '신청현황',
             type: 'item',
             url: '/dashboard/default',
             icon: '',
@@ -24,4 +24,4 @@ const dashboard = {
     ]
 };
 
-export default dashboard;
+export default myPage;

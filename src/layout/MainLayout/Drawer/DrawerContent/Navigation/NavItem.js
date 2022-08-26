@@ -9,6 +9,7 @@ import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } 
 
 // project import
 import { activeItem } from 'store/reducers/menu';
+import { useState } from 'react';
 
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
@@ -34,21 +35,7 @@ const NavItem = ({ item, level }) => {
 
     const Icon = item.icon;
     const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
-
-    const isSelected = openItem.findIndex((id) => id === item.id) > -1;
-
-    // active menu item on page load
-    useEffect(() => {
-        const currentIndex = document.location.pathname
-            .toString()
-            .split('/')
-            .findIndex((id) => id === item.id);
-        if (currentIndex > -1) {
-            dispatch(activeItem({ openItem: [item.id] }));
-        }
-        // eslint-disable-next-line
-    }, []);
-
+    const isSelected = document.location.pathname.toString() === item.url ? true : null;
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
 
@@ -105,18 +92,13 @@ const NavItem = ({ item, level }) => {
                                     bgcolor: 'secondary.lighter'
                                 }
                             }),
-                            ...(!drawerOpen &&
-                                isSelected && {
-                                    bgcolor: 'primary.lighter',
-                                    '&:hover': {
-                                        bgcolor: 'primary.lighter'
-                                    }
-                                })
+                            ...(!drawerOpen && isSelected && { bgcolor: 'primary.lighter', '&:hover': { bgcolor: 'primary.lighter' } })
                         }}
                     >
                         {itemIcon}
                     </ListItemIcon>
                 )}
+
                 {(drawerOpen || (!drawerOpen && level !== 1)) && (
                     <ListItemText
                         primary={

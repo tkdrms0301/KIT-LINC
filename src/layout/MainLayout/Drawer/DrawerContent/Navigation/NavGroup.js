@@ -2,16 +2,30 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 // material-ui
-import { Box, List, Typography } from '@mui/material';
+import { Box, List, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import * as React from 'react';
+import { styled } from '@mui/material/styles';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
+import MuiAccordion from '@mui/material/Accordion';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
 
 // project import
 import NavItem from './NavItem';
+import { useState, useEffect } from 'react';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
 const NavGroup = ({ item }) => {
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
+    const [selectedAccordion, setSelectedAccordion] = useState('');
+
+    useEffect(() => {
+        item.children.map((childrens, index) =>
+            childrens.url === document.location.pathname.toString() ? setSelectedAccordion(item.title) : null
+        );
+    });
 
     const navCollapse = item.children?.map((menuItem) => {
         switch (menuItem.type) {
@@ -32,23 +46,39 @@ const NavGroup = ({ item }) => {
         }
     });
 
+    const Accordion = styled((props) => <MuiAccordion disableGutters elevation={0} square {...props} />)(({ theme }) => ({
+        border: `1px solid ${theme.palette.divider}`,
+        '&:not(:last-child)': {
+            borderBottom: 0
+        },
+        '&:before': {
+            display: 'none'
+        }
+    }));
+
+    const AccordionSummary = styled((props) => (
+        <MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />} {...props} />
+    ))(({ theme }) => ({
+        backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : 'rgba(0, 0, 0, .03)',
+        flexDirection: 'row-reverse',
+        '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+            transform: 'rotate(90deg)'
+        },
+        '& .MuiAccordionSummary-content': {
+            marginLeft: theme.spacing(1)
+        }
+    }));
+
+    const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+        padding: theme.spacing(2),
+        borderTop: '1px solid rgba(0, 0, 0, .125)'
+    }));
+
     return (
-        <List
-            subheader={
-                item.title &&
-                drawerOpen && (
-                    <Box sx={{ pl: 3, mb: 1.5 }}>
-                        <Typography variant="subtitle2" color="textSecondary">
-                            {item.title}
-                        </Typography>
-                        {/* only available in paid version */}
-                    </Box>
-                )
-            }
-            sx={{ mb: drawerOpen ? 1.5 : 0, py: 0, zIndex: 0 }}
-        >
-            {navCollapse}
-        </List>
+        <Accordion defaultExpanded={selectedAccordion === item.title}>
+            <AccordionSummary>{item.title}</AccordionSummary>
+            <AccordionDetails sx={{ padding: '0 0 0 4%' }}>{navCollapse}</AccordionDetails>
+        </Accordion>
     );
 };
 

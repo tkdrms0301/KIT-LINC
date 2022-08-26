@@ -1,37 +1,18 @@
-import * as React from 'react';
-import { useState, useReducer } from 'react';
 import ProjectSort from './ProjectSort';
 
-import {
-    Button,
-    Box,
-    Grid,
-    Stack,
-    Typography,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    InputLabel,
-    MenuItem,
-    FormControl,
-    Select
-} from '@mui/material';
+import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
 
-const ProjectTable = ({ requestForm, onChangeRequestForm, onSubmitRequestForm, selectedPost, handleProjectChange, rows, categoryList }) => {
+const ProjectTable = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, selectedPost, handleProjectChange, rows, categoryList }) => {
     const isSelected = (id) => selectedPost.id === id;
     return (
         <Grid item xs={12}>
             <MainCard title="애로기술 리스트" codeHighlight>
                 <ProjectSort
-                    requestForm={requestForm}
-                    onChangeRequestForm={onChangeRequestForm}
+                    requestInfo={requestInfo}
+                    onChangeRequestInfo={onChangeRequestInfo}
                     onSubmitRequestForm={onSubmitRequestForm}
                     categoryList={categoryList}
                 />

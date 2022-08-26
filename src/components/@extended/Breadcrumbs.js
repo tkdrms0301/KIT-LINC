@@ -78,17 +78,12 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
                         <Grid item>
                             <MuiBreadcrumbs aria-label="breadcrumb">
                                 <Typography component={Link} to="/" color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
-                                    Home
+                                    {main.title}
                                 </Typography>
                                 {mainContent}
                                 {itemContent}
                             </MuiBreadcrumbs>
                         </Grid>
-                        {/* {title && (
-                            <Grid item sx={{ mt: 2 }}>
-                                <Typography variant="h5">{item.title}</Typography>
-                            </Grid>
-                        )} */}
                     </Grid>
                 </MainCard>
             );

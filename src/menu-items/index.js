@@ -1,14 +1,14 @@
 // project import
-import dashboard from './dashboard';
-import work from './work';
-import manager from './manager';
-import company from './company';
-import professor from './professor';
+import myPageManage from './myPageManage';
+import etc from './etc';
+import difficultTechsManage from './difficultTechsManage';
+import hompageManage from './hompageManage';
+import fieldTrainingManage from './fieldTrainingManage';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [dashboard, work, manager, company, professor]
+    items: [myPageManage, difficultTechsManage, fieldTrainingManage, hompageManage, etc]
 };
 
 export default menuItems;

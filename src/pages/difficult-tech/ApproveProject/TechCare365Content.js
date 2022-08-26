@@ -27,7 +27,8 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
         '마케팅지도',
         '해외시장 개척',
         '사업화지도',
-        '사업계획서 작성지도'
+        '사업계획서 작성지도',
+        '기타'
     ];
 
     const applicantInfoList = [
@@ -59,7 +60,8 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
         '목제종이',
         '석유화확',
         '비금속',
-        '운송장비'
+        '운송장비',
+        '기타'
     ];
 
     let formInfoArr;
@@ -70,17 +72,18 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
 
     return (
         <Grid item xs={12}>
-            <MainCard codeHighlight>
-                <Typography variant="h1" align="center" sx={{ my: 3 }}>
-                    지원서 상세정보
-                </Typography>
-                {formInfoArr !== undefined ? (
+            {formInfoArr !== undefined ? (
+                <MainCard codeHighlight sx={{ width: '80%', margin: 'auto' }}>
+                    <Typography variant="h1" align="center" sx={{ my: 3 }}>
+                        지원서 상세정보
+                    </Typography>
+
                     <Grid container spacing={3}>
                         <Grid item xs={12} justifyContent="center" alignItems="center">
                             <Box component="form" noValidate autoComplete="off">
                                 <Grid container spacing={1}>
                                     {applicantInfoList.map((applicantInfo, index) => (
-                                        <Grid item xs={index === 4 ? 12 : 6} key={index}>
+                                        <Grid item xs={index === 4 ? 8 : 4} key={index}>
                                             <Box>
                                                 <Typography variant="h5">{applicantInfo}</Typography>
                                             </Box>
@@ -115,7 +118,7 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.businessType.map((businessTypes, index) => (
-                                        <Grid item xs={6} key={index}>
+                                        <Grid item xs={4} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={businessTypeList[Number(businessTypes)]}
@@ -123,7 +126,7 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                                         </Grid>
                                     ))}
                                     {formInfo.businessTypeEtc !== null ? (
-                                        <Grid item xs={4}>
+                                        <Grid item>
                                             <TextField
                                                 fullWidth
                                                 label="기타"
@@ -199,7 +202,7 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.consultingField.map((consultingFields, index) => (
-                                        <Grid item xs={6} key={index}>
+                                        <Grid item xs={4} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={consultingFieldList[Number(consultingFields)]}
@@ -207,8 +210,8 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                                         </Grid>
                                     ))}
                                     {formInfo.consultingFieldEtc !== null ? (
-                                        <Grid item xs={3}>
-                                            <FormControlLabel control={<Checkbox checked />} label="기타" />
+                                        <Grid item>
+                                            {/* <FormControlLabel control={<Checkbox checked />} label="기타" /> */}
                                             <TextField
                                                 fullWidth
                                                 type="text"
@@ -229,7 +232,7 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                             </Box>
                             <Grid container spacing={4}>
                                 {formInfo.consultantInfo.map((consultingFields, index) => (
-                                    <Grid item xs={3} key={index}>
+                                    <Grid item xs={4} key={index}>
                                         <TextField
                                             fullWidth
                                             label={consultantInfoList[index]}
@@ -254,7 +257,8 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                                         <TextField
                                             fullWidth
                                             type="text"
-                                            variant="standard"
+                                            multiline
+                                            rows={4}
                                             value={formInfo.detailInfo}
                                             InputProps={{
                                                 readOnly: true
@@ -271,30 +275,39 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                             <Box>
                                 <Grid container spacing={5}>
                                     <Grid item xs={12}>
-                                        <TextField fullWidth type="text" variant="standard" value={formInfo.effectiveness} />
+                                        <TextField
+                                            fullWidth
+                                            type="text"
+                                            multiline
+                                            rows={4}
+                                            value={formInfo.effectiveness}
+                                            InputProps={{
+                                                readOnly: true
+                                            }}
+                                        />
                                     </Grid>
                                 </Grid>
                             </Box>
                         </Grid>
                     </Grid>
-                ) : null}
-                <Grid container justifyContent="flex-end" alignItems="center" sx={{ my: 3 }}>
-                    <Grid container item xs={2}>
-                        <Stack direction="row" spacing={2}>
-                            <form onSubmit={onSubmitApproveProject}>
-                                <Button variant="contained" type="submit" size="large">
-                                    승인
-                                </Button>
-                            </form>
-                            <form onSubmit={onSubmitRejectProject}>
-                                <Button variant="outlined" type="submit" size="large">
-                                    거절
-                                </Button>
-                            </form>
-                        </Stack>
+                    <Grid container justifyContent="center" sx={{ my: 3 }}>
+                        <Grid item xs={2}>
+                            <Stack direction="row" spacing={2}>
+                                <form onSubmit={onSubmitApproveProject}>
+                                    <Button variant="contained" type="submit">
+                                        승인
+                                    </Button>
+                                </form>
+                                <form onSubmit={onSubmitRejectProject}>
+                                    <Button variant="outlined" type="submit">
+                                        거절
+                                    </Button>
+                                </form>
+                            </Stack>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </MainCard>
+                </MainCard>
+            ) : null}
         </Grid>
     );
 }

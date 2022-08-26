@@ -20,19 +20,19 @@ const icons = {
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
-const works = {
-    id: 'works',
-    title: '애로 기술 관리(공통)',
+const company = {
+    id: 'company',
+    title: '홈페이지 관리',
     type: 'group',
     children: [
         {
-            id: 'work-difficult-techs',
-            title: '애로 기술 조회',
+            id: 'util-difficult-tech-docs-company',
+            title: '공지사항 관리',
             type: 'item',
-            url: '/difficult-techs',
+            url: '/difficult-tech-docs-company',
             icon: ''
         }
     ]
 };
 
-export default works;
+export default company;

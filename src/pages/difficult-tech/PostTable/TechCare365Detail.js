@@ -92,9 +92,9 @@ const TechCare365Detail = () => {
         formInfoArr = Object.values(formInfo);
     }
     return (
-        <>
-            <Grid container alignItems="center" justifyContent="center">
-                <MainCard codeHighlight width="80%">
+        <Grid>
+            <Grid container sx={{ width: '80%', margin: 'auto' }}>
+                <MainCard codeHighlight>
                     <Typography variant="h3" align="center" sx={{ my: 3 }}>
                         지원서 상세정보 TechCare365
                     </Typography>
@@ -155,7 +155,7 @@ const TechCare365Detail = () => {
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.businessType.map((businessTypes, index) => (
-                                        <Grid item xs={6} key={index}>
+                                        <Grid item xs={4} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={businessTypeList[Number(businessTypes)]}
@@ -203,7 +203,7 @@ const TechCare365Detail = () => {
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.consultingField.map((consultingFields, index) => (
-                                        <Grid item xs={6} key={index}>
+                                        <Grid item xs={4} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={consultingFieldList[Number(consultingFields)]}
@@ -214,7 +214,6 @@ const TechCare365Detail = () => {
                                         <Grid item xs={3}>
                                             <FormControlLabel control={<Checkbox checked />} label="기타" />
                                             <TextField
-                                                fullWidth
                                                 type="text"
                                                 variant="standard"
                                                 defaultValue={formInfo.consultingFieldEtc}
@@ -233,7 +232,7 @@ const TechCare365Detail = () => {
                             </Box>
                             <Grid container spacing={4}>
                                 {formInfo.consultantInfo.map((consultingFields, index) => (
-                                    <Grid item xs={3} key={index}>
+                                    <Grid item xs={4} key={index}>
                                         <TextField
                                             fullWidth
                                             label={consultantInfoList[index]}
@@ -258,8 +257,9 @@ const TechCare365Detail = () => {
                                         <TextField
                                             fullWidth
                                             type="text"
-                                            variant="standard"
+                                            multiline
                                             value={formInfo.detailInfo}
+                                            rows={4}
                                             InputProps={{
                                                 readOnly: true
                                             }}
@@ -271,7 +271,7 @@ const TechCare365Detail = () => {
                     </Grid>
                 </MainCard>
             </Grid>
-        </>
+        </Grid>
     );
 };
 

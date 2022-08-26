@@ -10,7 +10,7 @@ import Search from './Search';
 
 // dummy data
 import post from './dummy.js';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import loadingState from 'state/Loading';
 const PostTable = () => {
@@ -28,10 +28,11 @@ const PostTable = () => {
     };
 
     // search
-    const [searchInput, setSearch] = useState('');
 
-    const handleSearchChange = (e) => {
-        setSearch(e.target.value);
+    const [searchInput, setSearchInput] = useState('');
+    const searchInputValue = useMemo(() => setSearchInput(searchInput), [searchInput]);
+    const onChangeSearchInput = (e) => {
+        setSearchInput(e.target.value);
     };
 
     // detail
@@ -69,13 +70,18 @@ const PostTable = () => {
             filteredPost = filteredPost.filter((item) => item.requestForm.includes(selectedRequstForm));
         }
 
+        if (searchInput !== null) {
+            console.log(searchInput);
+            filteredPost = filteredPost.filter((item) => item.title.includes(searchInput));
+        }
+
         if (page === LAST_PAGE) {
             setData(filteredPost.slice(10 * (page - 1)));
         } else {
             setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
         }
         console.log(data);
-    }, [page, selectedConsultingField, selectedRequstForm]);
+    }, [page, selectedConsultingField, selectedRequstForm, searchInput]);
 
     const handlePage = (event) => {
         const nowPageInt = parseInt(event.target.outerText);
@@ -86,38 +92,40 @@ const PostTable = () => {
         <>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Box>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <Search search={searchInput} handleChange={handleSearchChange} />
-                        </Grid>
-                        <Grid item xs={3}>
-                            <SideFilter
-                                selectedConsultingField={selectedConsultingField}
-                                onChangeSelectedConsultingField={onChangeSelectedConsultingField}
-                                selectedRequstForm={selectedRequstForm}
-                                onChangeSelectedRequestForm={onChangeSelectedRequestForm}
-                            />
-                        </Grid>
-                        <Grid item xs={9}>
-                            <Grid container spacing={2}>
-                                {data.map((post, index) => (
-                                    <TechPost key={index} project={post} />
-                                ))}
+                    <Grid sx={{ maxWidth: '1000px', width: '1000px' }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <Search searchInputValue={searchInputValue} onChangeSearchInput={onChangeSearchInput} />
+                            </Grid>
+                            <Grid item xs={3}>
+                                <SideFilter
+                                    selectedConsultingField={selectedConsultingField}
+                                    onChangeSelectedConsultingField={onChangeSelectedConsultingField}
+                                    selectedRequstForm={selectedRequstForm}
+                                    onChangeSelectedRequestForm={onChangeSelectedRequestForm}
+                                />
+                            </Grid>
+                            <Grid item xs={9}>
+                                <Grid container spacing={2}>
+                                    {data.map((post, index) => (
+                                        <TechPost key={index} project={post} />
+                                    ))}
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
-                    <Grid container justifyContent="center">
-                        <Pagination
-                            count={LAST_PAGE}
-                            defaultPage={1}
-                            boundaryCount={2}
-                            color="primary"
-                            variant="outlined"
-                            shape="rounded"
-                            size="large"
-                            sx={{ margin: 2 }}
-                            onChange={(e) => handlePage(e)}
-                        />
+                        <Grid container justifyContent="center">
+                            <Pagination
+                                count={LAST_PAGE}
+                                defaultPage={1}
+                                boundaryCount={2}
+                                color="primary"
+                                variant="outlined"
+                                shape="rounded"
+                                size="large"
+                                sx={{ margin: 2 }}
+                                onChange={(e) => handlePage(e)}
+                            />
+                        </Grid>
                     </Grid>
                 </Box>
             </Box>

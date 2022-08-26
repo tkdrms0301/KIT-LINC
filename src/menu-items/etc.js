@@ -20,34 +20,26 @@ const icons = {
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
-const company = {
-    id: 'company',
-    title: '애로 기술 관리(가족 회사)',
+const works = {
+    id: 'works',
+    title: '기타 페이지',
     type: 'group',
     children: [
         {
-            id: 'util-difficult-tech-create',
-            title: '애로 기술 등록',
+            id: 'util-difficult-tech-docs-modify',
+            title: '메인 페이지 게시글 수정',
             type: 'item',
-            url: '/difficult-tech-create',
-            icon: ''
-        },
-
-        {
-            id: 'util-difficult-tech-continue-company',
-            title: '진행 중 프로젝트',
-            type: 'item',
-            url: '/difficult-tech-continue-company',
+            url: '/difficult-tech-docs-modify',
             icon: ''
         },
         {
-            id: 'util-difficult-tech-docs-company',
-            title: '관련 서류 제출',
+            id: 'util-difficult-tech-docs-upload',
+            title: '테스팅 하는곳~',
             type: 'item',
-            url: '/difficult-tech-docs-company',
+            url: '/difficult-tech-docs-upload',
             icon: ''
         }
     ]
 };
 
-export default company;
+export default works;
