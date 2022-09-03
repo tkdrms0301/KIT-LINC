@@ -2,57 +2,57 @@
 const post = [
     {
         postId: 1,
-        title:
-            '프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1프로젝트 이름1',
-        content: '아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕녕안녕아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕아녕안녕',
-        tags: ['모집중'],
-        field: ['음식료', '섬유의복'],
+        title: 'K-기대함 프로젝트',
+        content: '애로기술 해결을 보다 손쉽게 사용하기 위한 프로젝트,..',
+        tags: ['진행중'],
+        field: ['IT분야'],
         requestForm: 'TechCare365',
         company: {
-            name: '회사 이름',
-            logo: '회사 로고',
+            name: 'IntelliK',
+            logo: 'https://www.kumoh.ac.kr/_res/ko/img/common/logo@2x.png',
             address: '회사 주소'
         },
         date: '2020-01-01'
     },
     {
         postId: 2,
-        title: '프로젝트 이름2',
-        content: '프로젝트 설명',
+        title: '지구온난화 방지를 위한 프로젝트',
+        content: '녹색 지구 프로젝트',
         tags: ['승인대기중'],
-        field: ['섬유의복', '운송장비'],
-        requestForm: '지원요청서4',
+        field: ['그린에너지분야', '섬유의복'],
+        requestForm: '지원요청서2',
         company: {
-            name: '회사 이름',
-            logo: '회사 로고',
+            name: '콬아콜라',
+            logo:
+                '//w.namu.la/s/5d0f7c939e428323cdc8436ecb05e67189b42c740734ee6e24d4b19416b6f8eb1d69280d82c9f0332bed53ab81dec8796c055f68b4b86638ff743856a288cd59982b9ebbee0f3a26954afc0cb261c4c608f4eafd38df48440b4b084d3173f36e',
             address: '회사 주소'
         },
         date: '2020-01-01'
     },
     {
         postId: 3,
-        title: '프로젝트 이름3',
-        content: '프로젝트 설명',
-        tags: ['완료', '승인대기중', '모집중', '진행중'],
-        field: ['목제종이', '운송장비'],
+        title: '맛있는 김치 만들기',
+        content: '세상에서 제일 맛있는 김치 만들기 프로젝트',
+        tags: ['승인대기중'],
+        field: ['음식료'],
         requestForm: 'TechCare365',
         company: {
-            name: '회사 이름',
-            logo: '회사 로고',
+            name: '종가집',
+            logo: 'http://www.jongga.co.kr/_img/logo.png',
             address: '회사 주소'
         },
         date: '2020-01-01'
     },
     {
         postId: 4,
-        title: '프로젝트 이름4',
-        content: '프로젝트 설명',
-        tags: ['완료'],
-        field: ['석유화학', '운송장비'],
+        title: '차세대 드론 제작',
+        content: '드론 제작 프로젝트',
+        tags: ['모집중'],
+        field: ['IT분야', '운송장비'],
         requestForm: '지원요청서2',
         company: {
-            name: '회사 이름',
-            logo: '회사 로고',
+            name: '㈜엑스드론',
+            logo: 'http://www.xdrone.co.kr/default/img/logo_light.png',
             address: '회사 주소'
         },
         date: '2020-01-01'
@@ -61,7 +61,7 @@ const post = [
         postId: 5,
         title: '프로젝트 이름5',
         content: '프로젝트 설명',
-        tags: ['승인대기중'],
+        tags: ['완료', '승인대기중', '모집중', '진행중'],
         field: ['비금속'],
         requestForm: 'TechCare365',
         company: {
@@ -89,7 +89,7 @@ const post = [
         postId: 7,
         title: '프로젝트 이름7',
         content: '프로젝트 설명',
-        tags: ['완료', '승인대기중', '모집중', '진행중'],
+        tags: ['모집중'],
         field: ['IT분야'],
         requestForm: 'TechCare365',
         company: {
@@ -145,7 +145,7 @@ const post = [
         postId: 11,
         title: '프로젝트 이름11',
         content: '프로젝트 설명',
-        tags: ['모집중', '진행중', '승인대기중'],
+        tags: ['진행중'],
         field: ['목제종이', '비금속'],
         requestForm: '지원요청서4',
         company: {
@@ -159,7 +159,7 @@ const post = [
         postId: 12,
         title: '프로젝트 이름12',
         content: '프로젝트 설명',
-        tags: ['모집중', '진행중'],
+        tags: ['모집중'],
         field: ['비금속'],
         requestForm: '지원요청서5',
         company: {

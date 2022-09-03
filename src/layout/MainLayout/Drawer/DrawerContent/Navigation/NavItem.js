@@ -47,7 +47,7 @@ const NavItem = ({ item, level }) => {
                 onClick={() => itemHandler(item.id)}
                 selected={isSelected}
                 sx={{
-                    zIndex: 1201,
+                    zIndex: 'inherit',
                     pl: drawerOpen ? `${level * 28}px` : 1.5,
                     py: !drawerOpen && level === 1 ? 1.25 : 1,
                     ...(drawerOpen && {
@@ -118,7 +118,7 @@ const NavItem = ({ item, level }) => {
                     />
                 )}
             </ListItemButton>
-            {/* {isSelected && item.children && item.children.map((child) => <NavItem key={child.id} item={child} level={level + 1} />)} */}
+            {isSelected && item.children && item.children.map((child) => <NavItem key={child.id} item={child} level={level + 1} />)}
         </>
     );
 };

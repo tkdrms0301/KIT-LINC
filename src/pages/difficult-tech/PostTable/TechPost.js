@@ -100,7 +100,7 @@ const TechPost = ({ project, index }) => {
                                     <Stack spacing={2}>
                                         <Grid container>
                                             <Grid item xs={3}>
-                                                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                                <Avatar alt="Remy Sharp" src={project.company.logo} />
                                             </Grid>
                                             <Grid item xs={9}>
                                                 {project.company.name}

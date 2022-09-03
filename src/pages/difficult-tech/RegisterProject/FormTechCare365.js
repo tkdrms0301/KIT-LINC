@@ -4,25 +4,18 @@ import { throttle } from 'lodash';
 import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
 
 const FormTechCare365 = ({
-    projectName,
-    onChangeProjectName,
+    projectNameRef,
     consultingForm,
     onChangeConsultingForm,
     consultingField,
     onChangeConsultingField,
     formInfo,
-    detailInfo,
-    onChangeDetailInfo,
-    effectiveness,
-    onChangeEffectiveness,
-    name,
-    onChangeName,
-    group,
-    onChangeGroup,
-    contact,
-    onChangeContact,
-    etc,
-    onChangeEtc,
+    detailInfoRef,
+    effectivenessRef,
+    nameRef,
+    groupRef,
+    contactRef,
+    etcRef,
     etcChecked,
     onSubmit
 }) => {
@@ -181,14 +174,7 @@ const FormTechCare365 = ({
                     <Typography variant="h5">프로젝트 제목</Typography>
                 </Box>
                 <Grid>
-                    <TextField
-                        fullWidth
-                        type="text"
-                        placeholder="프로젝트 제목"
-                        variant="standard"
-                        value={projectName}
-                        onChange={throttle(onChangeProjectName, 500)}
-                    />
+                    <TextField fullWidth type="text" placeholder="프로젝트 제목" variant="standard" inputRef={projectNameRef} />
                 </Grid>
             </Grid>
             <Grid item xs={12}>
@@ -225,7 +211,7 @@ const FormTechCare365 = ({
                             </Grid>
                         ))}
                         <Grid item xs={3}>
-                            <TextField fullWidth label="기타" type="text" variant="standard" onChange={onChangeEtc} value={etc} />
+                            <TextField fullWidth label="기타" type="text" variant="standard" inputRef={etcRef} />
                         </Grid>
                     </Grid>
                 </FormGroup>
@@ -237,34 +223,13 @@ const FormTechCare365 = ({
                 <Box>
                     <Grid container spacing={5}>
                         <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="성명"
-                                type="text"
-                                variant="standard"
-                                value={name}
-                                onChange={throttle(onChangeName, 500)}
-                            />
+                            <TextField fullWidth label="성명" type="text" variant="standard" inputRef={nameRef} />
                         </Grid>
                         <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="소속"
-                                type="text"
-                                variant="standard"
-                                value={group}
-                                onChange={throttle(onChangeGroup)}
-                            />
+                            <TextField fullWidth label="소속" type="text" variant="standard" inputRef={groupRef} />
                         </Grid>
                         <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="연락처"
-                                type="text"
-                                variant="standard"
-                                value={contact}
-                                onChange={throttle(onChangeContact)}
-                            />
+                            <TextField fullWidth label="연락처" type="text" variant="standard" inputRef={contactRef} />
                         </Grid>
                     </Grid>
                 </Box>
@@ -281,9 +246,8 @@ const FormTechCare365 = ({
                                 type="text"
                                 multiline
                                 placeholder="지원받고자 하는 분야의 상세 내용 기술"
-                                value={detailInfo}
+                                inputRef={detailInfoRef}
                                 rows={4}
-                                onChange={throttle(onChangeDetailInfo)}
                             />
                         </Grid>
                     </Grid>
@@ -302,8 +266,7 @@ const FormTechCare365 = ({
                                 type="text"
                                 multiline
                                 rows={4}
-                                value={effectiveness}
-                                onChange={throttle(onChangeEffectiveness, 500)}
+                                inputRef={effectivenessRef}
                             />
                         </Grid>
                     </Grid>

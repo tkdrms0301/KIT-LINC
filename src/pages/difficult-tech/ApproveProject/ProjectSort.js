@@ -1,10 +1,34 @@
-import { TextField, Box, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { TextField, Box, Button, Grid, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, categoryList }) => {
-    const { state, requestForm, startDate, endDate } = requestInfo;
-    const stateList = ['승인대기', '승인완료', '승인거절'];
+import dayjs from 'dayjs';
+const ProjectSort = ({
+    requestInfo,
+    onChangeRequestInfo,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    onSubmitRequestForm,
+    onSubmitSearch,
+    categoryList
+}) => {
+    const { state, requestForm } = requestInfo;
+    const stateList = [
+        {
+            label: '승인대기',
+            value: 'PENDING'
+        },
+        {
+            label: '승인완료',
+            value: 'APPROVED'
+        },
+        {
+            label: '승인거절',
+            value: 'REJECTED'
+        }
+    ];
 
     return (
         <Grid container>
@@ -13,8 +37,8 @@ const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, ca
                     <InputLabel>진행상태</InputLabel>
                     <Select name="state" value={state} onChange={onChangeRequestInfo} label="진행상태">
                         {stateList.map((states, index) => (
-                            <MenuItem key={index} value={states}>
-                                {states}
+                            <MenuItem key={index} value={states.value}>
+                                {states.label}
                             </MenuItem>
                         ))}
                     </Select>
@@ -25,8 +49,8 @@ const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, ca
                     <InputLabel>지원요청서</InputLabel>
                     <Select name="requestForm" value={requestForm} onChange={onChangeRequestInfo} label="지원요청서">
                         {categoryList.map((category, index) => (
-                            <MenuItem key={index} value={category}>
-                                {category}
+                            <MenuItem key={index} value={category.value}>
+                                {category.label}
                             </MenuItem>
                         ))}
                     </Select>
@@ -39,7 +63,9 @@ const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, ca
                         inputFormat="yyyy/MM/dd"
                         name="startDate"
                         value={startDate}
-                        onChange={onChangeRequestInfo}
+                        onChange={(newValue) => {
+                            setStartDate(newValue);
+                        }}
                         renderInput={(params) => (
                             <TextField
                                 InputProps={{
@@ -59,7 +85,7 @@ const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, ca
                         inputFormat="yyyy/MM/dd"
                         name="endDate"
                         value={endDate}
-                        onChange={onChangeRequestInfo}
+                        onChange={(newValue) => setEndDate(newValue)}
                         renderInput={(params) => (
                             <TextField
                                 InputProps={{
@@ -71,6 +97,13 @@ const ProjectSort = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, ca
                         )}
                     />
                 </LocalizationProvider>
+            </Box>
+            <Box sx={{ p: 1, pb: 3 }}>
+                <form onSubmit={onSubmitRequestForm}>
+                    <Button variant="contained" type="submit">
+                        검색
+                    </Button>
+                </form>
             </Box>
         </Grid>
     );

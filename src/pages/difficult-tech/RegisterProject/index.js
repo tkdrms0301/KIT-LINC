@@ -21,6 +21,13 @@ import Form5 from './Form5';
 import { throttle } from 'lodash';
 
 const RegisterPost = () => {
+    const projectNameRef = useRef();
+    const detailInfoRef = useRef();
+    const effectivenessRef = useRef();
+    const nameRef = useRef();
+    const groupRef = useRef();
+    const contactRef = useRef();
+    const etcRef = useRef();
     const [projectName, setProjectName] = useState('');
     const [consultingForm, setConsultingForm] = useState([]);
     const [consultingField, setConsultingField] = useState([]);
@@ -32,20 +39,6 @@ const RegisterPost = () => {
     const [etc, setEtc] = useState('');
     const [etcChecked, setEtcChecked] = useState(false);
     const [formInfo, setFormInfo] = useState();
-
-    const onChangeProjectName = (e) => {
-        setProjectName(e.target.value);
-    };
-
-    const onChangeDetailInfo = (e) => {
-        setDetailInfo(e.target.value);
-    };
-
-    const onChangeEffectiveness = useCallback((e) => {
-        setEffectiveness(e.target.value);
-    });
-
-    //const debouncedChangeHandler = useCallback(debounce(changeHandler, 300), []);
 
     const onChangeConsultingForm = (e) => {
         let updateList = [...consultingForm];
@@ -67,45 +60,22 @@ const RegisterPost = () => {
         setConsultingField(updateConsultList);
     };
 
-    const onChangeName = (e) => {
-        setName(e.target.value);
-    };
-    const onChangeGroup = (e) => {
-        setGroup(e.target.value);
-    };
-    const onChangeContact = (e) => {
-        setContact(e.target.value);
-    };
-
-    const onChangeEtc = (e) => {
-        setEtc(e.target.value);
-    };
-
     const onSubmit = (e) => {
         e.preventDefault();
         const consultantInfo = new Array(name, group, contact);
-
-        const test = {
-            projectName: projectName,
-            consultantForm: consultingForm,
-            consultingField: consultingField,
-            consultingFieldEtc: etc,
-            consultantInfo: consultantInfo,
-            detailInfo: detailInfo,
-            effectiveness: effectiveness
-        };
-        console.log(test);
+        console.log(projectNameRef.current.value);
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
+        console.log();
         axios
             .post('http://se337.duckdns.org:80/api/request/care365', {
-                projectName: projectName,
+                projectName: projectNameRef.current.value,
                 consultantForm: consultingForm,
                 consultingField: consultingField,
-                consultingFieldEtc: etc,
+                consultingFieldEtc: etcRef.current.value,
                 consultantInfo: consultantInfo,
-                detailInfo: detailInfo,
-                effectiveness: effectiveness
+                detailInfo: detailInfoRef.current.value,
+                effectiveness: effectivenessRef.current.value
             })
             .then((res) => {
                 console.log(res);
@@ -162,25 +132,18 @@ const RegisterPost = () => {
                         <Grid item xs={12}>
                             {view === 'TechCare365' ? (
                                 <FormTechCare365
-                                    projectName={projectName}
-                                    onChangeProjectName={onChangeProjectName}
+                                    projectNameRef={projectNameRef}
                                     consultingForm={consultingForm}
                                     onChangeConsultingForm={onChangeConsultingForm}
                                     consultingField={consultingField}
                                     onChangeConsultingField={onChangeConsultingField}
                                     formInfo={formInfo}
-                                    onChangeDetailInfo={onChangeDetailInfo}
-                                    detailInfo={detailInfo}
-                                    effectiveness={effectiveness}
-                                    onChangeEffectiveness={onChangeEffectiveness}
-                                    name={name}
-                                    onChangeName={onChangeName}
-                                    group={group}
-                                    onChangeGroup={onChangeGroup}
-                                    contact={contact}
-                                    onChangeContact={onChangeContact}
-                                    etc={etc}
-                                    onChangeEtc={onChangeEtc}
+                                    detailInfoRef={detailInfoRef}
+                                    effectivenessRef={effectivenessRef}
+                                    nameRef={nameRef}
+                                    groupRef={groupRef}
+                                    contactRef={contactRef}
+                                    etcRef={etcRef}
                                     etcChecked={etcChecked}
                                     onSubmit={onSubmit}
                                 ></FormTechCare365>
@@ -190,12 +153,6 @@ const RegisterPost = () => {
                             {view === '지원요청서4' ? <Form4></Form4> : null}
                             {view === '지원요청서5' ? <Form5></Form5> : null}
                         </Grid>
-
-                        {/*
-                        <Grid item xs={12}>
-                            <RegisterForm formik={formik} />
-                        </Grid>
-                        */}
                     </Grid>
                 </MainCard>
             </Grid>

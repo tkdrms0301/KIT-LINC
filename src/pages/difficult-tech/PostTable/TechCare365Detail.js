@@ -1,9 +1,12 @@
 // material-ui
-import { Grid, Stack, Box, Typography, Divider, TextField, Radio, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
+import { Grid, Button, Stack, Box, Typography, Divider, TextField, Radio, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 
 import MainCard from 'components/MainCard';
-
+import ProfessorSelect from './ProfessorSelect';
 const TechCare365Detail = () => {
+    const onSubmitApprove = () => {
+        console.log('test');
+    };
     const formInfo = {
         // companyName: res.data.data.companyName,
         companyName: 'companyName',
@@ -93,7 +96,7 @@ const TechCare365Detail = () => {
     }
     return (
         <Grid>
-            <Grid container sx={{ width: '80%', margin: 'auto' }}>
+            <Grid container sx={{ width: '80%', margin: 'auto', my: 3 }}>
                 <MainCard codeHighlight>
                     <Typography variant="h3" align="center" sx={{ my: 3 }}>
                         지원서 상세정보 TechCare365
@@ -268,9 +271,20 @@ const TechCare365Detail = () => {
                                 </Grid>
                             </Box>
                         </Grid>
+
+                        <Grid item xs={12}>
+                            <Grid container spacing={3} justifyContent="center">
+                                <Grid item>
+                                    <form onSubmit={onSubmitApprove}>
+                                        <Button variant="contained">승인</Button>
+                                    </form>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </MainCard>
             </Grid>
+            <ProfessorSelect></ProfessorSelect>
         </Grid>
     );
 };

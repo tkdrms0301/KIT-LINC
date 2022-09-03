@@ -1,52 +1,73 @@
 // material-ui
 import { Grid, Box, Pagination } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 // project import
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import SideFilter from './SideFilter';
 import TechPost from './TechPost';
 import Search from './Search';
 
 // dummy data
 import post from './dummy.js';
-import { useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import loadingState from 'state/Loading';
+import axios from '../../../../node_modules/axios/index';
 const PostTable = () => {
     // loading
     const [loading, setLoading] = useRecoilState(loadingState);
 
     // posts
-    // const [posts, setPosts] = useState([]);
+    // const [post, setPost] = useState([]);
     // search, category, pagination
 
     // side filter
-    const [selectedCategory, setSelectedCategory] = useState('all');
-    const handleCategoryChange = (event) => {
-        setSelectedCategory(event.target.value);
+    const [selected, setSelected] = useState({
+        selectedConsultingField: 'All',
+        selectedRequstForm: 'All',
+        selectedStatus: 'All'
+    });
+
+    const { selectedConsultingField, selectedRequstForm, selectedStatus } = selected;
+
+    const onChangeSelected = (e) => {
+        const { name, value } = e.target;
+        setSelected({
+            ...selected,
+            [name]: value
+        });
+        console.log(selected);
+    };
+
+    const getProjectList = (projectConsultingField, projectRequestForm, projectStatus) => {
+        console.log(projectConsultingField);
+        console.log(projectRequestForm);
+        console.log(projectStatus);
+        // axios
+        //     .get('url', {
+        //         params: { consultingField: projectConsultingField, requestForm: projectRequestForm, status: projectStatus }
+        //     })
+        //     .then((res) => {
+        //         console.log(res.data.data);
+        //         setPost(res.data.data)
+        //     });
     };
 
     // search
 
-    const [searchInput, setSearchInput] = useState('');
-    const searchInputValue = useMemo(() => setSearchInput(searchInput), [searchInput]);
-    const onChangeSearchInput = (e) => {
-        setSearchInput(e.target.value);
+    // 프로젝트 이름 입력후 검색 버튼*
+    const searchInputRef = useRef();
+    const onSubmitSearchInput = (e) => {
+        console.log(searchInputRef.current?.value);
+        // axios
+        //     .get('url', {
+        //         params: { searchInput: searchInputRef.current?.value }
+        //     })
+        //     .then((res) => {
+        //         console.log(res.data.data);
+        //     });
     };
 
     // detail
-    const [selectedConsultingField, setSelectedConsultingField] = useState('모두');
-    const [selectedRequstForm, setSelectedRequestForm] = useState('All');
-
-    const onChangeSelectedConsultingField = (e) => {
-        setSelectedConsultingField(e.target.value);
-        console.log(selectedConsultingField);
-    };
-    const onChangeSelectedRequestForm = (e) => {
-        setSelectedRequestForm(e.target.value);
-        console.log(selectedRequstForm);
-    };
 
     // pagination
     const LAST_PAGE = post.length % 10 === 0 ? parseInt(post.length / 10) : parseInt(post.length / 10) + 1;
@@ -55,33 +76,34 @@ const PostTable = () => {
     const [data, setData] = useState(post.slice(0, 10));
 
     useEffect(() => {
+        getProjectList(selectedConsultingField, selectedRequstForm, selectedStatus);
         // setLoading(true);
         // setTimeout(() => {
         //     setLoading(false);
         // }, 1500);
 
         // TODO: 수정필요
-        let filteredPost = post;
-        if (selectedConsultingField !== '모두') {
-            filteredPost = filteredPost.filter((item) => item.field.includes(selectedConsultingField));
-        }
+        // let filteredPost = post;
 
-        if (selectedRequstForm !== 'All') {
-            filteredPost = filteredPost.filter((item) => item.requestForm.includes(selectedRequstForm));
-        }
+        // if (selectedConsultingField !== 'All') {
+        //     filteredPost = filteredPost.filter((item) => item.field.includes(selectedConsultingField));
+        // }
 
-        if (searchInput !== null) {
-            console.log(searchInput);
-            filteredPost = filteredPost.filter((item) => item.title.includes(searchInput));
-        }
+        // if (selectedRequstForm !== 'All') {
+        //     filteredPost = filteredPost.filter((item) => item.requestForm.includes(selectedRequstForm));
+        // }
 
-        if (page === LAST_PAGE) {
-            setData(filteredPost.slice(10 * (page - 1)));
-        } else {
-            setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
-        }
+        // if (selectedstatus !== 'All') {
+        //     filteredPost = filteredPost.filter((item) => item.tags[0].includes(selectedstatus));
+        // }
+
+        // if (page === LAST_PAGE) {
+        //     setData(filteredPost.slice(10 * (page - 1)));
+        // } else {
+        //     setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
+        // }
         console.log(data);
-    }, [page, selectedConsultingField, selectedRequstForm, searchInput]);
+    }, [selected, page]);
 
     const handlePage = (event) => {
         const nowPageInt = parseInt(event.target.outerText);
@@ -95,15 +117,10 @@ const PostTable = () => {
                     <Grid sx={{ maxWidth: '1000px', width: '1000px' }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                <Search searchInputValue={searchInputValue} onChangeSearchInput={onChangeSearchInput} />
+                                <Search searchInputRef={searchInputRef} onSubmitSearchInput={onSubmitSearchInput} />
                             </Grid>
                             <Grid item xs={3}>
-                                <SideFilter
-                                    selectedConsultingField={selectedConsultingField}
-                                    onChangeSelectedConsultingField={onChangeSelectedConsultingField}
-                                    selectedRequstForm={selectedRequstForm}
-                                    onChangeSelectedRequestForm={onChangeSelectedRequestForm}
-                                />
+                                <SideFilter selected={selected} onChangeSelected={onChangeSelected} />
                             </Grid>
                             <Grid item xs={9}>
                                 <Grid container spacing={2}>

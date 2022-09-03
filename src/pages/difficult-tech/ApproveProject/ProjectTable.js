@@ -5,7 +5,19 @@ import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 // project import
 import MainCard from 'components/MainCard';
 
-const ProjectTable = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, selectedPost, handleProjectChange, rows, categoryList }) => {
+const ProjectTable = ({
+    requestInfo,
+    onChangeRequestInfo,
+    onSubmitRequestForm,
+    selectedPost,
+    handleProjectChange,
+    rows,
+    categoryList,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate
+}) => {
     const isSelected = (id) => selectedPost.id === id;
     return (
         <Grid item xs={12}>
@@ -15,6 +27,10 @@ const ProjectTable = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, s
                     onChangeRequestInfo={onChangeRequestInfo}
                     onSubmitRequestForm={onSubmitRequestForm}
                     categoryList={categoryList}
+                    startDate={startDate}
+                    setStartDate={setStartDate}
+                    endDate={endDate}
+                    setEndDate={setEndDate}
                 />
 
                 <TableContainer component={Paper} sx={{ maxHeight: 350 }}>
@@ -23,7 +39,7 @@ const ProjectTable = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, s
                             <TableRow>
                                 <TableCell>지원형태</TableCell>
                                 <TableCell>프로젝트 이름</TableCell>
-                                <TableCell>프로젝트 내용</TableCell>
+                                <TableCell>회사명</TableCell>
                                 <TableCell>날짜</TableCell>
                             </TableRow>
                         </TableHead>
@@ -41,7 +57,7 @@ const ProjectTable = ({ requestInfo, onChangeRequestInfo, onSubmitRequestForm, s
                                     >
                                         <TableCell>{row.projectType}</TableCell>
                                         <TableCell>{row.projectName}</TableCell>
-                                        <TableCell>{row.projectDetail}</TableCell>
+                                        <TableCell>{row.companyDetail.companyName}</TableCell>
                                         <TableCell>{row.createdDate}</TableCell>
                                     </TableRow>
                                 );

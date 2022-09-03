@@ -9,8 +9,13 @@ import ApproveProject from 'pages/difficult-tech/ApproveProject/index';
 import PostTable from 'pages/difficult-tech/PostTable/index';
 import DocumentManage from 'pages/difficult-tech/DocumentManage/DocumentManage';
 import TechPostDetail from 'pages/difficult-tech/PostTable/TechPostDetail';
-import ProjectMatching from 'pages/difficult-tech/ProjectMatching/index';
-import ProjectMatchingOther from 'pages/difficult-tech/ProjectMatchingOther/index';
+import EnterpriseForm from 'pages/FieldTraining/EnterpriseForm/index';
+import StudentForm from 'pages/FieldTraining/StudentForm/index';
+import FormManagement from 'pages/FieldTraining/FormManagement/index';
+import StudentManagement from 'pages/FieldTraining/StudentManagement/index';
+import StudentSelection from 'pages/FieldTraining/StudentSelection/index';
+import AllList from 'pages/FieldTraining/AllList/index';
+import SelectedStudentList from 'pages/FieldTraining/SelectedStudent/index';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -49,14 +54,6 @@ const MainRoutes = {
             path: '/difficult-tech-approval',
             element: <ApproveProject />
         },
-        {
-            path: '/difficult-tech-project-matching',
-            element: <ProjectMatching />
-        },
-        {
-            path: '/difficult-tech-project-matching-other',
-            element: <ProjectMatchingOther />
-        },
         // manager, professor, company 각각 페이지 나눠야됨
         {
             path: '/difficult-tech-docs-upload',
@@ -82,6 +79,35 @@ const MainRoutes = {
         {
             path: 'shadow',
             element: <TestLogin />
+        },
+
+        {
+            path: '/field-training-application-enterprise',
+            element: <EnterpriseForm />
+        },
+        {
+            path: '/field-training-application-student',
+            element: <StudentForm />
+        },
+        {
+            path: '/field-training-application-management',
+            element: <FormManagement />
+        },
+        {
+            path: '/field-training-student-management',
+            element: <StudentManagement />
+        },
+        {
+            path: '/field-training-select-list',
+            element: <StudentSelection />
+        },
+        {
+            path: '/field-training-selection-history-list',
+            element: <SelectedStudentList />
+        },
+        {
+            path: '/field-training-enterprise-student-list',
+            element: <AllList />
         }
     ]
 };

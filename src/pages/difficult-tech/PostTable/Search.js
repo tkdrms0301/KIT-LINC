@@ -1,11 +1,11 @@
 // material-ui
-import { Grid, Box, TextField, InputAdornment } from '@mui/material';
+import { Grid, Box, TextField, InputAdornment, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 // project import
 import MainCard from 'components/MainCard';
 
-const Search = ({ searchInputValue, onChangeSearchInput }) => {
+const Search = ({ searchInputRef, onSubmitSearchInput }) => {
     return (
         <Grid item xs={12}>
             <MainCard title="" codeHighlight>
@@ -14,12 +14,9 @@ const Search = ({ searchInputValue, onChangeSearchInput }) => {
                     <TextField
                         id="outlined-name"
                         label="프로젝트 이름 검색"
-                        value={searchInputValue}
-                        onChange={onChangeSearchInput}
+                        inputRef={searchInputRef}
                         variant="standard"
-                        sx={{
-                            width: '50%'
-                        }}
+                        sx={{ width: '50%' }}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -28,6 +25,9 @@ const Search = ({ searchInputValue, onChangeSearchInput }) => {
                             )
                         }}
                     />
+                    <form onClick={onSubmitSearchInput}>
+                        <Button variant="contained">검색</Button>
+                    </form>
                 </Box>
             </MainCard>
         </Grid>

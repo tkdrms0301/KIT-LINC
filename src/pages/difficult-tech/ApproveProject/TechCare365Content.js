@@ -5,7 +5,14 @@ import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/i
 
 import MainCard from 'components/MainCard';
 
-function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, onSubmitRejectProject }) {
+const TechCare365Content = ({
+    selectedPost,
+    formInfo,
+    onSubmitApproveProject,
+    onSubmitRejectProject,
+    onSubmitPendingProject,
+    requestInfo
+}) => {
     const consultingFormList = [
         '단기 기술지도(1일 4시간이상 4회 이내 단기기술지도)',
         '외부 자문의원 지도',
@@ -291,25 +298,50 @@ function TechCare365Content({ selectedPost, formInfo, onSubmitApproveProject, on
                         </Grid>
                     </Grid>
                     <Grid container justifyContent="center" sx={{ my: 3 }}>
-                        <Grid item xs={2}>
-                            <Stack direction="row" spacing={2}>
-                                <form onSubmit={onSubmitApproveProject}>
-                                    <Button variant="contained" type="submit">
-                                        승인
-                                    </Button>
-                                </form>
-                                <form onSubmit={onSubmitRejectProject}>
-                                    <Button variant="outlined" type="submit">
-                                        거절
-                                    </Button>
-                                </form>
-                            </Stack>
-                        </Grid>
+                        {console.log(formInfo)}
+                        {selectedPost.status === 'PENDING' ? (
+                            <Grid item>
+                                <Stack direction="row" spacing={2}>
+                                    <form onSubmit={onSubmitApproveProject}>
+                                        <Button variant="contained" type="submit">
+                                            승인
+                                        </Button>
+                                    </form>
+                                    <form onSubmit={onSubmitRejectProject}>
+                                        <Button variant="outlined" type="submit">
+                                            거절
+                                        </Button>
+                                    </form>
+                                </Stack>
+                            </Grid>
+                        ) : null}
+                        {selectedPost.status === 'APPROVED' ? (
+                            <Grid>
+                                <Stack direction="row" spacing={2}>
+                                    <form onSubmit={onSubmitPendingProject}>
+                                        <Button variant="contained" type="submit">
+                                            승인취소
+                                        </Button>
+                                    </form>
+                                </Stack>
+                            </Grid>
+                        ) : null}
+                        {selectedPost.status === 'REJECTED' ? (
+                            <Grid>
+                                <Stack direction="row" spacing={2}>
+                                    <form onSubmit={onSubmitPendingProject}>
+                                        <Button variant="contained" type="submit">
+                                            보류
+                                        </Button>
+                                    </form>
+                                </Stack>
+                            </Grid>
+                        ) : null}
                     </Grid>
                 </MainCard>
             ) : null}
         </Grid>
     );
-}
+};
 
 export default TechCare365Content;

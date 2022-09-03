@@ -4,9 +4,19 @@ import { Stack, Box, Typography, FormControl, FormLabel, RadioGroup, FormControl
 // project import
 import MainCard from 'components/MainCard';
 
-const SideFilter = ({ selectedConsultingField, onChangeSelectedConsultingField, selectedRequstForm, onChangeSelectedRequestForm }) => {
-    const businessTypeList = ['모두', 'IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
+const SideFilter = ({
+    selected,
+    onChangeSelected
+    // selectedConsultingField,
+    // selectedstatus,
+    // onChangeSelectedConsultingField,
+    // selectedRequstForm,
+    // onChangeSelectedRequestForm,
+    // onChangeSelectedStatus
+}) => {
+    const businessTypeList = ['All', 'IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
     const requestFormList = ['All', 'TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
+    const statusList = ['All', '진행중', '승인대기중', '모집중', '완료'];
 
     return (
         <MainCard title="" codeHighlight>
@@ -17,8 +27,18 @@ const SideFilter = ({ selectedConsultingField, onChangeSelectedConsultingField, 
             <Stack spacing={3}>
                 <Box>
                     <FormControl>
+                        <FormLabel>진행상태</FormLabel>
+                        <RadioGroup name="selectedStatus" value={selected.selectedStatus} onChange={onChangeSelected}>
+                            {statusList.map((status, index) => (
+                                <FormControlLabel key={index} value={status} control={<Radio />} label={status} />
+                            ))}
+                        </RadioGroup>
+                    </FormControl>
+                </Box>
+                <Box>
+                    <FormControl>
                         <FormLabel>업종</FormLabel>
-                        <RadioGroup value={selectedConsultingField} onChange={onChangeSelectedConsultingField}>
+                        <RadioGroup name="selectedConsultingField" value={selected.selectedConsultingField} onChange={onChangeSelected}>
                             {businessTypeList.map((businessType, index) => (
                                 <FormControlLabel key={index} value={businessType} control={<Radio />} label={businessType} />
                             ))}
@@ -28,7 +48,7 @@ const SideFilter = ({ selectedConsultingField, onChangeSelectedConsultingField, 
                 <Box>
                     <FormControl>
                         <FormLabel>지원서</FormLabel>
-                        <RadioGroup value={selectedRequstForm} onChange={onChangeSelectedRequestForm}>
+                        <RadioGroup name="selectedRequstForm" value={selected.selectedRequstForm} onChange={onChangeSelected}>
                             {requestFormList.map((requestForm, index) => (
                                 <FormControlLabel key={index} value={requestForm} control={<Radio />} label={requestForm} />
                             ))}

@@ -10,59 +10,65 @@ import Form2Content from './Form2Content';
 import Form3Content from './Form3Content';
 import Form4Content from './Form4Content';
 import Form5Content from './Form5Content';
-
+import dayjs from 'dayjs';
 function createData(id, formType, name, content, businessType, date) {
     return { id, formType, name, content, businessType, date };
 }
 
 function ApproveProject() {
-    const categoryList = ['All', 'Techcare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5', '지원요청서6', '지원요청서7'];
+    const categoryList = [
+        { label: 'All', value: 'All' },
+        { label: 'Techcare365', value: 'Techcare365' },
+        { label: '지원요청서2', value: '지원요청서2' },
+        { label: '지원요청서3', value: '지원요청서3' },
+        { label: '지원요청서4', value: '지원요청서4' },
+        { label: '지원요청서5', value: '지원요청서5' }
+    ];
 
     const [selectedPost, setSelectedPost] = useState('');
     const [formInfo, setFormInfo] = useState();
     const [rows, setRows] = useState([]);
-    const [selectedRow, setSelectedRow] = useState();
     const [requestInfo, setRequestInfo] = useState({
-        state: '승인대기',
-        requestForm: 'All',
-        startDate: new Date(),
-        endDate: new Date()
+        state: 'PENDING',
+        requestForm: 'All'
     });
-
-    const { state, requestForm, startDate, endDate } = requestInfo;
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const { state, requestForm } = requestInfo;
 
     const onChangeRequestInfo = (e) => {
         const { name, value } = e.target;
         console.log(e.target);
-        setRequestInfo({ ...requestFormInfo, [name]: value });
+        setRequestInfo({ ...requestInfo, [name]: value });
     };
 
     useEffect(() => {
         contentAllRequest();
     }, []);
-
     function contentAllRequest() {
         axios
-            .get('http://se337.duckdns.org:80/api/request/pending', {
-                type: 'All'
-            })
+            .get('http://se337.duckdns.org:80/api/request', {})
             .then((res) => {
-                console.log(res.data.data);
-                setRows(res.data.data);
+                console.log(res.data.data.content);
+                setRows(res.data.data.content);
                 //데이터 저장
             })
             .catch((err) => console.log(err));
     }
     const onSubmitRequestForm = (e) => {
         e.preventDefault();
-        console.log(requestForm);
         axios
-            .get('http://se337.duckdns.org:80/api/request/pending', {
-                type: requestForm
+            .get('http://se337.duckdns.org:80/api/request', {
+                params: {
+                    type: requestForm === 'All' ? null : requestForm,
+                    status: state,
+                    startDate: dayjs(startDate).format('YYYY-MM-DD'),
+                    endDate: dayjs(endDate).format('YYYY-MM-DD')
+                }
             })
             .then((res) => {
-                console.log(res.data.data);
-                setRows(res.data.data);
+                console.log(res.data.data.content);
+                setRows(res.data.data.content);
                 //데이터 저장
             })
             .catch((err) => console.log(err));
@@ -74,7 +80,7 @@ function ApproveProject() {
         console.log(selectedPost.id);
         axios
             .post('http://se337.duckdns.org:80/api/request/status', null, {
-                params: { requestId: Number(selectedPost.id) }
+                params: { requestId: Number(selectedPost.id), status: 'APPROVED' }
             })
             .then((res) => {
                 console.log(res);
@@ -88,23 +94,39 @@ function ApproveProject() {
         e.preventDefault();
         console.log('거절');
         axios
-            .post('http://se337.duckdns.org:80/api/request/care365', {
-                //pk: pk
+            .post('http://se337.duckdns.org:80/api/request/status', null, {
+                params: { requestId: Number(selectedPost.id), status: 'REJECTED' }
             })
             .then((res) => {
                 console.log(res);
+                alert('거절되었습니다.');
+                window.location.reload();
+            })
+            .catch((err) => console.log(err));
+    };
+    const onSubmitPendingProject = (e) => {
+        e.preventDefault();
+        axios
+            .post('http://se337.duckdns.org:80/api/request/status', null, {
+                params: { requestId: Number(selectedPost.id), status: 'PENDING' }
+            })
+            .then((res) => {
+                console.log(res);
+                alert('보류되었습니다.');
+                window.location.reload();
             })
             .catch((err) => console.log(err));
     };
 
     function requestFormInfo() {
         axios
-            .get('http://se337.duckdns.org:80/api/member/requestform', {})
+            .get('http://se337.duckdns.org:80/api/member/requestform', {
+                params: { requestId: Number(selectedPost.id) }
+            })
             .then((res) => {
                 console.log(res.data.data);
 
                 const tmpFormInfo = {
-                    // companyName: res.data.data.companyName,
                     companyName: res.data.data.companyName,
                     representativeName: res.data.data.representativeName,
                     companyRegistrationNum: res.data.data.companyRegistrationNum,
@@ -150,9 +172,11 @@ function ApproveProject() {
                     handleProjectChange={handleProjectChange}
                     formInfo={formInfo}
                     rows={rows}
-                    onSubmitRequestForm={onSubmitRequestForm}
                     onSubmitApproveProject={onSubmitApproveProject}
+                    onSubmitRejectProject={onSubmitRejectProject}
+                    onSubmitPendingProject={onSubmitPendingProject}
                     categoryList={categoryList}
+                    requestInfo={requestInfo}
                 ></TechCare365Content>
             )
         },
@@ -186,7 +210,12 @@ function ApproveProject() {
                         rows={rows}
                         onSubmitRequestForm={onSubmitRequestForm}
                         onSubmitApproveProject={onSubmitApproveProject}
+                        onSubmitRejectProject={onSubmitRejectProject}
                         categoryList={categoryList}
+                        startDate={startDate}
+                        setStartDate={setStartDate}
+                        endDate={endDate}
+                        setEndDate={setEndDate}
                     />
                 </Grid>
                 {requestFormList.map((requsetForms, index) =>

@@ -2,27 +2,38 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Stack, Typography } from '@mui/material';
-import * as React from 'react';
+import { Grid, Stack, Typography, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 
+import React, { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 // project import
 import MainCard from 'components/MainCard';
 
 const DocumentManage = () => {
+    let componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'test',
+        onAfterPrint: () => alert('Print success')
+    });
     return (
         <Grid container spacing={3}>
             <Grid item xs={12}>
                 <MainCard title="" codeHighlight>
-                    <Grid container spacing={3}>
-                        <Grid item xs={6}>
-                            <CustomizedAccordions></CustomizedAccordions>
+                    <div ref={componentRef} style={{ height: window.innerHeight }}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={6}>
+                                <button onClick={handlePrint}>Print tis out</button>
+                                {/* component to be printed */}
+                                <CustomizedAccordions ref={(el) => (componentRef = el)} />
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </div>
                 </MainCard>
             </Grid>
         </Grid>
