@@ -3,7 +3,40 @@ import { Grid, Button, Stack, Box, Typography, Divider, TextField, Radio, FormCo
 
 import MainCard from 'components/MainCard';
 import ProfessorSelect from './ProfessorSelect';
+import TechPostDetailButton from './TechPostDetailButton';
 const TechCare365Detail = () => {
+    const professorRows = [
+        {
+            professorName: '교수1',
+            professorMajor: '학과1',
+            professorNumber: '1234',
+            professorStudy: '연구1'
+        },
+        {
+            professorName: '교수2',
+            professorMajor: '학과2',
+            professorNumber: '1234',
+            professorStudy: '연구2'
+        },
+        {
+            professorName: '교수3',
+            professorMajor: '학과3',
+            professorNumber: '1234',
+            professorStudy: '연구3'
+        },
+        {
+            professorName: '교수4',
+            professorMajor: '학과4',
+            professorNumber: '1234',
+            professorStudy: '연구4'
+        },
+        {
+            professorName: '교수5',
+            professorMajor: '학과5',
+            professorNumber: '1234',
+            professorStudy: '연구5'
+        }
+    ];
     const onSubmitApprove = () => {
         console.log('test');
     };
@@ -33,13 +66,7 @@ const TechCare365Detail = () => {
         projectName: '프로젝트제목'
     };
 
-    const consultingFormList = [
-        '단기 기술지도(1일 4시간이상 4회 이내 단기기술지도)',
-        '외부 자문의원 지도',
-        '패키지形(2개학과이상의 교수 또는 2명이상 교수 및 자문위원으로 구성)',
-        '학기중 장기기술지도(기업의 여러가지 애로사항을 주 1~2회, 1일 6H, 이상, 8주이내 정기적으로 방문하여 패키지 형태로 지도)',
-        '방학․연구년중 장기기술지도(기업의 여러가지 애로사항을 주 2~3회, 1일 8H, 4주 이내 기업에 상주하면서 패키지 형태로 지도)'
-    ];
+    const consultingFormList = ['단기 기술지도', '외부 자문의원 지도', '패키지形', '학기중 장기기술지도', '방학,연구년중 장기기술지도'];
 
     const consultantInfoList = ['성명', '소속', '연락처'];
 
@@ -95,18 +122,13 @@ const TechCare365Detail = () => {
         formInfoArr = Object.values(formInfo);
     }
     return (
-        <Grid>
-            <Grid container sx={{ width: '80%', margin: 'auto', my: 3 }}>
+        <Grid sx={{ width: '80%', margin: 'auto', my: 3 }}>
+            <Grid container>
                 <MainCard codeHighlight>
-                    <Typography variant="h3" align="center" sx={{ my: 3 }}>
-                        지원서 상세정보 TechCare365
-                    </Typography>
+                    <Typography variant="h5">지원서 상세정보 TechCare365</Typography>
                     <Divider sx={{ background: 'primary.main', borderBottomWidth: 3, my: 2 }} />
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Box>
-                                <Typography variant="h5">프로젝트 제목</Typography>
-                            </Box>
                             <Grid>
                                 <TextField
                                     fullWidth
@@ -123,9 +145,9 @@ const TechCare365Detail = () => {
                             <Box component="form" noValidate autoComplete="off">
                                 <Grid container spacing={1}>
                                     {applicantInfoList.map((applicantInfo, index) => (
-                                        <Grid key={index} item xs={index === 4 ? 8 : 4}>
+                                        <Grid key={index} item xs={index === 4 ? 6 : 3}>
                                             <Box>
-                                                <Typography variant="h5">{applicantInfo}</Typography>
+                                                <Typography variant="body2">{applicantInfo}</Typography>
                                             </Box>
                                             <TextField
                                                 fullWidth
@@ -143,7 +165,7 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box>
-                                <Typography variant="h5">기업 성장 단계</Typography>
+                                <Typography variant="body2">기업 성장 단계</Typography>
                             </Box>
                             <Grid container>
                                 <Grid item xs={6}>
@@ -153,12 +175,12 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box>
-                                <Typography variant="h5">업종</Typography>
+                                <Typography variant="body2">업종</Typography>
                             </Box>
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.businessType.map((businessTypes, index) => (
-                                        <Grid item xs={4} key={index}>
+                                        <Grid item xs={3} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={businessTypeList[Number(businessTypes)]}
@@ -166,7 +188,7 @@ const TechCare365Detail = () => {
                                         </Grid>
                                     ))}
                                     {formInfo.businessTypeEtc !== undefined ? (
-                                        <Grid item xs={4}>
+                                        <Grid item xs={3}>
                                             <TextField
                                                 fullWidth
                                                 label="기타"
@@ -184,12 +206,12 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box>
-                                <Typography variant="h5">지도/자문 형태</Typography>
+                                <Typography variant="body2">지도/자문 형태</Typography>
                             </Box>
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.consultantForm.map((consultingForms, index) => (
-                                        <Grid item xs={6} key={index}>
+                                        <Grid item xs={3} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={consultingFormList[Number(consultingForms)]}
@@ -201,12 +223,12 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box>
-                                <Typography variant="h5">지도/자문 분야</Typography>
+                                <Typography variant="body2">지도/자문 분야</Typography>
                             </Box>
                             <FormGroup>
                                 <Grid container>
                                     {formInfo.consultingField.map((consultingFields, index) => (
-                                        <Grid item xs={4} key={index}>
+                                        <Grid item xs={3} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={consultingFieldList[Number(consultingFields)]}
@@ -214,7 +236,7 @@ const TechCare365Detail = () => {
                                         </Grid>
                                     ))}
                                     {formInfo.consultingFieldEtc !== undefined ? (
-                                        <Grid item xs={3}>
+                                        <Grid item>
                                             <FormControlLabel control={<Checkbox checked />} label="기타" />
                                             <TextField
                                                 type="text"
@@ -231,11 +253,11 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ my: 1 }}>
-                                <Typography variant="h5">희망지도/자문위원</Typography>
+                                <Typography variant="body2">희망지도/자문위원</Typography>
                             </Box>
                             <Grid container spacing={4}>
                                 {formInfo.consultantInfo.map((consultingFields, index) => (
-                                    <Grid item xs={4} key={index}>
+                                    <Grid item xs={3} key={index}>
                                         <TextField
                                             fullWidth
                                             label={consultantInfoList[index]}
@@ -252,10 +274,10 @@ const TechCare365Detail = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <Box>
-                                <Typography variant="h5">지원요청의 상세내용</Typography>
+                                <Typography variant="body2">지원요청의 상세내용</Typography>
                             </Box>
                             <Box>
-                                <Grid container spacing={5}>
+                                <Grid container sx={{ my: 1 }}>
                                     <Grid item xs={12}>
                                         <TextField
                                             fullWidth
@@ -271,20 +293,32 @@ const TechCare365Detail = () => {
                                 </Grid>
                             </Box>
                         </Grid>
-
                         <Grid item xs={12}>
-                            <Grid container spacing={3} justifyContent="center">
-                                <Grid item>
-                                    <form onSubmit={onSubmitApprove}>
-                                        <Button variant="contained">승인</Button>
-                                    </form>
+                            <Box>
+                                <Typography variant="body2">기대 효과</Typography>
+                            </Box>
+                            <Box>
+                                <Grid container sx={{ my: 1 }}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            fullWidth
+                                            type="text"
+                                            multiline
+                                            value={formInfo.effectiveness}
+                                            rows={4}
+                                            InputProps={{
+                                                readOnly: true
+                                            }}
+                                        />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </Box>
                         </Grid>
                     </Grid>
                 </MainCard>
             </Grid>
-            <ProfessorSelect></ProfessorSelect>
+            <ProfessorSelect professorRows={professorRows}></ProfessorSelect>
+            <TechPostDetailButton onSubmitApprove={onSubmitApprove}></TechPostDetailButton>
         </Grid>
     );
 };

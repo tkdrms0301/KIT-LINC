@@ -218,7 +218,6 @@ const TechCare365Content = ({
                                     ))}
                                     {formInfo.consultingFieldEtc !== null ? (
                                         <Grid item>
-                                            {/* <FormControlLabel control={<Checkbox checked />} label="기타" /> */}
                                             <TextField
                                                 fullWidth
                                                 type="text"
