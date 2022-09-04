@@ -2,51 +2,102 @@
 import { Grid, Button, Stack, Box, Typography, Divider, TextField, Radio, FormControlLabel, FormGroup, Checkbox } from '@mui/material';
 
 import MainCard from 'components/MainCard';
+import { useState, useEffect, useRef } from 'react';
+import axios from '../../../../node_modules/axios/index';
 import ProfessorSelect from './ProfessorSelect';
 import TechPostDetailButton from './TechPostDetailButton';
 const TechCare365Detail = () => {
+    const [selectedProfessor, setSelectedProfessor] = useState();
+
     const professorRows = [
         {
+            professorNumber: '1',
             professorName: '교수1',
             professorMajor: '학과1',
-            professorNumber: '1234',
             professorStudy: '연구1'
         },
         {
+            professorNumber: '2',
             professorName: '교수2',
             professorMajor: '학과2',
-            professorNumber: '1234',
             professorStudy: '연구2'
         },
         {
+            professorNumber: '3',
             professorName: '교수3',
             professorMajor: '학과3',
-            professorNumber: '1234',
             professorStudy: '연구3'
         },
         {
+            professorNumber: '4',
             professorName: '교수4',
             professorMajor: '학과4',
-            professorNumber: '1234',
             professorStudy: '연구4'
         },
         {
+            professorNumber: '5',
             professorName: '교수5',
             professorMajor: '학과5',
-            professorNumber: '1234',
             professorStudy: '연구5'
+        },
+        {
+            professorNumber: '6',
+            professorName: '교수6',
+            professorMajor: '학과6',
+            professorStudy: '연구6'
+        },
+        {
+            professorNumber: '7',
+            professorName: '교수7',
+            professorMajor: '학과7',
+            professorStudy: '연구7'
         }
     ];
+
+    // 프로젝트 내용 확인, 교수 확인 후 승인 버튼
     const onSubmitApprove = () => {
         console.log('test');
     };
+
+    const handleProfessorChange = (e, professorRow) => {
+        setSelectedProfessor(professorRow);
+    };
+
+    const requestProfessorInfo = () => {
+        axios
+            .get('url', {
+                params: { professorId: selectedProfessor.professorNumber }
+            })
+            .then((res) => {
+                console.log(res.data.data);
+            });
+    };
+
+    // 교수 검색 버튼*
+    const searchProfessorInputRef = useRef();
+
+    const onSubmitSearchProfessorInput = (e) => {
+        console.log(searchProfessorInputRef.current?.value);
+        // axios
+        //     .get('url', {
+        //         params: { searchInput: searchProfessorInputRef.current?.value }
+        //     })
+        //     .then((res) => {
+        //         console.log(res.data.data);
+        //     });
+    };
+
+    useEffect(() => {
+        console.log(selectedProfessor);
+    }, [selectedProfessor]);
+
     const formInfo = {
         // companyName: res.data.data.companyName,
         companyName: 'companyName',
         representativeName: 'representativeName',
         companyRegistrationNum: 'companyRegistrationNum',
         faxNum: 'faxNum',
-        address: 'ddressta',
+        address: 'address',
         name: 'name',
         departmentAndPosition: 'departmentAndPosition',
         phoneNum: 'phoneNum',
@@ -317,7 +368,13 @@ const TechCare365Detail = () => {
                     </Grid>
                 </MainCard>
             </Grid>
-            <ProfessorSelect professorRows={professorRows}></ProfessorSelect>
+            <ProfessorSelect
+                professorRows={professorRows}
+                handleProfessorChange={handleProfessorChange}
+                selectedProfessor={selectedProfessor}
+                searchProfessorInputRef={searchProfessorInputRef}
+                onSubmitSearchProfessorInput={onSubmitSearchProfessorInput}
+            ></ProfessorSelect>
             <TechPostDetailButton onSubmitApprove={onSubmitApprove}></TechPostDetailButton>
         </Grid>
     );

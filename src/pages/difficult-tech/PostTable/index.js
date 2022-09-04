@@ -11,7 +11,6 @@ import Search from './Search';
 import post from './dummy.js';
 import { useRecoilState } from 'recoil';
 import loadingState from 'state/Loading';
-import axios from '../../../../node_modules/axios/index';
 const PostTable = () => {
     // loading
     const [loading, setLoading] = useRecoilState(loadingState);
