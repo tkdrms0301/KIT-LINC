@@ -7,7 +7,6 @@ import TestLogin from 'pages/TestLogin/index';
 import RegisterPost from 'pages/difficult-tech/RegisterProject/index';
 import ApproveProject from 'pages/difficult-tech/ApproveProject/index';
 import PostTable from 'pages/difficult-tech/PostTable/index';
-import DocumentManage from 'pages/difficult-tech/DocumentManage/DocumentManage';
 import TechPostDetail from 'pages/difficult-tech/PostTable/TechPostDetail';
 import EnterpriseForm from 'pages/FieldTraining/EnterpriseForm/index';
 import StudentForm from 'pages/FieldTraining/StudentForm/index';
@@ -16,6 +15,11 @@ import StudentManagement from 'pages/FieldTraining/StudentManagement/index';
 import StudentSelection from 'pages/FieldTraining/StudentSelection/index';
 import AllList from 'pages/FieldTraining/AllList/index';
 import SelectedStudentList from 'pages/FieldTraining/SelectedStudent/index';
+import NoticeManagement from 'pages/homepage-manage/NoticeMain/index';
+import NoticeDetail from 'pages/homepage-manage/NoticeMain/NoticeDetail';
+import NoticeDetailWrite from 'pages/homepage-manage/NoticeMain/NoticeDetailWrite';
+import NoticeDetailModify from 'pages/homepage-manage/NoticeMain/NoticeDetailModify';
+import EnterpriseSignup from 'pages/FieldTraining/EnterpriseSignup/index';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -34,7 +38,7 @@ const MainRoutes = {
             children: [
                 {
                     path: 'default',
-                    element: <DocumentManage />
+                    element: null
                 }
             ]
         },
@@ -57,15 +61,15 @@ const MainRoutes = {
         // manager, professor, company 각각 페이지 나눠야됨
         {
             path: '/difficult-tech-docs-upload',
-            element: <DocumentManage />
+            element: null
         },
         {
             path: '/difficult-tech-docs-company',
-            element: <DocumentManage />
+            element: null
         },
         {
             path: '/difficult-tech-docs-professor',
-            element: <DocumentManage />
+            element: null
         },
         // professor, company 각각 페이지 나눠야됨
         {
@@ -77,10 +81,13 @@ const MainRoutes = {
             element: <DifficultTech />
         },
         {
-            path: 'shadow',
+            path: '/shadow',
             element: <TestLogin />
         },
-
+        {
+            path: '/field-training-enterprise-application',
+            element: <EnterpriseSignup />
+        },
         {
             path: '/field-training-application-enterprise',
             element: <EnterpriseForm />
@@ -108,6 +115,22 @@ const MainRoutes = {
         {
             path: '/field-training-enterprise-student-list',
             element: <AllList />
+        },
+        {
+            path: '/notice',
+            element: <NoticeManagement />
+        },
+        {
+            path: '/notice/:detail',
+            element: <NoticeDetail />
+        },
+        {
+            path: '/notice-write/:detail',
+            element: <NoticeDetailModify />
+        },
+        {
+            path: '/notice-write',
+            element: <NoticeDetailWrite />
         }
     ]
 };

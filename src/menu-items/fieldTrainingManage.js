@@ -26,6 +26,13 @@ const professor = {
     type: 'group',
     children: [
         {
+            id: 'field-training-enterprise-application',
+            title: '회원가입(기업)',
+            type: 'item',
+            url: '/field-training-enterprise-application',
+            icon: ''
+        },
+        {
             id: 'field-training-application-enterprise',
             title: '현장실습 신청(기업)',
             type: 'item',

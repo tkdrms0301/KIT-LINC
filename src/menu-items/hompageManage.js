@@ -26,10 +26,10 @@ const company = {
     type: 'group',
     children: [
         {
-            id: 'util-difficult-tech-docs-company',
+            id: 'notice',
             title: '공지사항 관리',
             type: 'item',
-            url: '/difficult-tech-docs-company',
+            url: '/notice',
             icon: ''
         }
     ]

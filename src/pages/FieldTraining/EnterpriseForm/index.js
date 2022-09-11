@@ -27,33 +27,30 @@ const EnterpriseForm = () => {
     const [endDate, setEndDate] = useState(dayjs(new Date()).format('YYYY-MM-DD'));
     const [startTime, setStartTime] = useState();
     const [endTime, setEndTime] = useState();
-    const [tpDeadlineDate, setTpDeadlineDate] = useState();
-    const [tpInterviewDate, setTpInterviewDate] = useState();
-    const [tpFinalSelectionDate, setTpFinalSelectionDate] = useState();
+    const [dayOfWeek, setDayOfWeek] = useState([]);
+    const [tpDeadlineDate, setTpDeadlineDate] = useState(dayjs(new Date()).format('YYYY-MM-DD hh:mm a'));
+    const [tpInterviewDate, setTpInterviewDate] = useState(dayjs(new Date()).format('YYYY-MM-DD hh:mm a'));
+    const [tpFinalSelectionDate, setTpFinalSelectionDate] = useState(dayjs(new Date()).format('YYYY-MM-DD hh:mm a'));
+    const [etcResourceCheck, setEtcResourceCheck] = useState([]);
     const [trainingProcess, setTrainingProcess] = useState({
-        tpDeadlineDateRadio: 'select',
-        tpInterviewDateRadio: 'select',
-        tpFinalSelectionDateRadio: 'select',
-        tpReferenceSchedule: ''
+        tpDeadlineDateRadio: true,
+        tpInterviewDateRadio: true,
+        tpFinalSelectionDateRadio: true
     });
-
-    const { tpDeadlineDateRadio, tpInterviewDateRadio, tpFinalSelectionDateRadio, tpReferenceSchedule } = trainingProcess;
+    const { tpDeadlineDateRadio, tpInterviewDateRadio, tpFinalSelectionDateRadio } = trainingProcess;
     const [requestInfo, setRequestInfo] = useState({
-        workingProcess: '방학과정',
-        workingStudentTerm: '1학기',
-        trainingTerm: '4주',
-        workingSemester: '직무체험형',
-        ftExist: '',
+        workingProcess: '1',
+        workingStudentTerm: '1',
+        trainingTerm: '4',
+        workingSemester: '1',
+        ftExist: '1',
         insuranceChecked: 'reject',
-        etcContract: 'argree',
-        etcContractElse: '',
-        ftpReferenceSchedul: '',
+        etcContract: '1',
         txRegularTrainingSelect: '월',
         txPaymentSelect: '당월',
-        selectionMethod: '',
-        jpAddress: '',
+        selectionMethod: '1',
         studentRecruit: '0',
-        studentGrade: '1학년'
+        studentGrade: '1'
     });
 
     const {
@@ -64,11 +61,9 @@ const EnterpriseForm = () => {
         ftExist,
         insuranceChecked,
         etcContract,
-        etcContractElse,
         txRegularTrainingSelect,
         txPaymentSelect,
         selectionMethod,
-        studentRecruit,
         studentGrade
     } = requestInfo;
     const [fileImage, setFileImage] = useState('');
@@ -98,38 +93,67 @@ const EnterpriseForm = () => {
     const studentRequirementRef = useRef();
     const studentEtcRef = useRef();
 
-    const workingProcessList = ['방학과정', '학기과정', '방학과정/학기과정'];
-    const studentTerms = ['1학기', '2학기'];
-    const trainingTerms = ['4주', '8주', '12주', '15주'];
-    const workingsemester = ['직무체험형', '채용연계형'];
+    const workingProcessList = [
+        { label: '방학과정', value: '1' },
+        { label: '방학과정', value: '2' },
+        { label: '방학과정/학기과정', value: '3' }
+    ];
+    const studentTerms = [
+        { label: '1학기', value: '1' },
+        { label: '여름학기', value: '2' },
+        { label: '2학기', value: '3' },
+        { label: '겨울학기', value: '4' }
+    ];
+    const trainingTerms = [
+        { label: '4주', value: '4' },
+        { label: '8주', value: '8' },
+        { label: '12주', value: '12' },
+        { label: '15주', value: '15' }
+    ];
+    const workingSemesters = [
+        { label: '직무체험형', value: '1' },
+        { label: '채용연계형', value: '2' }
+    ];
     const days = ['월', '화', '수', '목', '금', '토', '일'];
-    const ftExistList = ['현장실습없음', '상황별 실시', '주기적/상시적 실시'];
+    const ftExistList = [
+        { label: '현장실습없음', value: '1' },
+        { label: '상황별 실시', value: '2' },
+        { label: '주기적/상시적 실시', value: '3' }
+    ];
     const insurance = '참여 학생에 대한 산재보험 가입은 법적 의무임을 확인합니다.';
     const insuranceCheck = '(미가입시 운영 불가)';
-    const etcContracts = ['체결함', '체결안함'];
+    const etcContracts = [
+        { label: '체결함', value: '1' },
+        { label: '체결안함', value: '2' }
+    ];
     const etcResources = ['식사', '교통', '기숙사'];
-    const selectMethods = ['서류선발', '면접선발', '학교추천선발', '기타'];
+    const selectMethods = [
+        { label: '서류선발', value: '1' },
+        { label: '면접선발', value: '2' },
+        { label: '학교추천선발', value: '3' },
+        { label: '기타', value: '4' }
+    ];
     const titleList = [
         {
             name: 'tpDeadlineDateRadio',
             dateTitle: '접수마감일자',
             value: tpDeadlineDate,
             radioValue: trainingProcess.tpDeadlineDateRadio,
-            set: (newValue) => setTpDeadlineDate(newValue)
+            set: (newValue) => setTpDeadlineDate(dayjs(newValue).format('YYYY-MM-DD hh:mm a'))
         },
         {
             name: 'tpInterviewDateRadio',
             dateTitle: '면접일자',
             value: tpInterviewDate,
             radioValue: trainingProcess.tpInterviewDateRadio,
-            set: (newValue) => setTpInterviewDate(newValue)
+            set: (newValue) => setTpInterviewDate(dayjs(newValue).format('YYYY-MM-DD hh:mm a'))
         },
         {
             name: 'tpFinalSelectionDateRadio',
             dateTitle: '최종선발일자',
             value: tpFinalSelectionDate,
             radioValue: trainingProcess.tpFinalSelectionDateRadio,
-            set: (newValue) => setTpFinalSelectionDate(newValue)
+            set: (newValue) => setTpFinalSelectionDate(dayjs(newValue).format('YYYY-MM-DD hh:mm a'))
         },
         {
             name: 'tpReferenceSchedule',
@@ -210,27 +234,34 @@ const EnterpriseForm = () => {
             label: '모집인원'
         }
     ];
-    const grades = ['1학년', '2학년', '3학년', '4학년'];
+    const grades = [
+        { value: '1', label: '1학년' },
+        { value: '2', label: '2학년' },
+        { value: '3', label: '3학년' },
+        { value: '4', label: '4학년' }
+    ];
     const requireAbility = 'Co-op 참여 학생에게 요구되는\n' + 'CA역량, 외국어 역량, 지식/기술 역량, 전공과목 이수여부 등 기입';
-    const [etcResourceCheck, setEtcResourceCheck] = useState([]);
+
     const onChangeEtcResource = (checked, item) => {
         if (checked) {
             setEtcResourceCheck([...etcResourceCheck, item]);
         } else {
             setEtcResourceCheck(etcResourceCheck.filter((el) => el !== item));
         }
-        console.log(etcResourceCheck);
+    };
+    const onChangeDayOfWeek = (checked, item) => {
+        if (checked) {
+            setDayOfWeek([...dayOfWeek, item]);
+        } else {
+            setDayOfWeek(dayOfWeek.filter((el) => el !== item));
+        }
     };
     const onChangeRequestInfo = (e) => {
         const { name, value } = e.target;
-        console.log(name);
-        console.log(value);
         setRequestInfo({ ...requestInfo, [name]: value });
     };
     const onChangeTrainingProcess = (e) => {
         const { name, value } = e.target;
-        console.log(name);
-        console.log(value);
         setTrainingProcess({ ...trainingProcess, [name]: value });
     };
 
@@ -239,50 +270,82 @@ const EnterpriseForm = () => {
         documentTitle: '현장실습 신청서(기업용)'
     });
     const onSubmitSave = (e) => {
-        console.log(workingProcess);
-        console.log(workingSemester);
-        console.log(yearWorking);
-        console.log(workingStudentTerm);
-        console.log(trainingTerm);
-        console.log(startDate);
-        console.log(endDate);
-        console.log(dayjs(startTime).format('HH-mm A'));
-        console.log(dayjs(endTime).format('HH-mm A'));
-        console.log(); // 실습요일
-        console.log(ftExist);
-        console.log(insuranceChecked);
-        console.log(etcContract);
-        console.log(etcContractElseRef.current.value);
-        console.log(txRegularTrainingSelect);
-        console.log(txPaymentSelect);
-        console.log(txExtensionRef.current.value);
-        console.log(txRegularMoneyRef.current.value);
-        console.log(txPaymentDateRef.current.value);
-        console.log(etcResourceCheck);
-        console.log(selectionMethod);
-        console.log(selectionMethodEtcRef.current.value);
-        console.log(tpDeadlineDateRadio);
-        console.log(tpInterviewDateRadio);
-        console.log(tpFinalSelectionDateRadio);
-        console.log(tpReferenceScheduleRef.current.value);
-        console.log(miDepartmentRef.current.value);
-        console.log(miNameRef.current.value);
-        console.log(miPositionRef.current.value);
-        console.log(miContactRef.current.value);
-        console.log(miPhoneNumRef.current.value);
-        console.log(miEmailRef.current.value);
-        console.log(jpDepartmentRef.current.value);
-        console.log(jpJobRef.current.value);
-        console.log(jpAddressRef.current.value);
-        console.log(jobGoalRef.current.value);
-        console.log(operationGuidancePlanRef.current.value);
-        console.log(jobSummaryRef.current.value);
-        console.log(studentMajorRef.current.value);
-        console.log(studentRecruitRef.current.value);
-        console.log(studentGrade);
-        console.log(studentCreditRef.current.value);
-        console.log(studentRequirementRef.current.value);
-        console.log(studentEtcRef.current.value);
+        console.log('**submit form**');
+        const submitForm = {
+            workingProcess: workingProcess,
+            workingSemester: workingSemester,
+            yearWorking: yearWorking,
+            workingStudentTerm: workingStudentTerm,
+            trainingTerm: trainingTerm,
+            startDate: startDate,
+            endDate: endDate,
+            startTime: dayjs(startTime).format('HH-mm A'),
+            endTime: dayjs(endTime).format('HH-mm A'),
+            dayOfWeek: dayOfWeek,
+            ftExist: ftExist,
+            // console.log(insuranceChecked) // 필드 필요없이 프론트에서 체크
+            etcContract: etcContract,
+            etcContractElse: etcContractElseRef.current.value,
+            trainingExpension:
+                txRegularTrainingSelect +
+                '|' +
+                txPaymentSelect +
+                '|' +
+                txExtensionRef.current.value +
+                '|' +
+                txRegularMoneyRef.current.value +
+                '|' +
+                txRegularTrainingSelect +
+                '|' +
+                txPaymentDateRef.current.value,
+            etcResourceCheck: etcResourceCheck,
+            selectionMethod: selectionMethod,
+            selectionMethodEtc: selectionMethodEtcRef.current.value,
+            tpDeadlineDateChecked: tpDeadlineDateRadio,
+            tpDeadlineDate: tpDeadlineDate,
+            tpInterviewDateChecked: tpInterviewDateRadio,
+            tpInterviewDate: tpInterviewDate,
+            tpFinalSelectionDateChecked: tpFinalSelectionDateRadio,
+            tpFinalSelectionDate: tpFinalSelectionDate,
+            tpReferenceSchedule: tpReferenceScheduleRef.current.value,
+            managerInfo:
+                miDepartmentRef.current.value +
+                '|' +
+                miNameRef.current.value +
+                '|' +
+                miPositionRef.current.value +
+                '|' +
+                miContactRef.current.value +
+                '|' +
+                miPhoneNumRef.current.value +
+                '|' +
+                miEmailRef.current.value,
+            jobInfo:
+                jpDepartmentRef.current.value +
+                '|' +
+                jpJobRef.current.value +
+                '|' +
+                jpAddressRef.current.value +
+                '|' +
+                jobGoalRef.current.value +
+                '|' +
+                operationGuidancePlanRef.current.value +
+                '|' +
+                jobSummaryRef.current.value,
+            studentInfo:
+                studentMajorRef.current.value +
+                '|' +
+                studentRecruitRef.current.value +
+                '|' +
+                studentGrade +
+                '|' +
+                studentCreditRef.current.value +
+                '|' +
+                studentRequirementRef.current.value +
+                '|' +
+                studentEtcRef.current.value
+        };
+        console.log(submitForm);
     };
     const handleFile = (e) => {
         var fileInput = document.getElementsByClassName('ex_file');
@@ -309,7 +372,7 @@ const EnterpriseForm = () => {
                                     <Grid container>
                                         {workingProcessList.map((workProcess, index) => (
                                             <Grid item key={index}>
-                                                <FormControlLabel value={workProcess} control={<Radio />} label={workProcess} />
+                                                <FormControlLabel value={workProcess.value} control={<Radio />} label={workProcess.label} />
                                             </Grid>
                                         ))}
                                     </Grid>
@@ -321,9 +384,9 @@ const EnterpriseForm = () => {
                             <Grid container>
                                 <RadioGroup name="workingSemester" value={requestInfo.workingSemester} onChange={onChangeRequestInfo}>
                                     <Grid container>
-                                        {workingsemester.map((semester, index) => (
+                                        {workingSemesters.map((semester, index) => (
                                             <Grid item key={index}>
-                                                <FormControlLabel value={semester} control={<Radio />} label={semester} />
+                                                <FormControlLabel value={semester.value} control={<Radio />} label={semester.label} />
                                             </Grid>
                                         ))}
                                     </Grid>
@@ -368,8 +431,8 @@ const EnterpriseForm = () => {
                                                 onChange={onChangeRequestInfo}
                                             >
                                                 {studentTerms.map((studentTerm, index) => (
-                                                    <MenuItem value={studentTerm} key={index}>
-                                                        {studentTerm}
+                                                    <MenuItem value={studentTerm.value} key={index}>
+                                                        {studentTerm.label}
                                                     </MenuItem>
                                                 ))}
                                             </Select>
@@ -385,8 +448,8 @@ const EnterpriseForm = () => {
                                                 onChange={onChangeRequestInfo}
                                             >
                                                 {trainingTerms.map((trainingTerm, index) => (
-                                                    <MenuItem value={trainingTerm} key={index}>
-                                                        {trainingTerm}
+                                                    <MenuItem value={trainingTerm.value} key={index}>
+                                                        {trainingTerm.label}
                                                     </MenuItem>
                                                 ))}
                                             </Select>
@@ -492,7 +555,12 @@ const EnterpriseForm = () => {
                             <Grid container>
                                 {days.map((day, index) => (
                                     <Grid item xs={12 / 7} key={index}>
-                                        <FormControlLabel control={<Checkbox />} label={day} />
+                                        <FormControlLabel
+                                            value={day}
+                                            control={<Checkbox />}
+                                            onChange={(e) => onChangeDayOfWeek(e.target.checked, e.target.value)}
+                                            label={day}
+                                        />
                                     </Grid>
                                 ))}
                             </Grid>
@@ -504,7 +572,7 @@ const EnterpriseForm = () => {
                                     <Grid container>
                                         {ftExistList.map((ftExists, index) => (
                                             <Grid item key={index}>
-                                                <FormControlLabel value={ftExists} control={<Radio />} label={ftExists} />
+                                                <FormControlLabel value={ftExists.value} control={<Radio />} label={ftExists.label} />
                                             </Grid>
                                         ))}
                                     </Grid>
@@ -551,7 +619,7 @@ const EnterpriseForm = () => {
                                     <Grid container spacing={3}>
                                         {etcContracts.map((etcContract, index) => (
                                             <Grid item key={index}>
-                                                <FormControlLabel value={etcContract} control={<Radio />} label={etcContract} />
+                                                <FormControlLabel value={etcContract.value} control={<Radio />} label={etcContract.label} />
                                             </Grid>
                                         ))}
                                     </Grid>
@@ -665,7 +733,11 @@ const EnterpriseForm = () => {
                                     <Grid container>
                                         {selectMethods.map((selectMehtod, index) => (
                                             <Grid item key={index}>
-                                                <FormControlLabel value={selectMehtod} control={<Radio />} label={selectMehtod} />
+                                                <FormControlLabel
+                                                    value={selectMehtod.value}
+                                                    control={<Radio />}
+                                                    label={selectMehtod.label}
+                                                />
                                             </Grid>
                                         ))}
                                         <Grid item>
@@ -675,8 +747,8 @@ const EnterpriseForm = () => {
                                                 placeholder="기타 전형방법"
                                                 name="selectionMethodEtc"
                                                 inputRef={selectionMethodEtcRef}
-                                                disabled={selectionMethod === '기타' ? false : true}
-                                                InputProps={selectionMethod === '기타' ? null : { readOnly: true }}
+                                                disabled={selectionMethod === '4' ? false : true}
+                                                InputProps={selectionMethod === '4' ? null : { readOnly: true }}
                                             ></TextField>
                                         </Grid>
                                     </Grid>
@@ -796,8 +868,8 @@ const EnterpriseForm = () => {
                                     label="학년 선택"
                                 >
                                     {grades.map((grade, index) => (
-                                        <MenuItem value={grade} key={index}>
-                                            {grade}
+                                        <MenuItem value={grade.value} key={index}>
+                                            {grade.label}
                                         </MenuItem>
                                     ))}
                                 </Select>

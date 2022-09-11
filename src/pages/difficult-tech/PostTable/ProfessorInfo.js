@@ -33,7 +33,7 @@ const ProfessorInfo = ({ selectedProfessor }) => {
                             <TextField
                                 fullWidth
                                 type="text"
-                                defaultValue={professorInfo.value}
+                                value={professorInfo.value}
                                 variant="standard"
                                 InputProps={{
                                     readOnly: true

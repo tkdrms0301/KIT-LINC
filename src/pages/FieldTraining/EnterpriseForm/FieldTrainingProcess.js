@@ -1,5 +1,5 @@
 import { Grid, FormControlLabel, Typography, TextField, Radio, RadioGroup } from '@mui/material';
-import { LocalizationProvider, DesktopDatePicker, DatePicker, TimePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 const FieldTrainingProcess = ({ title, trainingProcess, onChangeTrainingProcess, tpReferenceScheduleRef }) => {
     return title.dateTitle === '참고일정' ? (
@@ -28,23 +28,23 @@ const FieldTrainingProcess = ({ title, trainingProcess, onChangeTrainingProcess,
                             <RadioGroup name={title.name} value={title.radioValue} onChange={onChangeTrainingProcess}>
                                 <Grid>
                                     <FormControlLabel
-                                        name={trainingProcess.name}
-                                        value="unSelect"
-                                        label="일정 별도 협의"
-                                        control={<Radio />}
-                                    ></FormControlLabel>
-                                </Grid>
-                                <Grid>
-                                    <FormControlLabel
-                                        value="select"
+                                        value={true}
                                         onChange={onChangeTrainingProcess}
                                         label="일정 선택"
                                         control={<Radio />}
                                     ></FormControlLabel>
                                 </Grid>
+                                <Grid>
+                                    <FormControlLabel
+                                        name={trainingProcess.name}
+                                        value={false}
+                                        label="일정 별도 협의"
+                                        control={<Radio />}
+                                    ></FormControlLabel>
+                                </Grid>
                             </RadioGroup>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                {title.radioValue === 'select' ? (
+                                {title.radioValue ? (
                                     <DateTimePicker
                                         label="일정 선택"
                                         inputFormat="yyyy/MM/dd hh:mm"

@@ -3,7 +3,6 @@ import { Grid, Box, Pagination } from '@mui/material';
 
 // project import
 import { useState, useRef, useEffect } from 'react';
-import SideFilter from './SideFilter';
 import TechPost from './TechPost';
 import Search from './Search';
 
@@ -56,7 +55,13 @@ const PostTable = () => {
     // 프로젝트 이름 입력후 검색 버튼*
     const searchInputRef = useRef();
     const onSubmitSearchInput = (e) => {
-        console.log(searchInputRef.current?.value);
+        const info = {
+            status: selectedStatus,
+            consultingField: selectedConsultingField,
+            requstForm: selectedRequstForm,
+            searchInput: searchInputRef.current?.value
+        };
+        console.log(info);
         // axios
         //     .get('url', {
         //         params: { searchInput: searchInputRef.current?.value }
@@ -116,12 +121,17 @@ const PostTable = () => {
                     <Grid sx={{ maxWidth: '1000px', width: '1000px' }}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                <Search searchInputRef={searchInputRef} onSubmitSearchInput={onSubmitSearchInput} />
+                                <Search
+                                    selected={selected}
+                                    onChangeSelected={onChangeSelected}
+                                    searchInputRef={searchInputRef}
+                                    onSubmitSearchInput={onSubmitSearchInput}
+                                />
                             </Grid>
-                            <Grid item xs={3}>
+                            {/* <Grid item xs={3}>
                                 <SideFilter selected={selected} onChangeSelected={onChangeSelected} />
-                            </Grid>
-                            <Grid item xs={9}>
+                            </Grid> */}
+                            <Grid item xs={12}>
                                 <Grid container spacing={2}>
                                     {data.map((post, index) => (
                                         <TechPost key={index} project={post} />

@@ -8,7 +8,7 @@ const TechPostDetailButton = ({ onSubmitApprove }) => {
                 <Grid container spacing={3} justifyContent="center">
                     <Grid item>
                         <form onSubmit={onSubmitApprove}>
-                            <Button variant="contained">승인</Button>
+                            <Button variant="contained">프로젝트 생성</Button>
                         </form>
                     </Grid>
                 </Grid>
