@@ -1,4 +1,4 @@
-import { Grid, Button, TextField, FormControl, Select, InputLabel, MenuItem, Paper, Divider, TableBody, Pagination } from '@mui/material';
+import { Grid, Button, TextField, FormControl, Select, InputLabel, MenuItem } from '@mui/material';
 const NoticeSearch = ({ noticeSearchForm, noticeSearchRef, onChangeNoticeSearchForm, onSubmitSearch }) => {
     const noticeSearchList = ['전체', '제목', '내용'];
     return (

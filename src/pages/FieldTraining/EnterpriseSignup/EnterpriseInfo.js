@@ -1,55 +1,86 @@
 import { Grid, InputLabel, Typography, TextField, Radio, FormControlLabel, RadioGroup, Checkbox } from '@mui/material';
-const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
+import { useEffect } from 'react';
+import axios from 'axios';
+const EnterpriseInfo = ({
+    businessNumber,
+    enterpriseSortation,
+    onChangeEnterpriseSortation,
+    enterpriseIsListed,
+    onChangeEnterpriseIsListed,
+    dayOfWeek,
+    onChangeDayOfWeek,
+    businessType1Ref,
+    businessType2Ref,
+    workingHourOfDay,
+    workingHourOfWeek,
+    workingDayOfWeek,
+    eiDepartmentRef,
+    eiNameRef,
+    eiPositionRef,
+    eiContactRef,
+    eiPhoneNumberRef,
+    eiEmailRef,
+    eiFaxRef,
+    enterpriseInfo,
+    onBlurEnterpriseInfo
+}) => {
+    // let enterpriseInfo;
+    useEffect(() => {
+        console.log(businessNumber);
+        //axios 사용 사업자등록번호(businessNumber) => 기업정보 값 가져오기
+        // enterpriseInfo 에 값 저장
+    }, []);
     const enterpriseInfoList = [
+        // enterpriseInfo 값을 value에 각각 저장하기
         {
             label: '기관(법인)명',
             size: 6,
-            value: ''
+            value: '기관'
         },
         {
             label: '영문기관명',
             size: 6,
-            value: ''
+            value: 'enterprise'
         },
         {
             label: '대표자명',
             size: 4,
-            value: ''
+            value: '대표자'
         },
         {
             label: '사업자등록번호',
             size: 4,
-            value: ''
+            value: businessNumber
         },
         {
             label: '개업 연월일',
             size: 4,
-            value: ''
+            value: '2022-01-01'
         },
         {
             label: '한국표준산업분류코드',
             size: 4,
-            value: ''
+            value: 'K1234'
         },
         {
             label: '종업원 수',
             size: 4,
-            value: ''
+            value: '100'
         },
         {
             label: '매출액',
             size: 4,
-            value: ''
+            value: '1000억'
         },
         {
             label: '사업장 소재지',
             size: 6,
-            value: ''
+            value: '구미시'
         },
         {
             label: '홈페이지',
             size: 6,
-            value: ''
+            value: 'https://www.kumoh.ac.kr'
         }
     ];
     const enterpriseSortationList = [
@@ -107,31 +138,31 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
     const enterpriseMDList = [
         {
             label: '부서명',
-            ref: businessType2Ref
+            ref: eiDepartmentRef
         },
         {
-            label: ' 성명',
-            ref: businessType2Ref
+            label: '성명',
+            ref: eiNameRef
         },
         {
             label: '직위',
-            ref: businessType2Ref
+            ref: eiPositionRef
         },
         {
             label: '연락처',
-            ref: businessType2Ref
+            ref: eiContactRef
         },
         {
             label: '휴대폰',
-            ref: businessType2Ref
+            ref: eiPhoneNumberRef
         },
         {
             label: '이메일',
-            ref: businessType2Ref
+            ref: eiEmailRef
         },
         {
             label: 'FAX',
-            ref: businessType2Ref
+            ref: eiFaxRef
         }
     ];
     return (
@@ -143,7 +174,13 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                 {enterpriseInfoList.map((enterpriseInfo, index) => (
                     <Grid item key={index} xs={enterpriseInfo.size}>
                         <InputLabel>{enterpriseInfo.label}</InputLabel>
-                        <TextField fullWidth placeholder={enterpriseInfo.label} variant="standard"></TextField>
+                        <TextField
+                            fullWidth
+                            placeholder={enterpriseInfo.label}
+                            variant="standard"
+                            defaultValue={enterpriseInfo.value}
+                            disabled
+                        ></TextField>
                     </Grid>
                 ))}
             </Grid>
@@ -156,7 +193,7 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                         <Grid item xs={12}>
                             <Typography>구분</Typography>
                         </Grid>
-                        <RadioGroup>
+                        <RadioGroup value={enterpriseSortation} onChange={onChangeEnterpriseSortation}>
                             <Grid container>
                                 {enterpriseSortationList.map((enterpriseSortation, index) => (
                                     <Grid item xs={4} key={index}>
@@ -178,12 +215,15 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                         </Grid>
                         <Grid item xs={12}>
                             <Grid container>
-                                {enterpriseIsListedList.map((enterpriseIsListed, index) => (
+                                {enterpriseIsListedList.map((enterpriseIsListeds, index) => (
                                     <Grid item xs={4} key={index}>
+                                        {console.log('checkbox')}
                                         <FormControlLabel
-                                            value={enterpriseIsListed.value}
+                                            value={enterpriseIsListeds.value}
                                             control={<Checkbox />}
-                                            label={enterpriseIsListed.label}
+                                            onChange={(e) => onChangeEnterpriseIsListed(e.target.checked, e.target.value)}
+                                            label={enterpriseIsListeds.label}
+                                            checked={enterpriseIsListed.includes(enterpriseIsListeds.value) ? true : false}
                                         />
                                     </Grid>
                                 ))}
@@ -192,13 +232,16 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                     </Grid>
                 </Grid>
                 {enterpriseStatus2.map((enterpriseStatus, index) => (
-                    <Grid item xs={6}>
+                    <Grid item xs={6} key={index}>
                         <Grid sx={{ mb: 1 }}>
                             <Typography>{enterpriseStatus.title}</Typography>
                         </Grid>
                         <Grid>
                             <TextField
                                 placeholder="사업의 종류(업태)"
+                                name="enterpriseBusinessType1"
+                                defaultValue={enterpriseInfo.enterpriseBusinessType1}
+                                onBlur={onBlurEnterpriseInfo}
                                 multiline
                                 rows={3}
                                 fullWidth
@@ -210,7 +253,7 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
             </Grid>
             <Grid container spacing={3} sx={{ mt: 1 }}>
                 <Grid item xs={12}>
-                    <Typography>기관현황</Typography>
+                    <Typography>기관 근로형태</Typography>
                 </Grid>
             </Grid>
             <Grid container spacing={3} sx={{ mt: 1 }}>
@@ -218,10 +261,10 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                     <Typography>정규 근로시간</Typography>
                     <Grid container direction="row" spacing={3}>
                         <Grid item xs={6}>
-                            <TextField fullWidth placeholder="1일 기준 시간" variant="standard"></TextField>
+                            <TextField fullWidth placeholder="1일 기준 시간" variant="standard" inputRef={workingHourOfDay}></TextField>
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField fullWidth placeholder="1주 기준 시간" variant="standard"></TextField>
+                            <TextField fullWidth placeholder="1주 기준 시간" variant="standard" inputRef={workingHourOfWeek}></TextField>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -229,11 +272,17 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                     <Typography>정규 근로일수</Typography>
                     <Grid container direction="row" spacing={3}>
                         <Grid item xs={3}>
-                            <TextField fullWidth placeholder="1주 기준 일수" variant="standard"></TextField>
+                            <TextField fullWidth placeholder="1주 기준 일수" variant="standard" inputRef={workingDayOfWeek}></TextField>
                         </Grid>
-                        {dayOfWeekList.map((dayOfWeek, index) => (
+                        {dayOfWeekList.map((dayOfWeeks, index) => (
                             <Grid item xs={9 / 7} key={index}>
-                                <FormControlLabel value={dayOfWeek.value} control={<Checkbox />} label={dayOfWeek.label} />
+                                <FormControlLabel
+                                    value={dayOfWeeks.value}
+                                    control={<Checkbox />}
+                                    label={dayOfWeeks.label}
+                                    onChange={(e) => onChangeDayOfWeek(e.target.checked, e.target.value)}
+                                    checked={dayOfWeek.includes(dayOfWeeks.value) ? true : false}
+                                />
                             </Grid>
                         ))}
                     </Grid>
@@ -244,7 +293,7 @@ const EnterpriseInfo = ({ businessType1Ref, businessType2Ref }) => {
                 {enterpriseMDList.map((enterpriseMD, index) => (
                     <Grid item xs={3} key={index}>
                         <InputLabel>{enterpriseMD.label}</InputLabel>
-                        <TextField fullWidth placeholder={enterpriseMD.label} variant="standard"></TextField>
+                        <TextField fullWidth placeholder={enterpriseMD.label} variant="standard" inputRef={enterpriseMD.ref}></TextField>
                     </Grid>
                 ))}
             </Grid>

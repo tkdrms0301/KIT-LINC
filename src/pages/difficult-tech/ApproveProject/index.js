@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 
-import { Button, Box, Grid, Stack, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 
 import ProjectTable from './ProjectTable';
 import TechCare365Content from './TechCare365Content';
@@ -47,7 +47,7 @@ function ApproveProject() {
     }, []);
     function contentAllRequest() {
         axios
-            .get('http://se337.duckdns.org:80/api/request', {})
+            .get('http://337se.duckdns.org:80/api/request', {})
             .then((res) => {
                 console.log(res.data.data.content);
                 setRows(res.data.data.content);
@@ -58,7 +58,7 @@ function ApproveProject() {
     const onSubmitRequestForm = (e) => {
         e.preventDefault();
         axios
-            .get('http://se337.duckdns.org:80/api/request', {
+            .get('http://337se.duckdns.org:80/api/request', {
                 params: {
                     type: requestForm === 'All' ? null : requestForm,
                     status: state,
@@ -79,8 +79,10 @@ function ApproveProject() {
         console.log('승인');
         console.log(selectedPost.id);
         axios
-            .post('http://se337.duckdns.org:80/api/request/status', null, {
-                params: { requestId: Number(selectedPost.id), status: 'APPROVED' }
+            .post('http://337se.duckdns.org:80/api/request/status', {
+                requestId: Number(selectedPost.id),
+                status: 'APPROVED',
+                comment: ''
             })
             .then((res) => {
                 console.log(res);
@@ -94,8 +96,10 @@ function ApproveProject() {
         e.preventDefault();
         console.log('거절');
         axios
-            .post('http://se337.duckdns.org:80/api/request/status', null, {
-                params: { requestId: Number(selectedPost.id), status: 'REJECTED' }
+            .post('http://337se.duckdns.org:80/api/request/status', {
+                requestId: Number(selectedPost.id),
+                status: 'REJECTED',
+                comment: ''
             })
             .then((res) => {
                 console.log(res);
@@ -107,8 +111,10 @@ function ApproveProject() {
     const onSubmitPendingProject = (e) => {
         e.preventDefault();
         axios
-            .post('http://se337.duckdns.org:80/api/request/status', null, {
-                params: { requestId: Number(selectedPost.id), status: 'PENDING' }
+            .post('http://337se.duckdns.org:80/api/request/status', {
+                requestId: Number(selectedPost.id),
+                status: 'PENDING',
+                comment: ''
             })
             .then((res) => {
                 console.log(res);
@@ -120,11 +126,11 @@ function ApproveProject() {
 
     function requestFormInfo() {
         axios
-            .get('http://se337.duckdns.org:80/api/member/requestform', {
+            .get('http://337se.duckdns.org:80/api/member/requestform', {
                 params: { requestId: Number(selectedPost.id) }
             })
             .then((res) => {
-                console.log(res.data.data);
+                //console.log(res.data.data);
 
                 const tmpFormInfo = {
                     companyName: res.data.data.companyName,
@@ -142,6 +148,13 @@ function ApproveProject() {
                     businessType: res.data.data.businessType,
                     businessTypeEtc: res.data.data.businessTypeEtc,
                     mainService: res.data.data.mainService,
+                    // consultantForm: res.data.data.consultantForm,
+                    // consultantInfo: res.data.data.consultantInfo,
+                    // consultingField: res.data.data.consultingField,
+                    // consultingFieldEtc: res.data.data.consultingFieldEtc,
+                    // detailInfo: res.data.data.detailInfo,
+                    // effectiveness: res.data.data.effectiveness,
+                    // projectName: res.data.data.projectName
                     consultantForm: ['0', '4'],
                     consultantInfo: ['성명', '소속', '연락처'],
                     consultingField: ['1', '4', '8', '11'],

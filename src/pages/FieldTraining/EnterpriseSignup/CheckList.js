@@ -1,4 +1,4 @@
-import { Grid, InputLabel, Typography, TextField, Radio, FormControlLabel, RadioGroup, Checkbox } from '@mui/material';
+import { Grid, Typography, TextField, Radio, FormControlLabel, RadioGroup } from '@mui/material';
 const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef }) => {
     const radio1List = [
         { label: '일반사무실 형태', value: '1' },

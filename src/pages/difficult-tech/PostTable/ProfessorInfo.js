@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography, Box, TableHead, TableRow, TableCell, Paper, Divider, TableBody } from '@mui/material';
+import { Grid, TextField, Typography, Box, Divider } from '@mui/material';
 
 const ProfessorInfo = ({ selectedProfessor }) => {
     const professorInfoList = [

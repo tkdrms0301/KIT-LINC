@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-import { Checkbox, TextField, RadioGroup, FormControlLabel, Radio, Button, Box, Grid, Stack, Typography, Divider } from '@mui/material';
-import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
-
+import { Checkbox, TextField, FormControlLabel, Radio, Button, Box, Grid, Stack, Typography, FormGroup } from '@mui/material';
 import MainCard from 'components/MainCard';
 
 const TechCare365Content = ({

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, Box, Grid, Stack, Typography, Divider } from '@mui/material';
+import { Button, Box, Grid, Stack, Typography } from '@mui/material';
 
 import MainCard from 'components/MainCard';
 

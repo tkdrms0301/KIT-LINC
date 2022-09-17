@@ -2,7 +2,6 @@ import { TextField, Box, Button, Grid, FormControl, InputLabel, Select, MenuItem
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import dayjs from 'dayjs';
 const ProjectSort = ({
     requestInfo,
     onChangeRequestInfo,
@@ -11,7 +10,6 @@ const ProjectSort = ({
     endDate,
     setEndDate,
     onSubmitRequestForm,
-    onSubmitSearch,
     categoryList
 }) => {
     const { state, requestForm } = requestInfo;

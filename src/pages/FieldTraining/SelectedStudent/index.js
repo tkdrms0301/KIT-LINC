@@ -1,4 +1,4 @@
-import { Grid, FormControlLabel, Checkbox, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 const SelectedStudentList = () => {
     return (

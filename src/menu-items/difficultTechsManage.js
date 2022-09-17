@@ -46,6 +46,13 @@ const difficultTechs = {
             url: '/difficult-tech-approval',
             icon: ''
         },
+        {
+            id: 'util-difficult-tech-family-enterprise',
+            title: '가족회사 조회',
+            type: 'item',
+            url: '/difficult-tech-family-enterprise',
+            icon: ''
+        },
         // {
         //     id: 'util-difficult-project-matching',
         //     title: '프로젝트 매칭',

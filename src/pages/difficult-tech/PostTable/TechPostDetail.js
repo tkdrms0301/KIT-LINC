@@ -1,5 +1,5 @@
 // project import
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import axios from '../../../../node_modules/axios/index';

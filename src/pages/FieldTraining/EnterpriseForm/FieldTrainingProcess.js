@@ -1,7 +1,7 @@
 import { Grid, FormControlLabel, Typography, TextField, Radio, RadioGroup } from '@mui/material';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-const FieldTrainingProcess = ({ title, trainingProcess, onChangeTrainingProcess, tpReferenceScheduleRef }) => {
+const FieldTrainingProcess = ({ title, onChangeTrainingProcess, tpReferenceScheduleRef }) => {
     return title.dateTitle === '참고일정' ? (
         <Grid>
             <Typography variant="h6">{title.dateTitle}</Typography>
@@ -35,12 +35,7 @@ const FieldTrainingProcess = ({ title, trainingProcess, onChangeTrainingProcess,
                                     ></FormControlLabel>
                                 </Grid>
                                 <Grid>
-                                    <FormControlLabel
-                                        name={trainingProcess.name}
-                                        value={false}
-                                        label="일정 별도 협의"
-                                        control={<Radio />}
-                                    ></FormControlLabel>
+                                    <FormControlLabel value={false} label="일정 별도 협의" control={<Radio />}></FormControlLabel>
                                 </Grid>
                             </RadioGroup>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>

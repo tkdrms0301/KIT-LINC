@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 // material-ui
-import { Box, List, Typography, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Typography } from '@mui/material';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';

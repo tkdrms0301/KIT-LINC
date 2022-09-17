@@ -1,7 +1,4 @@
-import { RadioGroup, FormControlLabel, Radio, Typography, TextField, Grid, Box, Checkbox, Button } from '@mui/material';
-import { throttle } from 'lodash';
-
-import { FormControl, FormGroup } from '../../../../node_modules/@mui/material/index';
+import { RadioGroup, FormControlLabel, Radio, Typography, TextField, Grid, Box, Checkbox, Button, FormGroup } from '@mui/material';
 
 const FormTechCare365 = ({
     projectNameRef,

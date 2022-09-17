@@ -1,19 +1,4 @@
-import {
-    Grid,
-    FormControlLabel,
-    Checkbox,
-    Typography,
-    InputLabel,
-    Select,
-    MenuItem,
-    FormControl,
-    TextField,
-    Radio,
-    Button,
-    Stack,
-    RadioGroup
-} from '@mui/material';
-import { useState } from 'react';
+import { Grid, Typography, TextField, Button } from '@mui/material';
 const Upload = ({ fileImageName, handleFile }) => {
     return (
         <Grid>

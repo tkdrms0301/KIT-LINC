@@ -1,5 +1,5 @@
 import MainCard from 'components/MainCard';
-import { Paper, Grid, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Grid, Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
 import EnterpriseFormTable from './EnterpriseFormTable';
 import { useState } from 'react';
 import StudentFormTable from './StudentFormTable';

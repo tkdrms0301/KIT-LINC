@@ -119,7 +119,7 @@ const PostTable = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Box>
                     <Grid sx={{ maxWidth: '1000px', width: '1000px' }}>
-                        <Grid container spacing={3}>
+                        <Grid container spacing={3} justifyContent="flex-end">
                             <Grid item xs={12}>
                                 <Search
                                     selected={selected}

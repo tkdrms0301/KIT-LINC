@@ -1,16 +1,12 @@
 // project import
 import MainCard from 'components/MainCard';
 
-import React, { useCallback, useEffect, useMemo, useState, useRef } from 'react';
-import { debounce } from 'lodash';
+import React, { useEffect, useState, useRef } from 'react';
 import * as axios from 'axios';
 
 // material-ui
 import { Grid } from '@mui/material';
 
-// third party
-import * as Yup from 'yup';
-import { useFormik } from 'formik';
 // project import
 import TechCatergory from './TechCategory';
 import FormTechCare365 from './FormTechCare365';
@@ -18,7 +14,6 @@ import Form2 from './Form2';
 import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
-import { throttle } from 'lodash';
 
 const RegisterPost = () => {
     const projectNameRef = useRef();
@@ -68,7 +63,7 @@ const RegisterPost = () => {
         // 이를 방지하기 위해 이 함수를 호출
         console.log();
         axios
-            .post('http://se337.duckdns.org:80/api/request/care365', {
+            .post('http://337se.duckdns.org:80/api/request/care365', {
                 projectName: projectNameRef.current.value,
                 consultantForm: consultingForm,
                 consultingField: consultingField,
@@ -85,7 +80,7 @@ const RegisterPost = () => {
 
     function requestFormInfo() {
         axios
-            .get('http://se337.duckdns.org:80/api/member/requestform', {})
+            .get('http://337se.duckdns.org:80/api/member/requestform', {})
             .then((res) => {
                 console.log(res.data.data);
 

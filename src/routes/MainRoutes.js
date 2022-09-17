@@ -20,7 +20,7 @@ import NoticeDetail from 'pages/homepage-manage/NoticeMain/NoticeDetail';
 import NoticeDetailWrite from 'pages/homepage-manage/NoticeMain/NoticeDetailWrite';
 import NoticeDetailModify from 'pages/homepage-manage/NoticeMain/NoticeDetailModify';
 import EnterpriseSignup from 'pages/FieldTraining/EnterpriseSignup/index';
-
+import FamilyEnterpriseTable from 'pages/difficult-tech/FamilyEnterpriseTable/index';
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 
@@ -57,6 +57,10 @@ const MainRoutes = {
         {
             path: '/difficult-tech-approval',
             element: <ApproveProject />
+        },
+        {
+            path: '/difficult-tech-family-enterprise',
+            element: <FamilyEnterpriseTable />
         },
         // manager, professor, company 각각 페이지 나눠야됨
         {

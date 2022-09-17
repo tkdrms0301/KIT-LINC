@@ -1,5 +1,4 @@
 import { Grid, Button, Typography, Divider, Stack } from '@mui/material';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Link, useNavigate } from 'react-router-dom';
 import MainCard from 'components/MainCard';
 import PostView from './NoticeFormViewer';

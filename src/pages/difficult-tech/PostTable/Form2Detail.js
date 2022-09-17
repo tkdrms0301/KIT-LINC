@@ -1,5 +1,5 @@
 // material-ui
-import { Grid, Stack, Box, Typography, Divider } from '@mui/material';
+import { Grid, Typography, Divider } from '@mui/material';
 
 import MainCard from 'components/MainCard';
 

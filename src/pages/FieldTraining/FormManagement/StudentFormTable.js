@@ -1,5 +1,5 @@
 import MainCard from 'components/MainCard';
-import { Paper, Grid, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
+import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from '@mui/material';
 import rows from './dummy';
 const StudentFormTable = () => {
     return (

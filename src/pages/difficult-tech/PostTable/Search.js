@@ -50,7 +50,7 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid itme xs={4} sx={{ mt: 3 }}>
+                    <Grid item xs={4}>
                         <InputLabel>프로젝트 이름</InputLabel>
                         <TextField
                             id="outlined-name"
