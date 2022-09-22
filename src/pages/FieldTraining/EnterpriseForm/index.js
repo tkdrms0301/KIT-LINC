@@ -1,21 +1,4 @@
-import {
-    Grid,
-    FormControlLabel,
-    Checkbox,
-    Typography,
-    InputLabel,
-    Select,
-    MenuItem,
-    FormControl,
-    TextField,
-    Radio,
-    Button,
-    Stack,
-    RadioGroup,
-    Tabs,
-    Tab,
-    Box
-} from '@mui/material';
+import { Grid, Button, Tabs, Tab, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import MainCard from 'components/MainCard';
 import { useState } from 'react';

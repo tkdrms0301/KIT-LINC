@@ -1,9 +1,7 @@
 // material-ui
 import { FormControl, MenuItem, Grid, InputLabel, Stack, Select } from '@mui/material';
-
+import { categoryList } from './constant';
 const TechCatergory = ({ view, handleView }) => {
-    const categoryList = ['TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
-
     return (
         <Grid container spacing={3}>
             <Grid item xs={12}>

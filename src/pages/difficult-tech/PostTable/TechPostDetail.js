@@ -1,6 +1,6 @@
 // project import
 import { Grid } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import axios from '../../../../node_modules/axios/index';
 import Form2Detail from './Form2Detail';
@@ -11,8 +11,6 @@ import TechCare365Detail from './TechCare365Detail';
 
 const TechPostDetail = () => {
     const params = useParams();
-    console.log(params.requestForm);
-    console.log(params.detail);
 
     const TechCare365 = <TechCare365Detail></TechCare365Detail>;
     const Form2 = <Form2Detail />;
@@ -42,8 +40,6 @@ const TechPostDetail = () => {
             template: Form5
         }
     ];
-
-    const [data, setData] = useState([]);
 
     return (
         <>

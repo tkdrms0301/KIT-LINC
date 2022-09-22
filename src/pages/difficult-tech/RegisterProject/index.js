@@ -15,7 +15,7 @@ import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
 
-const RegisterPost = () => {
+const RegisterProject = () => {
     const projectNameRef = useRef();
     const detailInfoRef = useRef();
     const effectivenessRef = useRef();
@@ -23,16 +23,8 @@ const RegisterPost = () => {
     const groupRef = useRef();
     const contactRef = useRef();
     const etcRef = useRef();
-    const [projectName, setProjectName] = useState('');
     const [consultingForm, setConsultingForm] = useState([]);
     const [consultingField, setConsultingField] = useState([]);
-    const [detailInfo, setDetailInfo] = useState('');
-    const [effectiveness, setEffectiveness] = useState('');
-    const [name, setName] = useState('');
-    const [group, setGroup] = useState('');
-    const [contact, setContact] = useState('');
-    const [etc, setEtc] = useState('');
-    const [etcChecked, setEtcChecked] = useState(false);
     const [formInfo, setFormInfo] = useState();
 
     const onChangeConsultingForm = (e) => {
@@ -57,7 +49,8 @@ const RegisterPost = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const consultantInfo = new Array(name, group, contact);
+
+        const consultantInfo = new Array(nameRef.current.value, groupRef.current.value, contactRef.current.value);
         console.log(projectNameRef.current.value);
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
@@ -83,26 +76,7 @@ const RegisterPost = () => {
             .get('http://337se.duckdns.org:80/api/member/requestform', {})
             .then((res) => {
                 console.log(res.data.data);
-
-                const tmpFormInfo = {
-                    companyName: res.data.data.companyName,
-                    representativeName: res.data.data.representativeName,
-                    companyRegistrationNum: res.data.data.companyRegistrationNum,
-                    faxNum: res.data.data.faxNum,
-                    address: res.data.data.address,
-                    name: res.data.data.name,
-                    departmentAndPosition: res.data.data.departmentAndPosition,
-                    phoneNum: res.data.data.phoneNum,
-                    email: res.data.data.email,
-                    fullTimeWorker: res.data.data.fullTimeWorker,
-                    sales: res.data.data.sales,
-                    businessType: res.data.data.businessType,
-                    businessTypeEtc: res.data.data.businessTypeEtc,
-                    growthDegree: res.data.data.growthDegree,
-                    mainService: res.data.data.mainService
-                };
-
-                setFormInfo(tmpFormInfo);
+                setFormInfo(res.data.data);
             })
             .catch((err) => console.log(err));
     }
@@ -139,7 +113,6 @@ const RegisterPost = () => {
                                     groupRef={groupRef}
                                     contactRef={contactRef}
                                     etcRef={etcRef}
-                                    etcChecked={etcChecked}
                                     onSubmit={onSubmit}
                                 ></FormTechCare365>
                             ) : null}
@@ -155,4 +128,4 @@ const RegisterPost = () => {
     );
 };
 
-export default RegisterPost;
+export default RegisterProject;

@@ -1,30 +1,16 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useRef } from 'react';
 import { Box, Grid } from '@mui/material';
-
 import ProjectTable from './ProjectTable';
 import TechCare365Content from './TechCare365Content';
-import * as axios from 'axios';
 import Form2Content from './Form2Content';
 import Form3Content from './Form3Content';
 import Form4Content from './Form4Content';
 import Form5Content from './Form5Content';
 import dayjs from 'dayjs';
-function createData(id, formType, name, content, businessType, date) {
-    return { id, formType, name, content, businessType, date };
-}
+
+import approveProjectApi from '../../api/difficult-tech/ApproveProjectApi';
 
 function ApproveProject() {
-    const categoryList = [
-        { label: 'All', value: 'All' },
-        { label: 'Techcare365', value: 'Techcare365' },
-        { label: '지원요청서2', value: '지원요청서2' },
-        { label: '지원요청서3', value: '지원요청서3' },
-        { label: '지원요청서4', value: '지원요청서4' },
-        { label: '지원요청서5', value: '지원요청서5' }
-    ];
-
     const [selectedPost, setSelectedPost] = useState('');
     const [formInfo, setFormInfo] = useState();
     const [rows, setRows] = useState([]);
@@ -36,56 +22,62 @@ function ApproveProject() {
     const [endDate, setEndDate] = useState(new Date());
     const { state, requestForm } = requestInfo;
 
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = (e) => {
+        e.preventDefault();
+        setOpen(true);
+    };
+
+    const handleClose = (e) => {
+        setOpen(false);
+    };
+
     const onChangeRequestInfo = (e) => {
         const { name, value } = e.target;
-        console.log(e.target);
         setRequestInfo({ ...requestInfo, [name]: value });
     };
+
+    const rejectReasonRef = useRef();
 
     useEffect(() => {
         contentAllRequest();
     }, []);
+
     function contentAllRequest() {
-        axios
-            .get('http://337se.duckdns.org:80/api/request', {})
+        approveProjectApi.contentAll
             .then((res) => {
-                console.log(res.data.data.content);
                 setRows(res.data.data.content);
-                //데이터 저장
             })
             .catch((err) => console.log(err));
     }
+
     const onSubmitRequestForm = (e) => {
         e.preventDefault();
-        axios
-            .get('http://337se.duckdns.org:80/api/request', {
-                params: {
-                    type: requestForm === 'All' ? null : requestForm,
-                    status: state,
-                    startDate: dayjs(startDate).format('YYYY-MM-DD'),
-                    endDate: dayjs(endDate).format('YYYY-MM-DD')
-                }
-            })
+        const filter = {
+            type: requestForm === 'All' ? null : requestForm,
+            status: state,
+            startDate: dayjs(startDate).format('YYYY-MM-DD'),
+            endDate: dayjs(endDate).format('YYYY-MM-DD')
+        };
+        approveProjectApi
+            .contentFilter(filter)
             .then((res) => {
-                console.log(res.data.data.content);
                 setRows(res.data.data.content);
-                //데이터 저장
             })
             .catch((err) => console.log(err));
     };
 
     const onSubmitApproveProject = (e) => {
         e.preventDefault();
-        console.log('승인');
-        console.log(selectedPost.id);
-        axios
-            .post('http://337se.duckdns.org:80/api/request/status', {
-                requestId: Number(selectedPost.id),
-                status: 'APPROVED',
-                comment: ''
-            })
+        const status = {
+            requestId: Number(selectedPost.id),
+            status: 'APPROVED',
+            comment: ''
+        };
+        approveProjectApi
+            .approve(status)
             .then((res) => {
-                console.log(res);
                 alert('승인되었습니다.');
                 window.location.reload();
             })
@@ -94,44 +86,42 @@ function ApproveProject() {
 
     const onSubmitRejectProject = (e) => {
         e.preventDefault();
-        console.log('거절');
-        axios
-            .post('http://337se.duckdns.org:80/api/request/status', {
-                requestId: Number(selectedPost.id),
-                status: 'REJECTED',
-                comment: ''
-            })
+        const status = {
+            requestId: Number(selectedPost.id),
+            status: 'REJECTED',
+            comment: rejectReasonRef.current.value
+        };
+        approveProjectApi
+            .approve(status)
             .then((res) => {
-                console.log(res);
                 alert('거절되었습니다.');
                 window.location.reload();
             })
             .catch((err) => console.log(err));
     };
+
     const onSubmitPendingProject = (e) => {
         e.preventDefault();
-        axios
-            .post('http://337se.duckdns.org:80/api/request/status', {
-                requestId: Number(selectedPost.id),
-                status: 'PENDING',
-                comment: ''
-            })
+        const status = {
+            requestId: Number(selectedPost.id),
+            status: 'PENDING',
+            comment: ''
+        };
+        approveProjectApi
+            .pending(status)
             .then((res) => {
-                console.log(res);
                 alert('보류되었습니다.');
                 window.location.reload();
             })
             .catch((err) => console.log(err));
     };
 
-    function requestFormInfo() {
-        axios
-            .get('http://337se.duckdns.org:80/api/member/requestform', {
-                params: { requestId: Number(selectedPost.id) }
-            })
+    const requestFormInfo = () => {
+        let companyInfo;
+        approveProjectApi
+            .contentCompanyInfo(Number(selectedPost.id))
             .then((res) => {
-                //console.log(res.data.data);
-
+                companyInfo = res.data.data;
                 const tmpFormInfo = {
                     companyName: res.data.data.companyName,
                     representativeName: res.data.data.representativeName,
@@ -167,10 +157,9 @@ function ApproveProject() {
                 setFormInfo(tmpFormInfo);
             })
             .catch((err) => console.log(err));
-    }
+    };
 
     const handleProjectChange = (event, rows) => {
-        console.log(rows.id); //선택한 post의 ID 배정 이걸로 back에 정보 요청
         requestFormInfo();
         setSelectedPost(rows);
     };
@@ -188,8 +177,11 @@ function ApproveProject() {
                     onSubmitApproveProject={onSubmitApproveProject}
                     onSubmitRejectProject={onSubmitRejectProject}
                     onSubmitPendingProject={onSubmitPendingProject}
-                    categoryList={categoryList}
                     requestInfo={requestInfo}
+                    handleOpen={handleOpen}
+                    handleClose={handleClose}
+                    open={open}
+                    rejectReasonRef={rejectReasonRef}
                 ></TechCare365Content>
             )
         },
@@ -224,16 +216,18 @@ function ApproveProject() {
                         onSubmitRequestForm={onSubmitRequestForm}
                         onSubmitApproveProject={onSubmitApproveProject}
                         onSubmitRejectProject={onSubmitRejectProject}
-                        categoryList={categoryList}
                         startDate={startDate}
                         setStartDate={setStartDate}
                         endDate={endDate}
                         setEndDate={setEndDate}
                     />
                 </Grid>
-                {requestFormList.map((requsetForms, index) =>
-                    requsetForms.requestForm === selectedPost.projectType ? <Box key={index}> {requsetForms.template}</Box> : null
-                )}
+
+                {formInfo !== undefined
+                    ? requestFormList.map((requsetForms, index) =>
+                          requsetForms.requestForm === selectedPost.projectType ? <Box key={index}> {requsetForms.template}</Box> : null
+                      )
+                    : null}
             </Grid>
         </Grid>
     );

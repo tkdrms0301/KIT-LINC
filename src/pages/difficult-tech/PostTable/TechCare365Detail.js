@@ -6,52 +6,49 @@ import { useState, useEffect, useRef } from 'react';
 import axios from '../../../../node_modules/axios/index';
 import ProfessorSelect from './ProfessorSelect';
 import TechPostDetailButton from './TechPostDetailButton';
+import { professorRows } from './dummy';
+import { useParams } from 'react-router-dom';
+import { consultingFormList, consultantInfoList, consultingFieldList, growthDegreeList, businessTypeListForTechCare365 } from './constant';
 const TechCare365Detail = () => {
+    const params = useParams();
     const [selectedProfessor, setSelectedProfessor] = useState();
+    const [formInfo, setFormInfo] = useState({
+        companyName: '',
+        representativeName: '',
+        companyRegistrationNum: '',
+        faxNum: '',
+        address: '',
+        name: '',
+        departmentAndPosition: '',
+        phoneNum: '',
+        email: '',
+        fullTimeWorker: '',
+        sales: '',
+        growthDegree: '',
+        businessType: [],
+        businessTypeEtc: '',
+        mainService: '',
+        consultantForm: [],
+        consultantInfo: [],
+        consultingField: [],
+        consultingFieldEtc: '',
+        detailInfo: '',
+        effectiveness: '',
+        projectName: ''
+    });
 
-    const professorRows = [
-        {
-            professorNumber: '1',
-            professorName: '교수1',
-            professorMajor: '학과1',
-            professorStudy: '연구1'
-        },
-        {
-            professorNumber: '2',
-            professorName: '교수2',
-            professorMajor: '학과2',
-            professorStudy: '연구2'
-        },
-        {
-            professorNumber: '3',
-            professorName: '교수3',
-            professorMajor: '학과3',
-            professorStudy: '연구3'
-        },
-        {
-            professorNumber: '4',
-            professorName: '교수4',
-            professorMajor: '학과4',
-            professorStudy: '연구4'
-        },
-        {
-            professorNumber: '5',
-            professorName: '교수5',
-            professorMajor: '학과5',
-            professorStudy: '연구5'
-        },
-        {
-            professorNumber: '6',
-            professorName: '교수6',
-            professorMajor: '학과6',
-            professorStudy: '연구6'
-        },
-        {
-            professorNumber: '7',
-            professorName: '교수7',
-            professorMajor: '학과7',
-            professorStudy: '연구7'
-        }
+    const applicantInfoList = [
+        { label: '기업명', value: formInfo.companyName },
+        { label: '대표자명', value: formInfo.representativeName },
+        { label: '시업자등록번호', value: formInfo.companyRegistrationNum },
+        { label: '전화번호 및 팩스번호', value: formInfo.faxNum },
+        { label: '주소', value: formInfo.departmentAndPosition },
+        { label: '작성자 성명', value: formInfo.name },
+        { label: '부서/직위', value: formInfo.departmentAndPosition },
+        { label: '전화번호', value: formInfo.phoneNum },
+        { label: 'e-mail', value: formInfo.email },
+        { label: '상시 근로자 수', value: formInfo.fullTimeWorker },
+        { label: '매출액(전년도 말 기준)', value: formInfo.sales }
     ];
 
     // 프로젝트 내용 확인, 교수 확인 후 승인 버튼
@@ -86,86 +83,99 @@ const TechCare365Detail = () => {
         //         console.log(res.data.data);
         //     });
     };
-
-    useEffect(() => {
-        console.log(selectedProfessor);
-    }, [selectedProfessor]);
-
-    const formInfo = {
-        // companyName: res.data.data.companyName,
-        companyName: 'companyName',
-        representativeName: 'representativeName',
-        companyRegistrationNum: 'companyRegistrationNum',
-        faxNum: 'faxNum',
-        address: 'address',
-        name: 'name',
-        departmentAndPosition: 'departmentAndPosition',
-        phoneNum: 'phoneNum',
-        email: 'email',
-        fullTimeWorker: 'fullTimeWorker',
-        sales: 'sales',
-        growthDegree: '3',
-        businessType: ['2', '4', '7'],
-        businessTypeEtc: undefined,
-        mainService: 'mainService',
-        consultantForm: ['0', '4'],
-        consultantInfo: ['성명', '소속', '연락처'],
-        consultingField: ['1', '4', '9', '10'],
-        consultingFieldEtc: '기타',
-        detailInfo: '상세내용',
-        effectiveness: '기대효과',
-        projectName: '프로젝트제목'
+    const requestInfo = async () => {
+        let companyInfo;
+        let additionalInfo;
+        await axios
+            .get('http://337se.duckdns.org:80/api/member/requestform', {})
+            .then((res) => {
+                const companyData = res.data.data;
+                console.log(companyData);
+                companyInfo = companyData;
+            })
+            .catch((err) => console.log(err));
+        await axios
+            .get('http://337se.duckdns.org:80/api/request/detail', {
+                params: {
+                    requestId: params.detail
+                }
+            })
+            .then((res) => {
+                const additionalData = res.data.data;
+                console.log(additionalData);
+                additionalInfo = additionalData;
+            });
+        setFormInfo({
+            ...formInfo,
+            ...companyInfo,
+            consultantForm: ['0', '4'], // 문자열로 받아서 리스트로 변경요청
+            consultantInfo: additionalInfo.wishMentor.split('|'),
+            consultingField: ['1', '4', '9', '10'], // 문자열로 받아서 리스트로 변경요청
+            consultingFieldEtc: additionalInfo.cooperationTypeEtc, // supportEtc 으로 변경 요청
+            detailInfo: additionalInfo.detail,
+            effectiveness: additionalInfo.expectEffect,
+            projectName: additionalInfo.requestName
+        });
     };
 
-    const consultingFormList = ['단기 기술지도', '외부 자문의원 지도', '패키지形', '학기중 장기기술지도', '방학,연구년중 장기기술지도'];
-
-    const consultantInfoList = ['성명', '소속', '연락처'];
-
-    const consultingFieldList = [
-        '기술지도',
-        '법률자문/수출입 지원',
-        '경영지도',
-        '사업화지도',
-        '특허분석',
-        '국가공인인증컨설팅 자문',
-        '디자인지도',
-        '마케팅지도',
-        '해외시장 개척',
-        '사업화지도',
-        '사업계획서 작성지도'
-    ];
-
-    const applicantInfoList = [
-        '기업명',
-        '대표자명',
-        '시업자등록번호',
-        '전화번호 및 팩스번호',
-        '주소',
-        '작성자 성명',
-        '부서/직위',
-        '전화번호',
-        'e-mail',
-        '상시 근로자 수',
-        '매출액(전년도 말 기준)'
-    ];
-    const growthDegreeList = [
-        '창업기(1년미만, 5인 이하)',
-        '초기성장기(3년미만, 50인 이하)',
-        '성장기(3년이상, 300인 미만)',
-        '성숙기(5년이상, 300인 이상)',
-        '업종전환기(동일제품 10년 이상)'
-    ];
-
-    const businessTypeList = [
-        'IT분야(전기전자, 통신, 컴퓨터, IT관련 기계장비 등)',
-        '그린에너지분야(태양광, 연료전지, 2차전지 등)',
-        '음식료',
-        '섬유의복',
-        '목제종이',
-        '석유화확',
-        '비금속',
-        '운송장비'
-    ];
+    useEffect(() => {
+        requestInfo();
+    }, []);
+    // useEffect(() => {
+    //     console.log(formInfo);
+    //     requestAdditionalInfo();
+    // }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get('http://337se.duckdns.org:80/api/request/detail', {
+    //             params: {
+    //                 requestId: params.detail
+    //             }
+    //         })
+    //         .then((res) => {
+    //             console.log(res.data.data);
+    //             setFormInfo({
+    //                 ...formInfo,
+    //                 consultantForm: ['0', '4'],
+    //                 consultantInfo: ['', '', ''],
+    //                 consultingField: ['1', '4', '9', '10'],
+    //                 consultingFieldEtc: '기타',
+    //                 detailInfo: res.data.data.detail,
+    //                 effectiveness: res.data.data.expectEffect,
+    //                 projectName: res.data.data.requestName
+    //             });
+    //         });
+    //     console.log(formInfo);
+    //     //     .then((res) => {
+    //     //         const data = res.data.data;
+    //     //         console.log(data);
+    //     //         const resFormInfo = {
+    //     //             companyName: data.company.companyName,
+    //     //             representativeName: data.company.ceoName,
+    //     //             companyRegistrationNum: data.company.businessNumber,
+    //     //             faxNum: data.company.faxNumber,
+    //     //             address: 'address',
+    //     //             name: 'name',
+    //     //             departmentAndPosition: 'departmentAndPosition',
+    //     //             phoneNum: 'phoneNum',
+    //     //             email: 'email',
+    //     //             fullTimeWorker: 'fullTimeWorker',
+    //     //             sales: 'sales',
+    //     //             growthDegree: '3',
+    //     //             businessType: ['2', '4', '7'],
+    //     //             businessTypeEtc: undefined,
+    //     //             mainService: 'mainService',
+    //     //             consultantForm: ['0', '4'],
+    //     //             consultantInfo: ['성명', '소속', '연락처'],
+    //     //             consultingField: ['1', '4', '9', '10'],
+    //     //             consultingFieldEtc: '기타',
+    //     //             detailInfo: '상세내용',
+    //     //             effectiveness: '기대효과',
+    //     //             projectName: '프로젝트제목'
+    //     //         };
+    //     //     })
+    //     //     .catch((err) => console.log(err)),
+    // }, []);
 
     let formInfoArr;
 
@@ -185,7 +195,7 @@ const TechCare365Detail = () => {
                                     fullWidth
                                     type="text"
                                     variant="standard"
-                                    defaultValue={formInfo.projectName}
+                                    value={formInfo.projectName}
                                     InputProps={{
                                         readOnly: true
                                     }}
@@ -198,13 +208,13 @@ const TechCare365Detail = () => {
                                     {applicantInfoList.map((applicantInfo, index) => (
                                         <Grid key={index} item xs={index === 4 ? 6 : 3}>
                                             <Box>
-                                                <Typography variant="body2">{applicantInfo}</Typography>
+                                                <Typography variant="body2">{applicantInfo.label}</Typography>
                                             </Box>
                                             <TextField
                                                 fullWidth
                                                 type="text"
                                                 variant="standard"
-                                                defaultValue={applicantInfo}
+                                                value={applicantInfo.value}
                                                 InputProps={{
                                                     readOnly: true
                                                 }}
@@ -234,7 +244,7 @@ const TechCare365Detail = () => {
                                         <Grid item xs={3} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
-                                                label={businessTypeList[Number(businessTypes)]}
+                                                label={businessTypeListForTechCare365[businessTypes]}
                                             />
                                         </Grid>
                                     ))}
@@ -245,7 +255,7 @@ const TechCare365Detail = () => {
                                                 label="기타"
                                                 type="text"
                                                 variant="standard"
-                                                defaultValue={formInfo.businessTypeEtc}
+                                                value={formInfo.businessTypeEtc}
                                                 InputProps={{
                                                     readOnly: true
                                                 }}

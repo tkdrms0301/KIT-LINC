@@ -4,7 +4,7 @@ import { Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
 
 // project import
 import MainCard from 'components/MainCard';
-
+import { categoryList } from './constant';
 const ProjectTable = ({
     requestInfo,
     onChangeRequestInfo,
@@ -12,7 +12,6 @@ const ProjectTable = ({
     selectedPost,
     handleProjectChange,
     rows,
-    categoryList,
     startDate,
     setStartDate,
     endDate,

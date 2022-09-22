@@ -7,7 +7,7 @@ import TechPost from './TechPost';
 import Search from './Search';
 
 // dummy data
-import post from './dummy.js';
+import { post } from './dummy.js';
 import { useRecoilState } from 'recoil';
 import loadingState from 'state/Loading';
 const PostTable = () => {
@@ -128,9 +128,6 @@ const PostTable = () => {
                                     onSubmitSearchInput={onSubmitSearchInput}
                                 />
                             </Grid>
-                            {/* <Grid item xs={3}>
-                                <SideFilter selected={selected} onChangeSelected={onChangeSelected} />
-                            </Grid> */}
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
                                     {data.map((post, index) => (

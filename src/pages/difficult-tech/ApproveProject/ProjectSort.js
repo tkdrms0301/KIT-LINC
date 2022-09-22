@@ -2,6 +2,7 @@ import { TextField, Box, Button, Grid, FormControl, InputLabel, Select, MenuItem
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { stateList } from './constant';
 const ProjectSort = ({
     requestInfo,
     onChangeRequestInfo,
@@ -13,20 +14,6 @@ const ProjectSort = ({
     categoryList
 }) => {
     const { state, requestForm } = requestInfo;
-    const stateList = [
-        {
-            label: '승인대기',
-            value: 'PENDING'
-        },
-        {
-            label: '승인완료',
-            value: 'APPROVED'
-        },
-        {
-            label: '승인거절',
-            value: 'REJECTED'
-        }
-    ];
 
     return (
         <Grid container>

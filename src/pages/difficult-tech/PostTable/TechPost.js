@@ -4,14 +4,8 @@ import { Link } from 'react-router-dom';
 
 // project import
 import MainCard from 'components/MainCard';
-import { wrap } from 'lodash';
-
+import { tagList } from './constant';
 const TechTag = ({ tag }) => {
-    const recruitment = { tagName: '모집중', color: '#78E366', text: '#FFFFFF' };
-    const progress = { tagName: '진행중', color: '#78BCEE', text: '#FFFFFF' };
-    const waitingApproval = { tagName: '승인대기중', color: '#CFDCE4', text: '#4F4A4A' };
-    const approved = { tagName: '완료', color: '#6F6969', text: '#FFFFFF' };
-    const tagList = [recruitment, progress, waitingApproval, approved];
     return (
         <Box>
             {tagList.map((tags, index) =>

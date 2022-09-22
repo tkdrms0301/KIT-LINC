@@ -4,12 +4,9 @@ import SearchIcon from '@mui/icons-material/Search';
 
 // project import
 import MainCard from 'components/MainCard';
+import { statusList, businessTypeListForSearch, requestFormList } from './constant';
 
 const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInput }) => {
-    const statusList = ['All', '진행중', '승인대기중', '모집중', '완료'];
-    const businessTypeList = ['All', 'IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
-    const requestFormList = ['All', 'TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
-
     return (
         <Grid item xs={12}>
             <MainCard title="" codeHighlight>
@@ -30,7 +27,7 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         <InputLabel>업종</InputLabel>
                         <FormControl label="업종" variant="standard" sx={{ minWidth: 120 }}>
                             <Select name="selectedConsultingField" value={selected.selectedConsultingField} onChange={onChangeSelected}>
-                                {businessTypeList.map((businessType, index) => (
+                                {businessTypeListForSearch.map((businessType, index) => (
                                     <MenuItem key={index} value={businessType}>
                                         {businessType}
                                     </MenuItem>

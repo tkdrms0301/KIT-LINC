@@ -171,4 +171,49 @@ const post = [
     }
 ];
 
-export default post;
+const professorRows = [
+    {
+        professorNumber: '1',
+        professorName: '교수1',
+        professorMajor: '학과1',
+        professorStudy: '연구1'
+    },
+    {
+        professorNumber: '2',
+        professorName: '교수2',
+        professorMajor: '학과2',
+        professorStudy: '연구2'
+    },
+    {
+        professorNumber: '3',
+        professorName: '교수3',
+        professorMajor: '학과3',
+        professorStudy: '연구3'
+    },
+    {
+        professorNumber: '4',
+        professorName: '교수4',
+        professorMajor: '학과4',
+        professorStudy: '연구4'
+    },
+    {
+        professorNumber: '5',
+        professorName: '교수5',
+        professorMajor: '학과5',
+        professorStudy: '연구5'
+    },
+    {
+        professorNumber: '6',
+        professorName: '교수6',
+        professorMajor: '학과6',
+        professorStudy: '연구6'
+    },
+    {
+        professorNumber: '7',
+        professorName: '교수7',
+        professorMajor: '학과7',
+        professorStudy: '연구7'
+    }
+];
+
+export { post, professorRows };
