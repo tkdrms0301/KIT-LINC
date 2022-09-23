@@ -52,34 +52,6 @@ const difficultTechs = {
             type: 'item',
             url: '/difficult-tech-family-enterprise',
             icon: ''
-        },
-        // {
-        //     id: 'util-difficult-project-matching',
-        //     title: '프로젝트 매칭',
-        //     type: 'item',
-        //     url: '/difficult-tech-project-matching',
-        //     icon: ''
-        // },
-        // {
-        //     id: 'util-difficult-project-matching-other',
-        //     title: '프로젝트 매칭 version-2',
-        //     type: 'item',
-        //     url: '/difficult-tech-project-matching-other',
-        //     icon: ''
-        // },
-        {
-            id: 'util-difficult-tech-continue-company',
-            title: '진행 중 프로젝트(가족회사)',
-            type: 'item',
-            url: '/difficult-tech-continue-company',
-            icon: ''
-        },
-        {
-            id: 'util-difficult-tech-continue-professor',
-            title: '진행 중 프로젝트(교수)',
-            type: 'item',
-            url: '/difficult-tech-continue-professor',
-            icon: ''
         }
     ]
 };

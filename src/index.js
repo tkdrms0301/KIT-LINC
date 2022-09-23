@@ -16,9 +16,7 @@ import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
 import { RecoilRoot } from 'recoil';
-
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
-
 ReactDOM.render(
     <RecoilRoot>
         <StrictMode>
@@ -31,5 +29,4 @@ ReactDOM.render(
     </RecoilRoot>,
     document.getElementById('root')
 );
-
 reportWebVitals();

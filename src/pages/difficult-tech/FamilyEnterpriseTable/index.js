@@ -10,10 +10,11 @@ import familyEnterpriseTable from '../../api/difficult-tech/FamilyEnterpriseTabl
 
 const FamilyEnterpriseTable = () => {
     const [selectedCompanyId, setSelectedCompanyId] = useState('');
-    const handleEnterpriseChange = (event, rows) => {
+    const handleEnterpriseChange = (e, rows) => {
         setSelectedCompanyId(rows.companyId);
         requestCompanyInfo(rows.companyId);
     };
+    const [checkList, setCheckList] = useState([]);
     const searchInputRef = useRef();
     const [selected, setSelected] = useState({
         companyType: '1',
@@ -22,13 +23,16 @@ const FamilyEnterpriseTable = () => {
     });
     const [enterpriseInfo, setEnterpriseInfo] = useState(null);
     // const [enterpriseRows, setEnterpriseRows] = useState();
+
     const onChangeSelected = (e) => {
         const { name, value } = e.target;
+        console.log(value);
         setSelected({
             ...selected,
             [name]: value
         });
     };
+
     const onSubmitSearchInput = () => {
         const filter = {
             companyType: selected.companyType,
@@ -68,14 +72,37 @@ const FamilyEnterpriseTable = () => {
         setEnterpriseInfo(enterpriseInfo);
     };
     const onClickExportExcelFile = () => {
-        console.log('test' + String(selectedCompanyId));
+        let enterpriseList = [];
+        enterpriseRows.map((row, index) => (checkList.includes(String(index)) ? enterpriseList.push(row.companyId) : null));
+        console.log(enterpriseList);
         familyEnterpriseTable
-            .export()
+            .export(enterpriseList)
             .then((res) => {
                 console.log(res.data.data);
             })
             .catch((err) => console.log(err));
     };
+
+    const onChangeAllCheck = (e) => {
+        const { value, checked } = e.target;
+        let list = [];
+        if (checked) {
+            enterpriseRows.map((row, i) => (list[i] = String(i)));
+        }
+        setCheckList(list);
+    };
+
+    const onChangeSingleCheck = (e) => {
+        const { value, checked } = e.target;
+        let updateCheckList = [...checkList];
+        if (checked) {
+            updateCheckList = [...checkList, value];
+        } else {
+            updateCheckList.splice(checkList.indexOf(value), 1);
+        }
+        setCheckList(updateCheckList);
+    };
+
     return (
         <Grid>
             <Grid>
@@ -87,6 +114,10 @@ const FamilyEnterpriseTable = () => {
                         onSubmitSearchInput={onSubmitSearchInput}
                     ></Search>
                     <EnterpriseTable
+                        onClickExportExcelFile={onClickExportExcelFile}
+                        onChangeAllCheck={onChangeAllCheck}
+                        onChangeSingleCheck={onChangeSingleCheck}
+                        checkList={checkList}
                         selectedCompanyId={selectedCompanyId}
                         enterpriseRows={enterpriseRows}
                         handleEnterpriseChange={handleEnterpriseChange}
@@ -94,10 +125,7 @@ const FamilyEnterpriseTable = () => {
                 </MainCard>
                 {enterpriseInfo !== null ? (
                     <MainCard sx={{ mt: 3 }} title="가족회사 세부조회">
-                        <FamilyEnterpriseInfo
-                            enterpriseInfo={enterpriseInfo}
-                            onClickExportExcelFile={onClickExportExcelFile}
-                        ></FamilyEnterpriseInfo>
+                        <FamilyEnterpriseInfo enterpriseInfo={enterpriseInfo}></FamilyEnterpriseInfo>
                     </MainCard>
                 ) : null}
             </Grid>
