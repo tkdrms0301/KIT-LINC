@@ -1,15 +1,30 @@
 import { Button, DialogTitle, Dialog, DialogContent, TextField, DialogActions, InputLabel, Typography, Grid } from '@mui/material';
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { checkOpen, checkClose } from '../../../store/reducers/difficult-Tech/approveProject';
 
 export default function FormDialog({ open, handleClose, rejectReasonRef, onSubmitRejectProject }) {
-    const [checkOpen, setCheckOpen] = useState(false);
+    // const [checkOpen, setCheckOpen] = useState(false);
+    // const [rejectReason, setRejectReason] = useState('');
+    // const handleCheckOpen = () => {
+    //     setCheckOpen(true);
+    //     setRejectReason(rejectReasonRef.current.value);
+    // };
+    // const handleCheckClose = () => {
+    //     setCheckOpen(false);
+    // };
+    const dispatch = useDispatch();
+    const isCheckOpen = useSelector((state) => state.checkInfo.checkOpen);
     const [rejectReason, setRejectReason] = useState('');
+    // const rejectReason = useSelector((state) => state.checkInfo.rejectReason);
+    const onChangeRejectReason = (e) => {
+        setRejectReason(e.target.value);
+    };
     const handleCheckOpen = () => {
-        setCheckOpen(true);
-        setRejectReason(rejectReasonRef.current.value);
+        dispatch(checkOpen(rejectReason));
     };
     const handleCheckClose = () => {
-        setCheckOpen(false);
+        dispatch(checkClose());
     };
     return (
         <div>
@@ -26,8 +41,9 @@ export default function FormDialog({ open, handleClose, rejectReasonRef, onSubmi
                         multiline
                         rows={5}
                         inputRef={rejectReasonRef}
+                        onBlur={onChangeRejectReason}
                     />
-                    <Dialog open={checkOpen} onClose={handleCheckClose}>
+                    <Dialog open={isCheckOpen} onClose={handleCheckClose}>
                         <DialogTitle>다음 같은 사유로 거절하시겠습니까?</DialogTitle>
                         <DialogContent>
                             <Grid>

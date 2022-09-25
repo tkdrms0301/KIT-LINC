@@ -3,9 +3,9 @@ import { combineReducers } from 'redux';
 
 // project import
 import menu from './menu';
-import approveProject from './difficult-Tech/approveProject/approveProject';
+import checkInfo from './difficult-Tech/approveProject';
 // ==============================|| COMBINE REDUCERS ||============================== //
 
-const reducers = combineReducers({ menu, approveProject });
+const reducers = combineReducers({ menu, checkInfo });
 
 export default reducers;
