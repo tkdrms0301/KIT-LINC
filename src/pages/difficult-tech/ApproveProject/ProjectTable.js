@@ -45,7 +45,6 @@ const ProjectTable = ({
                         <TableBody>
                             {rows.map((row) => {
                                 const isItemSelected = isSelected(row.id);
-
                                 return (
                                     <TableRow
                                         hover

@@ -5,27 +5,23 @@ import { Grid, Box, Pagination } from '@mui/material';
 import { useState, useRef, useEffect } from 'react';
 import TechPost from './TechPost';
 import Search from './Search';
+import PostTableApi from 'pages/api/difficult-tech/PostTableApi';
+import axios from 'axios';
 
 // dummy data
 import { post } from './dummy.js';
-import { useRecoilState } from 'recoil';
-import loadingState from 'state/Loading';
+
 const PostTable = () => {
-    // loading
-    const [loading, setLoading] = useRecoilState(loadingState);
-
-    // posts
-    // const [post, setPost] = useState([]);
-    // search, category, pagination
-
     // side filter
     const [selected, setSelected] = useState({
-        selectedConsultingField: 'All',
-        selectedRequstForm: 'All',
-        selectedStatus: 'All'
+        selectedConsultingField: 0,
+        selectedRequstForm: 0,
+        selectedStatus: 0,
+        projectName: ''
     });
 
-    const { selectedConsultingField, selectedRequstForm, selectedStatus } = selected;
+    const [page, setPage] = useState(1);
+    const [data, setData] = useState(post.slice(0, 10));
 
     const onChangeSelected = (e) => {
         const { name, value } = e.target;
@@ -33,86 +29,57 @@ const PostTable = () => {
             ...selected,
             [name]: value
         });
-        console.log(selected);
-    };
-
-    const getProjectList = (projectConsultingField, projectRequestForm, projectStatus) => {
-        console.log(projectConsultingField);
-        console.log(projectRequestForm);
-        console.log(projectStatus);
-        // axios
-        //     .get('url', {
-        //         params: { consultingField: projectConsultingField, requestForm: projectRequestForm, status: projectStatus }
-        //     })
-        //     .then((res) => {
-        //         console.log(res.data.data);
-        //         setPost(res.data.data)
-        //     });
     };
 
     // search
-
-    // 프로젝트 이름 입력후 검색 버튼*
-    const searchInputRef = useRef();
-    const onSubmitSearchInput = (e) => {
+    const requestProjectList = (e, requestPage) => {
         const info = {
-            status: selectedStatus,
-            consultingField: selectedConsultingField,
-            requstForm: selectedRequstForm,
-            searchInput: searchInputRef.current?.value
+            selectedConsultingField: selected.selectedConsultingField === 0 ? null : selected.selectedConsultingField,
+            selectedRequstForm: selected.selectedRequstForm === 0 ? null : selected.selectedRequstForm,
+            selectedStatus: selected.selectedStatus === 0 ? null : selected.selectedStatus,
+            projectName: selected.projectName,
+            page: requestPage
         };
         console.log(info);
-        // axios
-        //     .get('url', {
-        //         params: { searchInput: searchInputRef.current?.value }
-        //     })
-        //     .then((res) => {
-        //         console.log(res.data.data);
-        //     });
+        axios
+            .get('http://337se.duckdns.org:80/api/project', {
+                params: info
+            })
+            .then((res) => {
+                console.log(res.data.data);
+            })
+            .catch((err) => console.log(err));
     };
-
-    // detail
 
     // pagination
     const LAST_PAGE = post.length % 10 === 0 ? parseInt(post.length / 10) : parseInt(post.length / 10) + 1;
 
-    const [page, setPage] = useState(1);
-    const [data, setData] = useState(post.slice(0, 10));
+    const handlePage = (event, value) => {
+        setPage(value);
+    };
 
     useEffect(() => {
-        getProjectList(selectedConsultingField, selectedRequstForm, selectedStatus);
-        // setLoading(true);
-        // setTimeout(() => {
-        //     setLoading(false);
-        // }, 1500);
+        let filteredPost = post;
+        if (page === LAST_PAGE) {
+            setData(filteredPost.slice(10 * (page - 1)));
+        } else {
+            setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
+        }
 
-        // TODO: 수정필요
-        // let filteredPost = post;
-
-        // if (selectedConsultingField !== 'All') {
-        //     filteredPost = filteredPost.filter((item) => item.field.includes(selectedConsultingField));
-        // }
-
-        // if (selectedRequstForm !== 'All') {
-        //     filteredPost = filteredPost.filter((item) => item.requestForm.includes(selectedRequstForm));
-        // }
-
-        // if (selectedstatus !== 'All') {
-        //     filteredPost = filteredPost.filter((item) => item.tags[0].includes(selectedstatus));
-        // }
-
-        // if (page === LAST_PAGE) {
-        //     setData(filteredPost.slice(10 * (page - 1)));
-        // } else {
-        //     setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
-        // }
-        console.log(data);
-    }, [selected, page]);
-
-    const handlePage = (event) => {
-        const nowPageInt = parseInt(event.target.outerText);
-        setPage(nowPageInt);
-    };
+        // 프로젝트 리스트
+        // projectList -> setData에 저장
+        // 마지막 페이지
+        // lastPage -> Pagination의 count에 저장
+        // PostTableApi.contentFilter({
+        //     ...selected,
+        //     page: 1
+        // })
+        //     .then((res) => {
+        //         console.log(res.data.data);
+        //         setData(res.data.data);
+        //     })
+        //     .catch((err) => console.log(err));
+    }, [page]);
 
     return (
         <>
@@ -121,12 +88,7 @@ const PostTable = () => {
                     <Grid sx={{ maxWidth: '1000px', width: '1000px' }}>
                         <Grid container spacing={3} justifyContent="flex-end">
                             <Grid item xs={12}>
-                                <Search
-                                    selected={selected}
-                                    onChangeSelected={onChangeSelected}
-                                    searchInputRef={searchInputRef}
-                                    onSubmitSearchInput={onSubmitSearchInput}
-                                />
+                                <Search selected={selected} onChangeSelected={onChangeSelected} requestProjectList={requestProjectList} />
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
@@ -137,16 +99,25 @@ const PostTable = () => {
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="center">
+                            {/* 
+                            마지막 페이지 count
+                            기본 페이지 defaultPage
+
+                            나중에 count만 변경예정
+                            */}
                             <Pagination
+                                showFirstButton
+                                showLastButton
                                 count={LAST_PAGE}
+                                siblingCount={2}
                                 defaultPage={1}
-                                boundaryCount={2}
+                                boundaryCount={1}
                                 color="primary"
                                 variant="outlined"
                                 shape="rounded"
                                 size="large"
                                 sx={{ margin: 2 }}
-                                onChange={(e) => handlePage(e)}
+                                onChange={(e, value) => handlePage(e, value)}
                             />
                         </Grid>
                     </Grid>

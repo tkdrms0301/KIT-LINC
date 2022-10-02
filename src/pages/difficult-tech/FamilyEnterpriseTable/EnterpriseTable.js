@@ -1,4 +1,17 @@
-import { Grid, Table, TableContainer, TableHead, TableBody, TableCell, TableRow, Paper, Checkbox, Button } from '@mui/material';
+import {
+    Grid,
+    Table,
+    TableContainer,
+    TableHead,
+    TableBody,
+    TableCell,
+    TableRow,
+    Paper,
+    Checkbox,
+    Button,
+    Chip,
+    Stack
+} from '@mui/material';
 import { list } from './constant';
 
 const EnterpriseTable = ({
@@ -10,15 +23,18 @@ const EnterpriseTable = ({
     onChangeSingleCheck,
     onClickExportExcelFile
 }) => {
+    const categoryChip = ({ category }) => {
+        return <Chip lable={category} variant="outlined"></Chip>;
+    };
     const isSelected = (id) => selectedCompanyId.enterpriseId === id;
     const convertCompanyTypeList = (number) => {
         return list.companyTypeList[Number(number) - 2];
     };
     const convertCategoryList = (number) => {
-        return list.categoryList[Number(number) - 2];
+        return list.categoryList[number - 1];
     };
     const convertGrowthDegreeList = (number) => {
-        return list.growthDegreeList[Number(number) - 2];
+        return list.growthDegreeList[Number(number) - 1];
     };
     return (
         <Grid>
@@ -27,9 +43,12 @@ const EnterpriseTable = ({
                     <TableHead>
                         <TableRow>
                             <TableCell>
-                                <Checkbox checked={enterpriseRows.length === checkList.length} onChange={onChangeAllCheck}></Checkbox>
+                                <Checkbox
+                                    checked={enterpriseRows.length === checkList.length}
+                                    onChange={(e) => onChangeAllCheck(e.target.checked)}
+                                ></Checkbox>
                             </TableCell>
-                            <TableCell>회사 번호</TableCell>
+                            <TableCell>번호</TableCell>
                             <TableCell>회사명</TableCell>
                             <TableCell>회사 유형</TableCell>
                             <TableCell>업종</TableCell>
@@ -38,7 +57,7 @@ const EnterpriseTable = ({
                     </TableHead>
                     <TableBody>
                         {enterpriseRows.map((enterpriseRow, index) => {
-                            const isItemSelected = isSelected(enterpriseRow.companyId);
+                            const isItemSelected = isSelected(enterpriseRow.id);
                             return (
                                 <TableRow
                                     hover
@@ -49,15 +68,22 @@ const EnterpriseTable = ({
                                 >
                                     <TableCell>
                                         <Checkbox
-                                            value={index}
-                                            onChange={onChangeSingleCheck}
-                                            checked={checkList.includes(String(index))}
+                                            value={enterpriseRow.id}
+                                            onChange={(e) => onChangeSingleCheck(e)}
+                                            checked={checkList.includes(enterpriseRow.id) ? true : false}
                                         ></Checkbox>
                                     </TableCell>
-                                    <TableCell>{enterpriseRow.companyId}</TableCell>
-                                    <TableCell>{enterpriseRow.companyName}</TableCell>
+                                    <TableCell>{enterpriseRow.id}</TableCell>
+                                    <TableCell>{enterpriseRow.name}</TableCell>
                                     <TableCell>{convertCompanyTypeList(enterpriseRow.companyType)}</TableCell>
-                                    <TableCell>{convertCategoryList(enterpriseRow.category)}</TableCell>
+                                    <TableCell>
+                                        <Stack direction="row" spacing={3}>
+                                            {enterpriseRow.categoryList.map((category) => convertCategoryList(category))}
+                                        </Stack>
+                                        {/* {enterpriseRow.categoryList.map((category) =>
+                                                categoryChip(convertCategoryList(String(category)))
+                                            )} */}
+                                    </TableCell>
                                     <TableCell>{convertGrowthDegreeList(enterpriseRow.growthDegree)}</TableCell>
                                 </TableRow>
                             );

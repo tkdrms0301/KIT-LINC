@@ -7,12 +7,12 @@ import Form3Content from './Form3Content';
 import Form4Content from './Form4Content';
 import Form5Content from './Form5Content';
 import dayjs from 'dayjs';
-
+import axios from '../../../../node_modules/axios/index';
 import approveProjectApi from '../../api/difficult-tech/ApproveProjectApi';
 
 function ApproveProject() {
     const [selectedPost, setSelectedPost] = useState('');
-    const [formInfo, setFormInfo] = useState();
+    const [formInfo, setFormInfo] = useState(null);
     const [rows, setRows] = useState([]);
     const [requestInfo, setRequestInfo] = useState({
         state: 'PENDING',
@@ -116,47 +116,37 @@ function ApproveProject() {
             .catch((err) => console.log(err));
     };
 
-    const requestFormInfo = () => {
+    const requestFormInfo = async () => {
         let companyInfo;
-        approveProjectApi
-            .contentCompanyInfo(Number(selectedPost.id))
+        let additionalInfo;
+        await axios
+            .get('http://337se.duckdns.org:80/api/member/requestform', {})
             .then((res) => {
-                companyInfo = res.data.data;
-                const tmpFormInfo = {
-                    companyName: res.data.data.companyName,
-                    representativeName: res.data.data.representativeName,
-                    companyRegistrationNum: res.data.data.companyRegistrationNum,
-                    faxNum: res.data.data.faxNum,
-                    address: res.data.data.address,
-                    name: res.data.data.name,
-                    departmentAndPosition: res.data.data.departmentAndPosition,
-                    phoneNum: res.data.data.phoneNum,
-                    email: res.data.data.email,
-                    fullTimeWorker: res.data.data.fullTimeWorker,
-                    sales: res.data.data.sales,
-                    growthDegree: res.data.data.growthDegree,
-                    businessType: res.data.data.businessType,
-                    businessTypeEtc: res.data.data.businessTypeEtc,
-                    mainService: res.data.data.mainService,
-                    // consultantForm: res.data.data.consultantForm,
-                    // consultantInfo: res.data.data.consultantInfo,
-                    // consultingField: res.data.data.consultingField,
-                    // consultingFieldEtc: res.data.data.consultingFieldEtc,
-                    // detailInfo: res.data.data.detailInfo,
-                    // effectiveness: res.data.data.effectiveness,
-                    // projectName: res.data.data.projectName
-                    consultantForm: ['0', '4'],
-                    consultantInfo: ['성명', '소속', '연락처'],
-                    consultingField: ['1', '4', '8', '11'],
-                    consultingFieldEtc: '기타',
-                    detailInfo: '상세내용',
-                    effectiveness: '기대효과',
-                    projectName: '프로젝트제목'
-                };
-
-                setFormInfo(tmpFormInfo);
+                const companyData = res.data.data;
+                companyInfo = companyData;
             })
             .catch((err) => console.log(err));
+        await axios
+            .get('http://337se.duckdns.org:80/api/request/detail', {
+                params: {
+                    requestId: selectedPost.id
+                }
+            })
+            .then((res) => {
+                const additionalData = res.data.data;
+                additionalInfo = additionalData;
+            });
+        setFormInfo({
+            ...formInfo,
+            ...companyInfo,
+            consultantForm: additionalInfo.company.cooperationField,
+            consultantInfo: additionalInfo.wishMentor.split('|'),
+            consultingField: additionalInfo.supportField,
+            consultingFieldEtc: additionalInfo.cooperationTypeEtc, // supportEtc 으로 변경 요청
+            detailInfo: additionalInfo.detail,
+            effectiveness: additionalInfo.expectEffect,
+            projectName: additionalInfo.requestName
+        });
     };
 
     const handleProjectChange = (event, rows) => {
@@ -223,7 +213,7 @@ function ApproveProject() {
                     />
                 </Grid>
 
-                {formInfo !== undefined
+                {formInfo !== null
                     ? requestFormList.map((requsetForms, index) =>
                           requsetForms.requestForm === selectedPost.projectType ? <Box key={index}> {requsetForms.template}</Box> : null
                       )

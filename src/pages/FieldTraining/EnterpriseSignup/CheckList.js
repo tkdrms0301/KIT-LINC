@@ -1,44 +1,6 @@
-import { Grid, Typography, TextField, Radio, FormControlLabel, RadioGroup } from '@mui/material';
-const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef }) => {
-    const radio1List = [
-        { label: '일반사무실 형태', value: '1' },
-        { label: '연구소 형태', value: '2' },
-        { label: '생산/제조 등의 공장 형태', value: '3' },
-        { label: '주 사업장 외(건설현장, 자동차/선박/항공 등) 형태', value: '4' },
-        { label: '기타', value: '5' }
-    ];
-    const radio2List = [
-        { label: '일반사무실 형태', value: '1' },
-        { label: '연구소 형태', value: '2' },
-        { label: '생산/제조 등의 공장 형태', value: '3' },
-        { label: '주 사업장 외(건설현장, 자동차/선박/항공 등) 형태', value: '4' },
-        { label: '기타', value: '5' }
-    ];
-    const radio3List = [
-        {
-            label: '소속 근로자와 같은 공간에 배정된다.',
-            value: '1'
-        },
-        { label: '소속 근로자와 분리된 별도의 공간에 배정된다.', value: '2' }
-    ];
-    const radio4List = [
-        { label: '모든 필요 물품 및 비품을 제공한다.', value: '1' },
-        { label: '전혀 제공하지 않는다', value: '2' },
-        { label: '일부 제공한다.', value: '3' }
-    ];
-    const radio5List = [
-        { label: '물품 제조생산 등의 활동(업무)에 참여하지 않는다', value: '1' },
-        { label: '물품 제조생산 등의 활동(업무)에 일부 참여한다.', value: '2' },
-        { label: '물품 제조생산 등의 활동(업무)에 주 실습 직무로 참여한다.', value: '3' }
-    ];
-    const radio6List = [
-        { label: '취급하지 않는다.', value: '1' },
-        { label: '취급한다.(6-2 문항으로)', value: '2' }
-    ];
-    const radio7List = [
-        { label: '제공된다.', value: '1' },
-        { label: '제공되지 않는다.', value: '2' }
-    ];
+import { Grid, Typography, TextField, Radio, FormControlLabel, RadioGroup, Checkbox } from '@mui/material';
+import { radio1List, radio2List, radio3List, radio4List, radio5List, radio6List, radio7List } from './constant';
+const CheckList = ({ checkList1, checkList2, checkList, onChangeCheckList1, onChangeCheckList2, onBlurCheckList }) => {
     return (
         <Grid>
             <Grid container spacing={3}>
@@ -50,11 +12,24 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                         <Grid container alignItems="center">
                             {radio1List.map((radio1, index) => (
                                 <Grid item xs={radio1.value === '5' ? null : 4} key={index}>
-                                    <FormControlLabel value={radio1.value} control={<Radio />} label={radio1.label} />
+                                    <FormControlLabel
+                                        value={radio1.value}
+                                        control={<Checkbox />}
+                                        label={radio1.label}
+                                        onChange={(e) => onChangeCheckList1(e.target.checked, e.target.value)}
+                                        checked={checkList1.includes(radio1.value) ? true : false}
+                                    />
                                 </Grid>
                             ))}
                             <Grid item>
-                                <TextField placeholder="기타" variant="standard"></TextField>
+                                <TextField
+                                    disabled={checkList1.includes('5') ? false : true}
+                                    name="checkList1Etc"
+                                    defaultValue={checkList.checkList1Etc}
+                                    onBlur={onBlurCheckList}
+                                    placeholder="기타"
+                                    variant="standard"
+                                ></TextField>
                             </Grid>
                         </Grid>
                     </RadioGroup>
@@ -67,11 +42,24 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                         <Grid container alignItems="center">
                             {radio2List.map((radio2, index) => (
                                 <Grid item xs={radio2.value === '5' ? null : 4} key={index}>
-                                    <FormControlLabel value={radio2.value} control={<Radio />} label={radio2.label} />
+                                    <FormControlLabel
+                                        value={radio2.value}
+                                        control={<Checkbox />}
+                                        label={radio2.label}
+                                        onChange={(e) => onChangeCheckList2(e.target.checked, e.target.value)}
+                                        checked={checkList2.includes(radio2.value) ? true : false}
+                                    />
                                 </Grid>
                             ))}
                             <Grid item>
-                                <TextField placeholder="기타" variant="standard"></TextField>
+                                <TextField
+                                    disabled={checkList2.includes('5') ? false : true}
+                                    name="checkList2Etc"
+                                    defaultValue={checkList.checkList2Etc}
+                                    onBlur={onBlurCheckList}
+                                    placeholder="기타"
+                                    variant="standard"
+                                ></TextField>
                             </Grid>
                         </Grid>
                     </RadioGroup>
@@ -80,7 +68,7 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     <Typography>학생에 대한 실습공간 배정 형태</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <RadioGroup>
+                    <RadioGroup name="checkList3" value={checkList.checkList3} onChange={onBlurCheckList}>
                         <Grid container>
                             {radio3List.map((radio3, index) => (
                                 <Grid item xs={6} key={index}>
@@ -94,7 +82,7 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     <Typography>학생에게 실습에 필요한 물품 제공 여부(책상, PC 등)</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <RadioGroup>
+                    <RadioGroup name="checkList4" value={checkList.checkList4} onChange={onBlurCheckList}>
                         <Grid container alignItems="center">
                             {radio4List.map((radio4, index) => (
                                 <Grid item xs={radio4.value === '3' ? null : 6} key={index}>
@@ -102,7 +90,14 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                                 </Grid>
                             ))}
                             <Grid item>
-                                <TextField placeholder="기타" variant="standard"></TextField>
+                                <TextField
+                                    disabled={checkList.checkList4 !== '3'}
+                                    name="checkList4Etc"
+                                    defaultValue={checkList.checkList4Etc}
+                                    onBlur={onBlurCheckList}
+                                    placeholder="기타"
+                                    variant="standard"
+                                ></TextField>
                             </Grid>
                         </Grid>
                     </RadioGroup>
@@ -111,7 +106,7 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     <Typography>학생의 제조 또는 생산 업무에 참여 여부</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <RadioGroup>
+                    <RadioGroup name="checkList5" value={checkList.checkList5} onChange={onBlurCheckList}>
                         <Grid container>
                             {radio5List.map((radio5, index) => (
                                 <Grid item xs={6} key={index}>
@@ -125,7 +120,7 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     <Typography>학생이 수행할 실습 직무의 화학물질 또는 유해물질 등의 취급 여부</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <RadioGroup>
+                    <RadioGroup name="checkList6" value={checkList.checkList6} onChange={onBlurCheckList}>
                         <Grid container>
                             {radio6List.map((radio6, index) => (
                                 <Grid item xs={6} key={index}>
@@ -146,7 +141,7 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <RadioGroup>
+                    <RadioGroup name="checkList7" value={checkList.checkList7} onChange={onBlurCheckList}>
                         <Grid container>
                             {radio7List.map((radio7, index) => (
                                 <Grid item xs={6} key={index}>
@@ -160,7 +155,15 @@ const CheckList = ({ checkListEtc1Ref, checkListEtc2Ref, checkListRequiredRef })
                     <Typography>기타 유의사항(필요시 작성)</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField fullWidth multiline rows={3} placeholder="기타 유의사항"></TextField>
+                    <TextField
+                        name="checkListEtcAlert"
+                        defaultValue={checkList.checkListEtcAlert}
+                        onBlur={onBlurCheckList}
+                        fullWidth
+                        multiline
+                        rows={3}
+                        placeholder="기타 유의사항"
+                    ></TextField>
                 </Grid>
             </Grid>
         </Grid>

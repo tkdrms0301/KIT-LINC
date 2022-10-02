@@ -31,10 +31,10 @@ const EnterpriseForm = () => {
     const [startTime, setStartTime] = useState();
     const [endTime, setEndTime] = useState();
     const [requestInfo, setRequestInfo] = useState({
-        workingProcess: '1',
+        workingProcess: '',
         workingStudentTerm: '1',
         trainingTerm: '4',
-        workingSemester: '1',
+        workingSemester: '',
         ftExist: '1',
         // insuranceChecked: 'reject',
         etcContract: '1',

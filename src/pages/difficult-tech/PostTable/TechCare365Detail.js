@@ -108,9 +108,9 @@ const TechCare365Detail = () => {
         setFormInfo({
             ...formInfo,
             ...companyInfo,
-            consultantForm: ['0', '4'], // 문자열로 받아서 리스트로 변경요청
+            consultantForm: additionalInfo.company.cooperationField,
             consultantInfo: additionalInfo.wishMentor.split('|'),
-            consultingField: ['1', '4', '9', '10'], // 문자열로 받아서 리스트로 변경요청
+            consultingField: additionalInfo.supportField,
             consultingFieldEtc: additionalInfo.cooperationTypeEtc, // supportEtc 으로 변경 요청
             detailInfo: additionalInfo.detail,
             effectiveness: additionalInfo.expectEffect,
@@ -121,61 +121,6 @@ const TechCare365Detail = () => {
     useEffect(() => {
         requestInfo();
     }, []);
-    // useEffect(() => {
-    //     console.log(formInfo);
-    //     requestAdditionalInfo();
-    // }, []);
-    // useEffect(() => {
-    //     axios
-    //         .get('http://337se.duckdns.org:80/api/request/detail', {
-    //             params: {
-    //                 requestId: params.detail
-    //             }
-    //         })
-    //         .then((res) => {
-    //             console.log(res.data.data);
-    //             setFormInfo({
-    //                 ...formInfo,
-    //                 consultantForm: ['0', '4'],
-    //                 consultantInfo: ['', '', ''],
-    //                 consultingField: ['1', '4', '9', '10'],
-    //                 consultingFieldEtc: '기타',
-    //                 detailInfo: res.data.data.detail,
-    //                 effectiveness: res.data.data.expectEffect,
-    //                 projectName: res.data.data.requestName
-    //             });
-    //         });
-    //     console.log(formInfo);
-    //     //     .then((res) => {
-    //     //         const data = res.data.data;
-    //     //         console.log(data);
-    //     //         const resFormInfo = {
-    //     //             companyName: data.company.companyName,
-    //     //             representativeName: data.company.ceoName,
-    //     //             companyRegistrationNum: data.company.businessNumber,
-    //     //             faxNum: data.company.faxNumber,
-    //     //             address: 'address',
-    //     //             name: 'name',
-    //     //             departmentAndPosition: 'departmentAndPosition',
-    //     //             phoneNum: 'phoneNum',
-    //     //             email: 'email',
-    //     //             fullTimeWorker: 'fullTimeWorker',
-    //     //             sales: 'sales',
-    //     //             growthDegree: '3',
-    //     //             businessType: ['2', '4', '7'],
-    //     //             businessTypeEtc: undefined,
-    //     //             mainService: 'mainService',
-    //     //             consultantForm: ['0', '4'],
-    //     //             consultantInfo: ['성명', '소속', '연락처'],
-    //     //             consultingField: ['1', '4', '9', '10'],
-    //     //             consultingFieldEtc: '기타',
-    //     //             detailInfo: '상세내용',
-    //     //             effectiveness: '기대효과',
-    //     //             projectName: '프로젝트제목'
-    //     //         };
-    //     //     })
-    //     //     .catch((err) => console.log(err)),
-    // }, []);
 
     let formInfoArr;
 

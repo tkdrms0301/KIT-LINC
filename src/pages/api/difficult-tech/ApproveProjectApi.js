@@ -5,7 +5,6 @@ const approveProjectApi = {
     contentFilter: (filter) => api.get('api/request', { params: filter }),
     approve: (status) => api.post('api/request/status', status),
     reject: (status) => api.post('api/request/status', status),
-    pending: (status) => api.post('api/request/status', status),
-    contentCompanyInfo: (requestId) => api.get('api/member/requestform', { requestId: requestId })
+    pending: (status) => api.post('api/request/status', status)
 };
 export default approveProjectApi;

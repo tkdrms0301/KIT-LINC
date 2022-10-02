@@ -53,7 +53,7 @@ export default function FormDialog({ open, handleClose, rejectReasonRef, onSubmi
                         <DialogActions>
                             <Button onClick={handleCheckClose}>취소</Button>
                             <Button variant="contained" onClick={onSubmitRejectProject}>
-                                거절
+                                확인
                             </Button>
                         </DialogActions>
                     </Dialog>

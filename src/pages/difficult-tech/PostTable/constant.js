@@ -1,6 +1,28 @@
-const statusList = ['All', '진행중', '승인대기중', '모집중', '완료'];
-const businessTypeListForSearch = ['All', 'IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
-const requestFormList = ['All', 'TechCare365', '지원요청서2', '지원요청서3', '지원요청서4', '지원요청서5'];
+const statusList = [
+    { label: 'All', value: 0 },
+    { label: '진행중', value: 1 },
+    { label: '승인대기중', value: 2 },
+    { label: '모집중', value: 3 },
+    { label: '완료', value: 4 }
+];
+const businessTypeListForSearch = [
+    { label: 'All', value: 0 },
+    { label: 'IT분야', value: 1 },
+    { label: '그린에너지분야', value: 2 },
+    { label: '음식료', value: 3 },
+    { label: '섬유의복', value: 4 },
+    { label: '석유화확', value: 5 },
+    { label: '비금속', value: 6 },
+    { label: '운송장비', value: 7 }
+];
+const requestFormList = [
+    { label: 'All', value: 0 },
+    { label: 'TechCare365', value: 1 },
+    { label: '지원요청서2', value: 2 },
+    { label: '지원요청서3', value: 3 },
+    { label: '지원요청서4', value: 4 },
+    { label: '지원요청서5', value: 5 }
+];
 
 const consultingFormList = ['단기 기술지도', '외부 자문의원 지도', '패키지形', '학기중 장기기술지도', '방학,연구년중 장기기술지도'];
 

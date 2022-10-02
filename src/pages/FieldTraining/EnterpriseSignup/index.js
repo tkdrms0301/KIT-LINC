@@ -1,38 +1,18 @@
 import { Grid, Tabs, Tab, Box, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import MainCard from 'components/MainCard';
-import { useRef, useState } from 'react';
-import BusinessNumber from './BusinessNumber';
+import { useState } from 'react';
 import EnterpriseInfo from './EnterpriseInfo';
 import CheckList from './CheckList';
 import Upload from './Upload';
 import axios from 'axios';
 const EnterpriseSignup = () => {
-    const businessNumberRef = useRef();
-    const businessType1Ref = useRef();
-    const businessType2Ref = useRef();
-    const workingHourOfDay = useRef();
-    const workingHourOfWeek = useRef();
-    const workingDayOfWeek = useRef();
-    const eiDepartmentRef = useRef();
-    const eiNameRef = useRef();
-    const eiPositionRef = useRef();
-    const eiContactRef = useRef();
-    const eiPhoneNumberRef = useRef();
-    const eiEmailRef = useRef();
-    const eiFaxRef = useRef();
-    const checkListEtc1Ref = useRef();
-    const checkListEtc2Ref = useRef();
-    const checkListRequiredRef = useRef();
     const [value, setValue] = useState(1);
-    const [businessNumber, setBusinessNumber] = useState('');
-
-    const [fileImage, setFileImage] = useState('');
+    const [fileImage, setFileImage] = useState();
     const [fileImageName, setFileImageName] = useState('');
 
     function TabPanel(props) {
         const { children, value, index } = props;
-
         return <Grid>{value === index && <Box sx={{ p: 3 }}>{children}</Box>}</Grid>;
     }
 
@@ -48,42 +28,35 @@ const EnterpriseSignup = () => {
                 setValue(newValue);
                 return;
             case 1:
-                if (newValue === 1 && businessNumber) {
+                if (
+                    newValue === 1 &&
+                    enterpriseIsListed.length !== 0 &&
+                    dayOfWeek.length !== 0 &&
+                    enterpriseInfo.enterpriseBusinessType1 &&
+                    enterpriseInfo.enterpriseBusinessType2 &&
+                    enterpriseInfo.hourOfDay &&
+                    enterpriseInfo.hourOfWeek &&
+                    enterpriseInfo.dayOfWeek &&
+                    enterpriseInfo.eiDepartment &&
+                    enterpriseInfo.eiName &&
+                    enterpriseInfo.eiPosition &&
+                    enterpriseInfo.eiContact &&
+                    enterpriseInfo.eiPhoneNumber &&
+                    enterpriseInfo.eiEmail &&
+                    enterpriseInfo.eiFax
+                ) {
                     setValue(newValue);
                 } else {
-                    alert('사업자 등록번호를 입력하세요');
+                    alert('기업정보를 입력하세요');
                     setValue(newValue - 1);
                 }
                 return;
             case 2:
                 setValue(newValue);
                 return;
-            case 3:
-                setValue(newValue);
-                return;
-            case 4:
-                setValue(newValue);
-                return;
-        }
-    };
-    const handleBusinessNumber = () => {
-        // businessNumberRef.current.value 값 전송 -> 성공, 실패
-
-        if (true) {
-            //성공시
-            setBusinessNumber(businessNumberRef.current.value);
-            console.log(businessNumberRef.current.value);
-        } else {
-            //실패시
-            alert('존재하지 않는 사업자 등록번호 입니다.');
         }
     };
 
-    const [enterpriseSortation, setEnterpriseSortation] = useState('');
-    const onChangeEnterpriseSortation = (e) => {
-        console.log(e.target.value);
-        setEnterpriseSortation(e.target.value);
-    };
     const [enterpriseIsListed, setEnterpriseIsListedList] = useState([]);
     const onChangeEnterpriseIsListed = (checked, item) => {
         if (checked) {
@@ -92,6 +65,7 @@ const EnterpriseSignup = () => {
             setEnterpriseIsListedList(enterpriseIsListed.filter((el) => el !== item));
         }
     };
+
     const [dayOfWeek, setDayOfWeek] = useState([]);
     const onChangeDayOfWeek = (checked, item) => {
         if (checked) {
@@ -100,6 +74,7 @@ const EnterpriseSignup = () => {
             setDayOfWeek(dayOfWeek.filter((el) => el !== item));
         }
     };
+
     const [enterpriseInfo, setEnterpriseInfo] = useState({
         enterpriseBusinessType1: '', // 사업의 종류(업태) 1
         enterpriseBusinessType2: '', // 사업의 종류(업태) 2
@@ -114,38 +89,94 @@ const EnterpriseSignup = () => {
         eiEmail: '', // 이메일
         eiFax: '' // 팩스
     });
+
     const onBlurEnterpriseInfo = (e) => {
-        console.log(e.target);
         const { name, value } = e.target;
         setEnterpriseInfo({
             ...enterpriseInfo,
             [name]: value
         });
     };
+    const [checkList1, setCheckList1] = useState([]);
+    const [checkList2, setCheckList2] = useState([]);
+    const [checkList, setCheckList] = useState({
+        checkList1Etc: '',
+        checkList2Etc: '',
+        checkList3: '',
+        checkList4: '',
+        checkList4Etc: '',
+        checkList5: '',
+        checkList6: '',
+        checkList7: '',
+        checkListEtcAlert: ''
+    });
+    const [fileInfo, setFileInfo] = useState({
+        id: '',
+        url: ''
+    });
+
+    const onChangeCheckList1 = (checked, item) => {
+        if (checked) {
+            setCheckList1([...checkList1, item]);
+        } else {
+            setCheckList1(checkList1.filter((el) => el !== item));
+        }
+    };
+
+    const onChangeCheckList2 = (checked, item) => {
+        if (checked) {
+            setCheckList2([...checkList2, item]);
+        } else {
+            setCheckList2(checkList2.filter((el) => el !== item));
+        }
+    };
+
+    const onBlurCheckList = (e) => {
+        const { name, value } = e.target;
+        setCheckList({
+            ...checkList,
+            [name]: value
+        });
+    };
+
     const handleEnterpriseInfo = () => {
         const info = {
-            enterpriseSortation: enterpriseSortation,
             enterpriseIsListed: enterpriseIsListed,
             enterpriseBusinessType1: enterpriseInfo.enterpriseBusinessType1,
-            enterpriseBusinessType2: businessType2Ref?.current.value,
+            enterpriseBusinessType2: '',
             dayOfWeek: dayOfWeek,
-            eiDepartment: eiDepartmentRef?.current.value,
-            eiName: eiNameRef?.current.value,
-            eiPosition: eiPositionRef?.current.value,
-            eiContact: eiContactRef?.current.value,
-            eiPhoneNumber: eiPhoneNumberRef?.current.value,
-            eiEmail: eiEmailRef?.current.value,
-            eiFax: eiFaxRef?.current.value
+            eiDepartment: '',
+            eiName: '',
+            eiPosition: '',
+            eiContact: '',
+            eiPhoneNumber: '',
+            eiEmail: '',
+            eiFax: ''
         };
         console.log(info);
     };
+
     const handleFile = (e) => {
         setFileImage(e.target.files[0]);
         setFileImageName(e.target.files[0].name);
         console.log(e.target.files[0].name);
     };
-    const onSubmitEnterpriseInfo = () => {
+
+    const onSubmitEnterpriseInfo = async () => {
         console.log(fileImage);
+        const formData = new FormData();
+        formData.append('files', fileImage);
+        await axios({
+            method: 'POST',
+            url: 'http://337se.duckdns.org:80/api/file/upload',
+            mode: 'cors',
+            headers: { 'Content-Type': 'multipart/form-data' },
+            data: formData
+        })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => console.log(err));
     };
     return (
         <Grid>
@@ -154,52 +185,32 @@ const EnterpriseSignup = () => {
                     <Box sx={{ width: '100%' }}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                             <Tabs value={value}>
-                                <Tab label="사업자 등록정보" />
                                 <Tab label="기업 정보" />
                                 <Tab label="자체 점검표" />
                                 <Tab label="업로드 자료" />
                             </Tabs>
                         </Box>
                         <TabPanel value={value} index={0}>
-                            <BusinessNumber
-                                businessNumberRef={businessNumberRef}
-                                businessNumber={businessNumber}
-                                handleBusinessNumber={handleBusinessNumber}
-                            ></BusinessNumber>
-                        </TabPanel>
-                        <TabPanel value={value} index={1}>
                             <EnterpriseInfo
-                                businessNumber={businessNumber}
-                                enterpriseSortation={enterpriseSortation}
-                                onChangeEnterpriseSortation={onChangeEnterpriseSortation}
                                 enterpriseIsListed={enterpriseIsListed}
                                 onChangeEnterpriseIsListed={onChangeEnterpriseIsListed}
                                 dayOfWeek={dayOfWeek}
                                 onChangeDayOfWeek={onChangeDayOfWeek}
-                                businessType1Ref={businessType1Ref}
-                                businessType2Ref={businessType2Ref}
-                                workingHourOfDay={workingHourOfDay}
-                                workingHourOfWeek={workingHourOfWeek}
-                                workingDayOfWeek={workingDayOfWeek}
-                                eiDepartmentRef={eiDepartmentRef}
-                                eiNameRef={eiNameRef}
-                                eiPositionRef={eiPositionRef}
-                                eiContactRef={eiContactRef}
-                                eiPhoneNumberRef={eiPhoneNumberRef}
-                                eiEmailRef={eiEmailRef}
-                                eiFaxRef={eiFaxRef}
                                 enterpriseInfo={enterpriseInfo}
                                 onBlurEnterpriseInfo={onBlurEnterpriseInfo}
                             ></EnterpriseInfo>
                         </TabPanel>
-                        <TabPanel value={value} index={2}>
+                        <TabPanel value={value} index={1}>
                             <CheckList
-                                checkListEtc1Ref={checkListEtc1Ref}
-                                checkListEtc2Ref={checkListEtc2Ref}
-                                checkListRequiredRef={checkListRequiredRef}
+                                checkList1={checkList1}
+                                checkList2={checkList2}
+                                checkList={checkList}
+                                onChangeCheckList1={onChangeCheckList1}
+                                onChangeCheckList2={onChangeCheckList2}
+                                onBlurCheckList={onBlurCheckList}
                             ></CheckList>
                         </TabPanel>
-                        <TabPanel value={value} index={3}>
+                        <TabPanel value={value} index={2}>
                             <Upload fileImageName={fileImageName} handleFile={handleFile}></Upload>
                         </TabPanel>
                         <Grid container direction={value !== 0 ? 'row' : 'row-reverse'} justifyContent="space-between" sx={{ mt: 3 }}>
@@ -208,26 +219,15 @@ const EnterpriseSignup = () => {
                                     <Button variant="contained">이전</Button>
                                 </form>
                             ) : null}
-                            {value === 1 ? (
-                                <form onClick={handleEnterpriseInfo}>
-                                    <Button variant="contained">저장</Button>
-                                </form>
-                            ) : null}
-                            {value === 2 ? (
-                                <form>
-                                    <Button variant="contained">저장</Button>
-                                </form>
-                            ) : null}
-                            {value !== 3 ? (
+                            {value !== 2 ? (
                                 <form onClick={(e) => handlePageChange(e, value + 1)}>
                                     <Button variant="contained">다음</Button>
                                 </form>
-                            ) : null}
-                            {value === 3 ? (
+                            ) : (
                                 <form onClick={onSubmitEnterpriseInfo}>
                                     <Button variant="contained">제출</Button>
                                 </form>
-                            ) : null}
+                            )}
                         </Grid>
                     </Box>
                 </Grid>

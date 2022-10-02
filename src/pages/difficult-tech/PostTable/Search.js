@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import MainCard from 'components/MainCard';
 import { statusList, businessTypeListForSearch, requestFormList } from './constant';
 
-const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInput }) => {
+const Search = ({ selected, onChangeSelected, requestProjectList }) => {
     return (
         <Grid item xs={12}>
             <MainCard title="" codeHighlight>
@@ -16,8 +16,8 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         <FormControl label="진행 상태" variant="standard" sx={{ minWidth: 120 }}>
                             <Select name="selectedStatus" value={selected.selectedStatus} onChange={onChangeSelected}>
                                 {statusList.map((status, index) => (
-                                    <MenuItem key={index} value={status}>
-                                        {status}
+                                    <MenuItem key={index} value={status.value}>
+                                        {status.label}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -28,8 +28,8 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         <FormControl label="업종" variant="standard" sx={{ minWidth: 120 }}>
                             <Select name="selectedConsultingField" value={selected.selectedConsultingField} onChange={onChangeSelected}>
                                 {businessTypeListForSearch.map((businessType, index) => (
-                                    <MenuItem key={index} value={businessType}>
-                                        {businessType}
+                                    <MenuItem key={index} value={businessType.value}>
+                                        {businessType.label}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -40,8 +40,8 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         <FormControl variant="standard" sx={{ minWidth: 120 }}>
                             <Select name="selectedRequstForm" value={selected.selectedRequstForm} onChange={onChangeSelected}>
                                 {requestFormList.map((requestForm, index) => (
-                                    <MenuItem key={index} value={requestForm}>
-                                        {requestForm}
+                                    <MenuItem key={index} value={requestForm.value}>
+                                        {requestForm.label}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -52,7 +52,9 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         <TextField
                             id="outlined-name"
                             placeholder="프로젝트 이름 검색"
-                            inputRef={searchInputRef}
+                            name="projectName"
+                            defaultValue={selected.projectName}
+                            onBlur={onChangeSelected}
                             variant="standard"
                             fullWidth
                             InputProps={{
@@ -65,7 +67,7 @@ const Search = ({ selected, onChangeSelected, searchInputRef, onSubmitSearchInpu
                         />
                     </Grid>
                     <Grid item xs={2} sx={{ mt: 1 }}>
-                        <form onClick={onSubmitSearchInput}>
+                        <form onClick={(e) => requestProjectList(e, 1)}>
                             <Button variant="contained">검색</Button>
                         </form>
                     </Grid>
