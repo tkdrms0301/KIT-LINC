@@ -1,7 +1,7 @@
 import axios from 'axios';
 import api from '../api';
 const approveProjectApi = {
-    contentAll: api.get('api/request'),
+    contentAll: () => api.get('api/request', null),
     contentFilter: (filter) => api.get('api/request', { params: filter }),
     approve: (status) => api.post('api/request/status', status),
     reject: (status) => api.post('api/request/status', status),
