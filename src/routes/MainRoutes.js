@@ -21,6 +21,8 @@ import NoticeDetailWrite from 'pages/homepage-manage/NoticeMain/NoticeDetailWrit
 import NoticeDetailModify from 'pages/homepage-manage/NoticeMain/NoticeDetailModify';
 import EnterpriseSignup from 'pages/FieldTraining/EnterpriseSignup/index';
 import FamilyEnterpriseTable from 'pages/difficult-tech/FamilyEnterpriseTable/index';
+import Login from 'pages/homepage-manage/Login';
+import ResearcherTable from 'pages/difficult-tech/ResearcherTable/index';
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 
@@ -135,6 +137,10 @@ const MainRoutes = {
         {
             path: '/notice-write',
             element: <NoticeDetailWrite />
+        },
+        {
+            path: '/difficult-tech-researcher',
+            element: <ResearcherTable />
         }
     ]
 };

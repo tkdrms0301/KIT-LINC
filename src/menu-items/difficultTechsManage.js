@@ -52,6 +52,13 @@ const difficultTechs = {
             type: 'item',
             url: '/difficult-tech-family-enterprise',
             icon: ''
+        },
+        {
+            id: 'util-difficult-tech-researcher',
+            title: '연구자 조회',
+            type: 'item',
+            url: '/difficult-tech-researcher',
+            icon: ''
         }
     ]
 };

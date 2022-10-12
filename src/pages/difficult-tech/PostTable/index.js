@@ -34,15 +34,16 @@ const PostTable = () => {
     // search
     const requestProjectList = (e, requestPage) => {
         const info = {
-            selectedConsultingField: selected.selectedConsultingField === 0 ? null : selected.selectedConsultingField,
-            selectedRequstForm: selected.selectedRequstForm === 0 ? null : selected.selectedRequstForm,
-            selectedStatus: selected.selectedStatus === 0 ? null : selected.selectedStatus,
+            businessTypeIds: selected.selectedConsultingField === 0 ? null : selected.selectedConsultingField,
+            requestForm: selected.selectedRequstForm === 0 ? null : selected.selectedRequstForm,
+            status: selected.selectedStatus === 0 ? null : selected.selectedStatus,
             projectName: selected.projectName,
-            page: requestPage
+            page: requestPage - 1,
+            size: 10
         };
         console.log(info);
         axios
-            .get('http://337se.duckdns.org:80/api/project', {
+            .get('http://337se.duckdns.org:80/api/project', null, {
                 params: info
             })
             .then((res) => {

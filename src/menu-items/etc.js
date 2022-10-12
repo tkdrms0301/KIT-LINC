@@ -38,6 +38,13 @@ const works = {
             type: 'item',
             url: '/difficult-tech-docs-upload',
             icon: ''
+        },
+        {
+            id: 'login',
+            title: '로그인',
+            type: 'item',
+            url: '/login',
+            icon: ''
         }
     ]
 };
