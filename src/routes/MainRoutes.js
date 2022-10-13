@@ -26,7 +26,7 @@ import ResearcherTable from 'pages/difficult-tech/ResearcherTable/index';
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
 
-// render - 애로 기술 관리
+// render - 애로 기술 관리ㅇ
 const DifficultTech = Loadable(lazy(() => import('pages/difficult-tech')));
 
 // ==============================|| MAIN ROUTING ||============================== //
