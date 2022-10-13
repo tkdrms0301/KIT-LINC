@@ -4,6 +4,7 @@ import MainCard from 'components/MainCard';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from '../../../../node_modules/react-router-dom/index';
+import loginApi from 'pages/api/difficult-tech/LoginApi';
 const Login = () => {
     const navigation = useNavigate();
     const height = document.documentElement.clientHeight;
@@ -23,13 +24,21 @@ const Login = () => {
         const formData = new FormData();
         formData.append('loginId', login.id);
         formData.append('password', login.password);
-        axios.defaults.withCredentials = true;
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             },
             withCredentials: true
         };
+        // loginApi
+        //     .login(formData)
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((res) => {
+        //         console.log(res);
+        //     });
         axios
             .post('http://337se.duckdns.org:80/api/member/login', formData, config)
 
@@ -40,7 +49,7 @@ const Login = () => {
                 console.log(res);
             });
 
-        //navigation('/');
+        navigation('/');
     };
     return (
         <>
