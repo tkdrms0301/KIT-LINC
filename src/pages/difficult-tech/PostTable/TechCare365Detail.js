@@ -9,6 +9,7 @@ import TechPostDetailButton from './TechPostDetailButton';
 import { professorRows } from './dummy';
 import { useParams } from 'react-router-dom';
 import { consultingFormList, consultantInfoList, consultingFieldList, growthDegreeList, businessTypeListForTechCare365 } from './constant';
+import PostTableApi from 'pages/api/difficult-tech/PostTableApi';
 const TechCare365Detail = () => {
     const params = useParams();
     const [selectedProfessor, setSelectedProfessor] = useState();
@@ -86,32 +87,28 @@ const TechCare365Detail = () => {
     const requestInfo = async () => {
         let companyInfo;
         let additionalInfo;
-        await axios
-            .get('http://337se.duckdns.org:80/api/member/requestform', {})
+        await PostTableApi.contentDetailForm()
             .then((res) => {
                 const companyData = res.data.data;
                 console.log(companyData);
                 companyInfo = companyData;
             })
             .catch((err) => console.log(err));
-        await axios
-            .get('http://337se.duckdns.org:80/api/request/detail', {
-                params: {
-                    requestId: params.detail
-                }
-            })
-            .then((res) => {
-                const additionalData = res.data.data;
-                console.log(additionalData);
-                additionalInfo = additionalData;
-            });
+        await PostTableApi.contentDetailFormRequestId({
+            requestId: params.detail
+        }).then((res) => {
+            const additionalData = res.data.data;
+            console.log(additionalData);
+            additionalInfo = additionalData;
+        });
         setFormInfo({
             ...formInfo,
             ...companyInfo,
             consultantForm: additionalInfo.company.cooperationField,
-            consultantInfo: additionalInfo.wishMentor.split('|'),
-            consultingField: additionalInfo.supportField,
-            consultingFieldEtc: additionalInfo.cooperationTypeEtc, // supportEtc 으로 변경 요청
+            // consultantInfo: additionalInfo.wishMentor.split('|'),
+            consultantInfo: ['성명', '성명', '성명'], // dd
+            consultingField: additionalInfo.supportField, //dd
+            consultingFieldEtc: additionalInfo.companyCategoryEtc, // supportEtc 으로 변경 요청
             detailInfo: additionalInfo.detail,
             effectiveness: additionalInfo.expectEffect,
             projectName: additionalInfo.requestName
@@ -233,14 +230,14 @@ const TechCare365Detail = () => {
                             </Box>
                             <FormGroup>
                                 <Grid container>
-                                    {formInfo.consultingField.map((consultingFields, index) => (
+                                    {/* {formInfo.consultingField.map((consultingFields, index) => (
                                         <Grid item xs={3} key={index}>
                                             <FormControlLabel
                                                 control={<Checkbox checked />}
                                                 label={consultingFieldList[Number(consultingFields)]}
                                             />
                                         </Grid>
-                                    ))}
+                                    ))} */}
                                     {formInfo.consultingFieldEtc !== undefined ? (
                                         <Grid item>
                                             <FormControlLabel control={<Checkbox checked />} label="기타" />

@@ -60,11 +60,13 @@ const businessTypeListForTechCare365 = [
     '비금속',
     '운송장비'
 ];
+const fieldTagList = ['IT분야', '그린에너지분야', '음식료', '섬유의복', '목제종이', '석유화확', '비금속', '운송장비'];
+
 const tagList = [
-    { tagName: '모집중', color: '#78E366', text: '#FFFFFF' },
-    { tagName: '진행중', color: '#78BCEE', text: '#FFFFFF' },
-    { tagName: '승인대기중', color: '#CFDCE4', text: '#4F4A4A' },
-    { tagName: '완료', color: '#6F6969', text: '#FFFFFF' }
+    { tagName: '모집중', tagValue: '모집중', color: '#78E366', text: '#FFFFFF' },
+    { tagName: '진행중', tagValue: 'PENDING', color: '#78BCEE', text: '#FFFFFF' },
+    { tagName: '승인대기중', tagValue: 'APPROVED', color: '#CFDCE4', text: '#4F4A4A' },
+    { tagName: '완료', tagValue: '완료', color: '#6F6969', text: '#FFFFFF' }
 ];
 
 export {
@@ -76,5 +78,6 @@ export {
     consultingFieldList,
     growthDegreeList,
     businessTypeListForTechCare365,
-    tagList
+    tagList,
+    fieldTagList
 };

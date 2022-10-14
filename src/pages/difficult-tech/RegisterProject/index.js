@@ -14,6 +14,7 @@ import Form2 from './Form2';
 import Form3 from './Form3';
 import Form4 from './Form4';
 import Form5 from './Form5';
+import registerProjectApi from 'pages/api/difficult-tech/RegisterProjectApi';
 
 const RegisterProject = () => {
     const projectNameRef = useRef();
@@ -54,17 +55,17 @@ const RegisterProject = () => {
         console.log(projectNameRef.current.value);
         // submit 이벤트는 브라우저에서 새로고침을 발생
         // 이를 방지하기 위해 이 함수를 호출
-        console.log();
-        axios
-            .post('http://337se.duckdns.org:80/api/request/care365', {
-                projectName: projectNameRef.current.value,
-                consultantForm: consultingForm,
-                consultingField: consultingField,
-                consultingFieldEtc: etcRef.current.value,
-                consultantInfo: consultantInfo,
-                detailInfo: detailInfoRef.current.value,
-                effectiveness: effectivenessRef.current.value
-            })
+        const formInfo = {
+            projectName: projectNameRef.current.value,
+            consultantForm: consultingForm,
+            consultingField: consultingField,
+            consultingFieldEtc: etcRef.current.value,
+            consultantInfo: consultantInfo,
+            detailInfo: detailInfoRef.current.value,
+            effectiveness: effectivenessRef.current.value
+        };
+        registerProjectApi
+            .contentSubmit(formInfo)
             .then((res) => {
                 console.log(res);
             })
@@ -72,8 +73,8 @@ const RegisterProject = () => {
     };
 
     function requestFormInfo() {
-        axios
-            .get('http://337se.duckdns.org:80/api/member/requestform', {})
+        registerProjectApi
+            .contentForm()
             .then((res) => {
                 console.log(res.data.data);
                 setFormInfo(res.data.data);

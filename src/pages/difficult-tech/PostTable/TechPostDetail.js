@@ -1,8 +1,6 @@
 // project import
 import { Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import axios from '../../../../node_modules/axios/index';
 import Form2Detail from './Form2Detail';
 import Form3Detail from './Form3Detail';
 import Form4Detail from './Form4Detail';
@@ -11,8 +9,9 @@ import TechCare365Detail from './TechCare365Detail';
 
 const TechPostDetail = () => {
     const params = useParams();
+    const requestForm = params.requestForm;
 
-    const TechCare365 = <TechCare365Detail></TechCare365Detail>;
+    const Techcare365 = <TechCare365Detail />;
     const Form2 = <Form2Detail />;
     const Form3 = <Form3Detail />;
     const Form4 = <Form4Detail />;
@@ -20,8 +19,8 @@ const TechPostDetail = () => {
 
     const requestFormList = [
         {
-            requestForm: 'TechCare365',
-            template: TechCare365
+            requestForm: 'Techcare365',
+            template: Techcare365
         },
         {
             requestForm: '지원요청서2',
@@ -44,7 +43,7 @@ const TechPostDetail = () => {
     return (
         <>
             {requestFormList.map((requestForms, index) =>
-                requestForms.requestForm === params.requestForm ? <Grid key={index}>{requestForms.template}</Grid> : null
+                requestForms.requestForm === requestForm ? <Grid key={index}>{requestForms.template}</Grid> : null
             )}
         </>
     );

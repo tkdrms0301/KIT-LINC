@@ -8,9 +8,6 @@ import Search from './Search';
 import PostTableApi from 'pages/api/difficult-tech/PostTableApi';
 import axios from 'axios';
 
-// dummy data
-import { post } from './dummy.js';
-
 const PostTable = () => {
     // side filter
     const [selected, setSelected] = useState({
@@ -21,7 +18,8 @@ const PostTable = () => {
     });
 
     const [page, setPage] = useState(1);
-    const [data, setData] = useState(post.slice(0, 10));
+    const [lastPage, setLastPage] = useState(1);
+    const [data, setData] = useState([]);
 
     const onChangeSelected = (e) => {
         const { name, value } = e.target;
@@ -42,44 +40,50 @@ const PostTable = () => {
             size: 10
         };
         console.log(info);
-        axios
-            .get('http://337se.duckdns.org:80/api/project', null, {
-                params: info
-            })
+        PostTableApi.contentAll()
             .then((res) => {
                 console.log(res.data.data);
             })
             .catch((err) => console.log(err));
     };
 
-    // pagination
-    const LAST_PAGE = post.length % 10 === 0 ? parseInt(post.length / 10) : parseInt(post.length / 10) + 1;
-
     const handlePage = (event, value) => {
+        const info = {
+            businessTypeIds: selected.selectedConsultingField === 0 ? null : selected.selectedConsultingField,
+            requestForm: selected.selectedRequstForm === 0 ? null : selected.selectedRequstForm,
+            status: selected.selectedStatus === 0 ? null : selected.selectedStatus,
+            projectName: selected.projectName,
+            page: value - 1,
+            size: 10
+        };
+        PostTableApi.contentAll(info)
+            .then((res) => {
+                console.log(res.data.data.content);
+                console.log(res.data.data.pageable);
+                setPage(res.data.data.pageable.pageNumber + 1);
+                setData(res.data.data.content);
+            })
+            .catch((err) => console.log(err));
         setPage(value);
     };
 
     useEffect(() => {
-        let filteredPost = post;
-        if (page === LAST_PAGE) {
-            setData(filteredPost.slice(10 * (page - 1)));
-        } else {
-            setData(filteredPost.slice(10 * (page - 1), 10 * (page - 1) + 10));
-        }
-
-        // 프로젝트 리스트
-        // projectList -> setData에 저장
-        // 마지막 페이지
-        // lastPage -> Pagination의 count에 저장
-        // PostTableApi.contentFilter({
-        //     ...selected,
-        //     page: 1
-        // })
-        //     .then((res) => {
-        //         console.log(res.data.data);
-        //         setData(res.data.data);
-        //     })
-        //     .catch((err) => console.log(err));
+        const info = {
+            businessTypeIds: selected.selectedConsultingField === 0 ? null : selected.selectedConsultingField,
+            requestForm: selected.selectedRequstForm === 0 ? null : selected.selectedRequstForm,
+            status: selected.selectedStatus === 0 ? null : selected.selectedStatus,
+            projectName: selected.projectName,
+            page: 0,
+            size: 10
+        };
+        PostTableApi.contentAll(info)
+            .then((res) => {
+                console.log(res.data.data);
+                setPage(res.data.data.pageable.offset + 1);
+                setLastPage(res.data.data.pageable.pageNumber + 1);
+                setData(res.data.data.content);
+            })
+            .catch((err) => console.log(err));
     }, [page]);
 
     return (
@@ -93,24 +97,17 @@ const PostTable = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 <Grid container spacing={2}>
-                                    {data.map((post, index) => (
-                                        <TechPost key={index} project={post} />
+                                    {data.map((project, index) => (
+                                        <TechPost key={index} project={project} />
                                     ))}
                                 </Grid>
                             </Grid>
                         </Grid>
                         <Grid container justifyContent="center">
-                            {/* 
-                            마지막 페이지 count
-                            기본 페이지 defaultPage
-
-                            나중에 count만 변경예정
-                            */}
                             <Pagination
                                 showFirstButton
                                 showLastButton
-                                count={LAST_PAGE}
-                                siblingCount={2}
+                                count={lastPage}
                                 defaultPage={1}
                                 boundaryCount={1}
                                 color="primary"

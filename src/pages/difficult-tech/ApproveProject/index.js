@@ -8,6 +8,7 @@ import Form4Content from './Form4Content';
 import Form5Content from './Form5Content';
 import dayjs from 'dayjs';
 import axios from '../../../../node_modules/axios/index';
+import config from '../../api/config';
 import approveProjectApi from '../../api/difficult-tech/ApproveProjectApi';
 
 function ApproveProject() {
@@ -45,7 +46,8 @@ function ApproveProject() {
     }, []);
 
     function contentAllRequest() {
-        approveProjectApi.contentAll
+        approveProjectApi
+            .contentAll()
             .then((res) => {
                 setRows(res.data.data.content);
             })
@@ -116,33 +118,34 @@ function ApproveProject() {
             .catch((err) => console.log(err));
     };
 
-    const requestFormInfo = async () => {
+    const requestFormInfo = async (requestId) => {
         let companyInfo;
         let additionalInfo;
-        await axios
-            .get('http://337se.duckdns.org:80/api/member/requestform', {})
+        await approveProjectApi
+            .contentDetailForm()
             .then((res) => {
                 const companyData = res.data.data;
+                console.log(companyData);
                 companyInfo = companyData;
             })
             .catch((err) => console.log(err));
-        await axios
-            .get('http://337se.duckdns.org:80/api/request/detail', {
-                params: {
-                    requestId: selectedPost.id
-                }
+        await approveProjectApi
+            .contentDetailFormRequestId({
+                requestId: requestId
             })
             .then((res) => {
                 const additionalData = res.data.data;
+                console.log(additionalData);
                 additionalInfo = additionalData;
             });
         setFormInfo({
             ...formInfo,
             ...companyInfo,
             consultantForm: additionalInfo.company.cooperationField,
-            consultantInfo: additionalInfo.wishMentor.split('|'),
-            consultingField: additionalInfo.supportField,
-            consultingFieldEtc: additionalInfo.cooperationTypeEtc, // supportEtc 으로 변경 요청
+            // consultantInfo: additionalInfo.wishMentor.split('|'),
+            consultantInfo: ['성명', '성명', '성명'], // dd
+            consultingField: additionalInfo.supportField, //dd
+            consultingFieldEtc: additionalInfo.companyCategoryEtc, // supportEtc 으로 변경 요청
             detailInfo: additionalInfo.detail,
             effectiveness: additionalInfo.expectEffect,
             projectName: additionalInfo.requestName
@@ -150,7 +153,7 @@ function ApproveProject() {
     };
 
     const handleProjectChange = (event, rows) => {
-        requestFormInfo();
+        requestFormInfo(rows.id);
         setSelectedPost(rows);
     };
 
