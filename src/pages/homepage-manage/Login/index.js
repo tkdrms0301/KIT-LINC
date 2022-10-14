@@ -25,23 +25,8 @@ const Login = () => {
         formData.append('loginId', login.id);
         formData.append('password', login.password);
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            withCredentials: true
-        };
-        // loginApi
-        //     .login(formData)
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((res) => {
-        //         console.log(res);
-        //     });
-        axios
-            .post('http://337se.duckdns.org:80/api/member/login', formData, config)
-
+        loginApi
+            .login(formData)
             .then((res) => {
                 console.log(res);
             })
