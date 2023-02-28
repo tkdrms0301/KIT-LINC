@@ -14,7 +14,6 @@ import {
 } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import MainCard from 'components/MainCard';
-import NoticeSearch from './NoticeSearch';
 import posts from './dummy';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -33,12 +32,7 @@ const NoticeManagement = () => {
             <MainCard>
                 <Typography variant="h5">공지사항</Typography>
                 <Divider sx={{ background: 'primary.main', borderBottomWidth: 3, my: 2 }} />
-                <NoticeSearch
-                    noticeSearchForm={noticeSearchForm}
-                    noticeSearchRef={noticeSearchRef}
-                    onChangeNoticeSearchForm={onChangeNoticeSearchForm}
-                    onSubmitSearch={onSubmitSearch}
-                ></NoticeSearch>
+
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <TableContainer component={Paper} sx={{ borderTop: 2, borderBottom: 2, borderLeft: 0 }}>

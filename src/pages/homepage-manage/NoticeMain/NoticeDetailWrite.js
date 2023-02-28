@@ -33,20 +33,6 @@ const NoticeDetailWrite = () => {
                     </Grid>
                 </Grid>
                 <Divider sx={{ background: 'primary.main', borderBottomWidth: 3, my: 2 }} />
-                <Grid container>
-                    <Grid item xs={9}>
-                        <Stack direction="row" spacing={2}>
-                            <Typography>첨부</Typography>
-                        </Stack>
-                    </Grid>
-                    <Grid item xs={3} align="end">
-                        <Button variant="contained" component="label">
-                            업로드
-                            <input hidden accept="image/*" multiple type="file" />
-                        </Button>
-                    </Grid>
-                </Grid>
-                <Divider sx={{ background: 'primary.main', borderBottomWidth: 3, my: 2 }} />
                 <Grid>
                     <NoticeForm editorRef={editorRef}></NoticeForm>
                 </Grid>

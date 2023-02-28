@@ -110,6 +110,5 @@
         "eslint-plugin-react": "^7.26.1",
         "eslint-plugin-react-hooks": "4.0.8",
         "prettier": "2.2.1"
-    },
-    "proxy": "http://337se.duckdns.org:80"
+    }
 }

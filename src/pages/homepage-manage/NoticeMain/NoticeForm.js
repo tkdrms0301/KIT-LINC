@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
@@ -12,17 +11,33 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
 import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 import '@toast-ui/chart/dist/toastui-chart.css';
+
+import { useCallback, useState } from 'react';
+import axios from '../../../../node_modules/axios/index';
+
 function NoticeForm({ editorRef, postData }) {
-    // useEffect(() => {
-    //     // 이미지 업로드 막기
-    //     editorRef.current.getInstance().removeHook('addImageBlobHook');
-    // }, []);
+    const [file, setFile] = useState(null);
+
     const chartOptions = {
         minWidth: 100,
         maxWidth: 600,
         minHeight: 100,
         maxHeight: 300
     };
+
+    const uploadImage = useCallback(async (blob) => {
+        if (!blob) return;
+        const formData = new FormData();
+        formData.append('file', blob);
+        const res = await axios.post('http://localhost:4000/file/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if (res.status === 201) console.log(res.data);
+        return res.data.url;
+    });
+
     return (
         <>
             <Editor
@@ -33,17 +48,13 @@ function NoticeForm({ editorRef, postData }) {
                 language="ko-KR"
                 initialEditType="wysiwyg"
                 plugins={[[chart, chartOptions], codeSyntaxHighlight, colorSyntax, tableMergedCell]}
-                // hooks={{
-                //     addImageBlobHook: async (blob, callback) => {
-                //         // console.log(blob);
-                //         // File {name: '카레유.png', ... }
-                //         // 1. 첨부된 이미지 파일을 서버로 전송후, 이미지 경로 url을 받아온다.
-                //         // const imgUrl = await .... 서버 전송 / 경로 수신 코드 ...
-                //         // 2. 첨부된 이미지를 화면에 표시(경로는 임의로 넣었다.)
-                //         // callback('http://localhost:5000/img/카레유.png', '카레유');
-                //         //https://curryyou.tistory.com/474
-                //     }
-                // }}
+                hooks={{
+                    addImageBlobHook: async (blob, callback) => {
+                        console.log(blob);
+                        const url = await uploadImage(blob);
+                        callback(url, 'alt text');
+                    }
+                }}
             />
         </>
     );
